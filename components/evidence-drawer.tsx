@@ -1,152 +1,89 @@
-"use client";
+import type { FeedbackSignal, Locale } from '@/lib/data';
+import { sourceLabel, t, themeLabel } from '@/lib/i18n';
+import { getThemeSeverity, normalizeSource } from '@/lib/selectors';
+import { MessageSquareQuote, ExternalLink } from 'lucide-react';
 
-import { useState } from "react";
-import { evidenceItems, type Evidence } from "@/lib/data";
-import { cn, formatDate } from "@/lib/utils";
-import {
-  MessageSquareQuote,
-  ExternalLink,
-  ChevronDown,
-  Calendar,
-} from "lucide-react";
+interface EvidenceDrawerProps {
+  locale: Locale;
+  rows: FeedbackSignal[];
+}
 
-export function EvidenceDrawer() {
+const severityClass = {
+  critical: 'badge-base badge-critical',
+  major: 'badge-base badge-major',
+  minor: 'badge-base badge-minor',
+};
+
+export function EvidenceDrawer({ locale, rows }: EvidenceDrawerProps) {
   return (
-    <section id="evidence" className="py-8 md:py-12">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <div className="mb-1 flex items-center gap-2">
-              <MessageSquareQuote className="h-5 w-5 text-primary" />
-              <h2
-                className="text-2xl font-bold text-foreground md:text-3xl"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Evidence Drawer
-              </h2>
-            </div>
-            <p className="text-sm text-foreground-muted">
-              Raw player feedback organized by theme and severity
-            </p>
+    <section id="evidence" data-section="evidence" data-collapsed="false" className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+      <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+            <MessageSquareQuote className="h-3.5 w-3.5" />
+            {t(locale, 'evidence_title')}
           </div>
-          <span className="rounded-full bg-cream px-3 py-1 font-mono text-xs font-medium text-foreground-muted">
-            {evidenceItems.length} items
-          </span>
+          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">{t(locale, 'evidence_desc')}</h2>
+          <p className="max-w-3xl text-sm leading-6 text-foreground-muted">{t(locale, 'evidence_intro')}</p>
         </div>
-
-        {/* Evidence cards grid */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {evidenceItems.map((evidence) => (
-            <EvidenceCard key={evidence.id} evidence={evidence} />
-          ))}
+        <div className="rounded-[1.25rem] border border-border-subtle bg-surface px-4 py-3 shadow-card">
+          <div className="eyebrow">{t(locale, 'signals_in_view')}</div>
+          <div className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">{rows.length}</div>
         </div>
       </div>
+
+      {rows.length ? (
+        <div id="evidenceGrid" className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
+          {rows.map((row) => {
+            const source = normalizeSource(row.source);
+            const severity = row.severity || getThemeSeverity(row.theme);
+            return (
+              <details key={row.id} className="surface-card group overflow-hidden p-5 open:shadow-card-hover">
+                <summary className="list-none cursor-pointer">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="badge-base badge-muted">{sourceLabel(locale, source)}</span>
+                    <span className={severityClass[severity]}>{severity === 'critical' ? t(locale, 'severity_critical') : severity === 'major' ? t(locale, 'severity_major') : t(locale, 'severity_minor')}</span>
+                    <span className="badge-base badge-positive">{themeLabel(locale, row.theme)}</span>
+                  </div>
+                  <p className="mt-4 line-clamp-5 text-sm leading-6 text-foreground-muted">{row.quote}</p>
+                  <div className="mt-4 flex items-center justify-between gap-3 border-t border-border-subtle pt-4">
+                    <span className="eyebrow">{row.id}</span>
+                    <span className="font-mono text-xs uppercase tracking-[0.12em] text-primary">{t(locale, 'evidence_details')}</span>
+                  </div>
+                </summary>
+                <div className="mt-4 space-y-3 border-t border-border-subtle pt-4">
+                  <div>
+                    <div className="eyebrow">{locale === 'ru' ? 'Тема' : 'Theme'}</div>
+                    <p className="mt-2 text-sm leading-6 text-foreground">{themeLabel(locale, row.theme)}</p>
+                  </div>
+                  <div>
+                    <div className="eyebrow">{locale === 'ru' ? 'Сигнал' : 'Signal'}</div>
+                    <p className="mt-2 text-sm leading-6 text-foreground-muted">{row.quote}</p>
+                  </div>
+                  {row.url ? (
+                    <a href={row.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-primary transition hover:text-primary-strong">
+                      {shortSourceLabel(row.url, locale)}
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  ) : null}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="surface-card p-5 text-sm leading-6 text-foreground-muted">{t(locale, 'no_evidence')}</div>
+      )}
     </section>
   );
 }
 
-function EvidenceCard({ evidence }: { evidence: Evidence }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const sourceColors: Record<string, { bg: string; text: string }> = {
-    steam: { bg: "bg-[#1b2838]", text: "text-white" },
-    discord: { bg: "bg-[#5865f2]", text: "text-white" },
-    youtube: { bg: "bg-[#ff0000]", text: "text-white" },
-    forum: { bg: "bg-stone", text: "text-surface" },
-  };
-
-  const severityColors: Record<string, string> = {
-    critical: "bg-critical-bg text-critical border-critical/20",
-    high: "bg-high-bg text-high border-high/20",
-    medium: "bg-medium-bg text-medium border-medium/20",
-    low: "bg-low-bg text-low border-low/20",
-  };
-
-  const sentimentStyles = evidence.theme === "Atmosphere/Cozy" || 
-    evidence.theme === "No-pressure flow" || 
-    evidence.theme === "Audio/ASMR"
-      ? "border-l-low"
-      : "border-l-accent";
-
-  return (
-    <article
-      className={cn(
-        "transition-card group flex flex-col rounded-xl border border-border-subtle bg-surface shadow-card hover:shadow-card-hover",
-        "border-l-[3px]",
-        sentimentStyles
-      )}
-    >
-      <div className="p-4">
-        {/* Chips row */}
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span
-            className={cn(
-              "inline-flex items-center rounded px-2 py-0.5 font-mono text-[10px] font-medium uppercase",
-              sourceColors[evidence.source]?.bg,
-              sourceColors[evidence.source]?.text
-            )}
-          >
-            {evidence.source}
-          </span>
-          <span
-            className={cn(
-              "inline-flex items-center rounded border px-2 py-0.5 font-mono text-[10px] font-medium uppercase",
-              severityColors[evidence.severity]
-            )}
-          >
-            {evidence.severity}
-          </span>
-          <span className="rounded-full bg-cream px-2 py-0.5 font-mono text-[10px] text-foreground-muted">
-            {evidence.theme}
-          </span>
-        </div>
-
-        {/* Quote */}
-        <blockquote
-          className={cn(
-            "mb-3 text-sm leading-relaxed text-foreground",
-            !isExpanded && "line-clamp-3"
-          )}
-        >
-          "{evidence.quote}"
-        </blockquote>
-
-        {/* Expand button */}
-        {evidence.quote.length > 150 && (
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="mb-3 flex items-center gap-1 text-xs font-medium text-primary hover:text-teal-light"
-          >
-            {isExpanded ? "Show less" : "Show more"}
-            <ChevronDown
-              className={cn(
-                "h-3 w-3 transition-transform",
-                isExpanded && "rotate-180"
-              )}
-            />
-          </button>
-        )}
-
-        {/* Footer */}
-        <div className="flex items-center justify-between border-t border-border-subtle pt-3">
-          <div className="flex items-center gap-1 text-xs text-foreground-muted">
-            <Calendar className="h-3 w-3" />
-            {formatDate(evidence.date)}
-          </div>
-          {evidence.url && (
-            <a
-              href={evidence.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-xs font-medium text-primary hover:text-teal-light"
-            >
-              Source
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          )}
-        </div>
-      </div>
-    </article>
-  );
+function shortSourceLabel(url: string, locale: Locale): string {
+  try {
+    const host = new URL(url).hostname;
+    if (host.includes('steam')) return locale === 'ru' ? 'Обсуждение Steam' : 'Steam discussion';
+    if (host.includes('discord')) return 'Discord';
+    if (host.includes('youtu')) return locale === 'ru' ? 'YouTube обзор' : 'YouTube review';
+  } catch {}
+  return t(locale, 'open_source_link');
 }

@@ -1,82 +1,43 @@
-"use client";
+import type { CompetitorRow, Locale } from '@/lib/data';
+import { competitorCopy, t } from '@/lib/i18n';
+import { Sparkles } from 'lucide-react';
 
-import { competitors, type Competitor } from "@/lib/data";
-import { Check, X, Sparkles } from "lucide-react";
-
-export function CompetitorSection() {
-  return (
-    <div className="grid gap-4 md:grid-cols-3">
-      {competitors.map((competitor) => (
-        <CompetitorCard key={competitor.name} competitor={competitor} />
-      ))}
-    </div>
-  );
+interface CompetitorSectionProps {
+  locale: Locale;
+  rows: CompetitorRow[];
 }
 
-function CompetitorCard({ competitor }: { competitor: Competitor }) {
+export function CompetitorSection({ locale, rows }: CompetitorSectionProps) {
+  if (!rows.length) return <div className="surface-card p-5 text-sm leading-6 text-foreground-muted">{t(locale, 'no_competitors')}</div>;
+
   return (
-    <div className="transition-card flex flex-col rounded-xl border border-border-subtle bg-surface p-5 shadow-card hover:shadow-card-hover">
-      <div className="mb-4">
-        <h3
-          className="mb-1 text-lg font-semibold text-foreground"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          {competitor.name}
-        </h3>
-        <p className="text-sm text-foreground-muted">{competitor.marketRole}</p>
-      </div>
-
-      <div className="mb-4 space-y-3">
-        <div>
-          <div className="mb-2 flex items-center gap-1 text-low">
-            <Check className="h-3.5 w-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-wider">
-              Strengths
-            </span>
+    <div className="grid gap-4 xl:grid-cols-2">
+      {rows.map((row) => (
+        <article key={row.game} className="surface-card p-5">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="eyebrow">{t(locale, 'competitor_th_role')}</div>
+              <h3 className="mt-2 font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{row.game}</h3>
+              <p className="mt-2 text-sm leading-6 text-foreground-muted">{competitorCopy(locale, row.game, 'market_role', row.market_role)}</p>
+            </div>
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-soft/60 text-foreground-muted"><Sparkles className="h-4 w-4" /></span>
           </div>
-          <ul className="space-y-1">
-            {competitor.strengths.map((strength, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-2 text-sm text-foreground-muted"
-              >
-                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-low" />
-                {strength}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <div className="mb-2 flex items-center gap-1 text-critical">
-            <X className="h-3.5 w-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-wider">
-              Weaknesses
-            </span>
+          <div className="mt-5 grid gap-4 lg:grid-cols-2">
+            <div className="rounded-[1.2rem] border border-border-subtle bg-surface-raised p-4">
+              <div className="eyebrow">{t(locale, 'competitor_th_strengths')}</div>
+              <p className="mt-2 text-sm leading-6 text-foreground-muted">{competitorCopy(locale, row.game, 'strengths', row.strengths)}</p>
+            </div>
+            <div className="rounded-[1.2rem] border border-border-subtle bg-surface-raised p-4">
+              <div className="eyebrow">{t(locale, 'competitor_th_weaknesses')}</div>
+              <p className="mt-2 text-sm leading-6 text-foreground-muted">{competitorCopy(locale, row.game, 'weaknesses', row.weaknesses)}</p>
+            </div>
           </div>
-          <ul className="space-y-1">
-            {competitor.weaknesses.map((weakness, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-2 text-sm text-foreground-muted"
-              >
-                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-critical" />
-                {weakness}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="mt-auto rounded-lg bg-primary/5 p-3">
-        <div className="mb-1 flex items-center gap-1 text-primary">
-          <Sparkles className="h-3 w-3" />
-          <span className="font-mono text-[10px] uppercase tracking-wider">
-            VCS Opportunity
-          </span>
-        </div>
-        <p className="text-sm font-medium text-primary">{competitor.opportunity}</p>
-      </div>
+          <div className="mt-4 rounded-[1.2rem] border border-border-subtle bg-[rgba(40,95,89,0.08)] p-4">
+            <div className="eyebrow">{t(locale, 'competitor_th_opportunity')}</div>
+            <p className="mt-2 text-sm leading-6 text-foreground">{competitorCopy(locale, row.game, 'opportunity', row.opportunity)}</p>
+          </div>
+        </article>
+      ))}
     </div>
   );
 }

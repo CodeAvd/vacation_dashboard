@@ -1,121 +1,58 @@
-"use client";
+import type { Locale, RoadmapRow } from '@/lib/data';
+import { t } from '@/lib/i18n';
+import { cn } from '@/lib/utils';
 
-import { roadmapItems, type RoadmapItem } from "@/lib/data";
-import { cn } from "@/lib/utils";
-import { Circle, CheckCircle2, Clock, AlertCircle } from "lucide-react";
+interface RoadmapSectionProps {
+  locale: Locale;
+  rows: RoadmapRow[];
+}
 
-const phases = [
-  { id: "0-1m", label: "0-1 Month", description: "Immediate priorities" },
-  { id: "1-2m", label: "1-2 Months", description: "Short-term goals" },
-  { id: "2-3m", label: "2-3 Months", description: "Medium-term planning" },
-];
+export function RoadmapSection({ locale, rows }: RoadmapSectionProps) {
+  if (!rows.length) return <div className="surface-card p-5 text-sm leading-6 text-foreground-muted">{t(locale, 'no_roadmap')}</div>;
 
-export function RoadmapSection() {
+  const groups = rows.reduce<Record<string, RoadmapRow[]>>((acc, row) => {
+    acc[row.window] ||= [];
+    acc[row.window].push(row);
+    return acc;
+  }, {});
+
   return (
-    <div className="space-y-6">
-      {phases.map((phase) => {
-        const phaseItems = roadmapItems.filter((item) => item.phase === phase.id);
-        return (
-          <div key={phase.id}>
-            <div className="mb-3 flex items-center gap-3">
-              <div
-                className={cn(
-                  "h-2 w-2 rounded-full",
-                  phase.id === "0-1m"
-                    ? "bg-critical"
-                    : phase.id === "1-2m"
-                      ? "bg-medium"
-                      : "bg-low"
-                )}
-              />
-              <div>
-                <h3
-                  className="font-semibold text-foreground"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {phase.label}
-                </h3>
-                <p className="text-xs text-foreground-muted">{phase.description}</p>
-              </div>
-            </div>
-
-            <div className="ml-1 space-y-2 border-l-2 border-border-subtle pl-5">
-              {phaseItems.map((item) => (
-                <RoadmapCard key={item.id} item={item} />
-              ))}
-            </div>
+    <div className="grid gap-5 xl:grid-cols-3">
+      {Object.entries(groups).map(([window, items]) => (
+        <section key={window} className="surface-card p-5">
+          <div className="eyebrow">{locale === 'ru' ? 'Окно поставки' : 'Delivery window'}</div>
+          <h3 className="mt-2 font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{window}</h3>
+          <div className="mt-5 space-y-4 border-l border-border-subtle pl-4">
+            {items.map((item) => (
+              <article key={`${window}-${item.initiative}`} className={cn('timeline-step', item.urgency)}>
+                <div className="rounded-[1.15rem] border border-border-subtle bg-surface-raised p-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={item.urgency === 'critical' ? 'badge-base badge-critical' : item.urgency === 'major' ? 'badge-base badge-major' : 'badge-base badge-minor'}>
+                      {item.urgency === 'critical' ? t(locale, 'severity_critical') : item.urgency === 'major' ? t(locale, 'severity_major') : t(locale, 'severity_minor')}
+                    </span>
+                  </div>
+                  <h4 className="mt-3 text-base font-semibold text-foreground">{item.initiative}</h4>
+                    <p className="mt-3 text-sm leading-6 text-foreground-muted"><strong>{locale === 'ru' ? 'Зависимость:' : 'Dependency:'}</strong> {localizeDependency(locale, item.dependency)}</p>
+                  <p className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-foreground-soft">{t(locale, 'roadmap_delivery_note')}</p>
+                </div>
+              </article>
+            ))}
           </div>
-        );
-      })}
+        </section>
+      ))}
     </div>
   );
 }
 
-function RoadmapCard({ item }: { item: RoadmapItem }) {
-  const statusIcons: Record<RoadmapItem["status"], React.ReactNode> = {
-    planned: <Circle className="h-4 w-4" />,
-    "in-progress": <Clock className="h-4 w-4" />,
-    blocked: <AlertCircle className="h-4 w-4" />,
+function localizeDependency(locale: Locale, dependency: string) {
+  if (locale === 'ru') return dependency;
+
+  const map: Record<string, string> = {
+    'Блокер reliability #1': 'Reliability blocker #1',
+    'После базовой save-stability': 'After baseline save stability is secured',
+    'После первой телеметрии патча': 'After the first telemetry patch lands',
+    'После закрытия P0 reliability': 'After P0 reliability work is closed',
   };
 
-  const statusColors: Record<RoadmapItem["status"], string> = {
-    planned: "text-foreground-muted",
-    "in-progress": "text-primary",
-    blocked: "text-critical",
-  };
-
-  const urgencyStyles: Record<RoadmapItem["urgency"], string> = {
-    critical: "border-l-critical",
-    high: "border-l-high",
-    medium: "border-l-medium",
-  };
-
-  return (
-    <div
-      className={cn(
-        "transition-card flex items-center gap-3 rounded-lg border border-border-subtle border-l-[3px] bg-surface p-3 shadow-card hover:shadow-card-hover",
-        urgencyStyles[item.urgency]
-      )}
-    >
-      <span className={cn(statusColors[item.status])}>
-        {statusIcons[item.status]}
-      </span>
-
-      <div className="min-w-0 flex-1">
-        <p className="font-medium text-foreground">{item.title}</p>
-        {item.dependencies.length > 0 && (
-          <p className="mt-0.5 text-xs text-foreground-muted">
-            Depends on: {item.dependencies.join(", ")}
-          </p>
-        )}
-      </div>
-
-      <div className="flex items-center gap-2">
-        <span
-          className={cn(
-            "rounded px-2 py-0.5 font-mono text-[10px] font-medium uppercase",
-            item.urgency === "critical"
-              ? "bg-critical-bg text-critical"
-              : item.urgency === "high"
-                ? "bg-high-bg text-high"
-                : "bg-medium-bg text-medium"
-          )}
-        >
-          {item.urgency}
-        </span>
-        <span
-          className={cn(
-            "rounded-full px-2 py-0.5 font-mono text-[10px]",
-            item.status === "in-progress"
-              ? "bg-primary/10 text-primary"
-              : item.status === "blocked"
-                ? "bg-critical-bg text-critical"
-                : "bg-cream text-foreground-muted"
-          )}
-        >
-          {item.status}
-        </span>
-      </div>
-    </div>
-  );
+  return map[dependency] || dependency;
 }

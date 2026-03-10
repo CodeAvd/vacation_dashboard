@@ -1,230 +1,128 @@
-"use client";
+import type { BugCluster, Locale } from '@/lib/data';
+import { inferBugCause, inferFixTrack } from '@/lib/selectors';
+import { sourceLabel, t, themeLabel } from '@/lib/i18n';
+import { Bug, TriangleAlert } from 'lucide-react';
 
-import { bugClusters, type BugCluster } from "@/lib/data";
-import { cn } from "@/lib/utils";
-import { Bug, ExternalLink } from "lucide-react";
+interface BugTriageProps {
+  locale: Locale;
+  rows: BugCluster[];
+}
 
-export function BugTriage() {
+const severityClass = {
+  critical: 'badge-base badge-critical',
+  major: 'badge-base badge-major',
+  minor: 'badge-base badge-minor',
+};
+
+const priorityClass = {
+  P0: 'badge-base priority-p0',
+  P1: 'badge-base priority-p1',
+  P2: 'badge-base priority-p2',
+};
+
+export function BugTriage({ locale, rows }: BugTriageProps) {
   return (
-    <section id="triage" className="py-8 md:py-12">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <div className="mb-1 flex items-center gap-2">
-              <Bug className="h-5 w-5 text-primary" />
-              <h2
-                className="text-2xl font-bold text-foreground md:text-3xl"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Bug Triage Board
-              </h2>
-            </div>
-            <p className="text-sm text-foreground-muted">
-              Clustered issues with reproduction hints and priority scores
-            </p>
+    <section id="bugs" data-section="bugs" data-collapsed="false" className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+      <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+            <Bug className="h-3.5 w-3.5" />
+            {t(locale, 'bugs_title')}
           </div>
-          <span className="rounded-full bg-cream px-3 py-1 font-mono text-xs font-medium text-foreground-muted">
-            {bugClusters.length} clusters
-          </span>
+          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">{t(locale, 'bugs_desc')}</h2>
+          <p className="max-w-3xl text-sm leading-6 text-foreground-muted">{t(locale, 'bugs_intro')}</p>
         </div>
-
-        {/* Desktop table */}
-        <div className="hidden overflow-hidden rounded-xl border border-border-subtle bg-surface shadow-card md:block">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border-subtle bg-cream/50">
-                <th className="px-4 py-3 text-left font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Cluster
-                </th>
-                <th className="px-4 py-3 text-center font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Severity
-                </th>
-                <th className="px-4 py-3 text-center font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Priority
-                </th>
-                <th className="px-4 py-3 text-center font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Freq
-                </th>
-                <th className="px-4 py-3 text-center font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Score
-                </th>
-                <th className="px-4 py-3 text-left font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Repro Hints
-                </th>
-                <th className="px-4 py-3 text-center font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Sources
-                </th>
-                <th className="px-4 py-3 text-center font-mono text-[10px] uppercase tracking-wider text-foreground-muted">
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {bugClusters.map((bug, index) => (
-                <tr
-                  key={bug.id}
-                  className={cn(
-                    "transition-colors hover:bg-cream/30",
-                    index !== bugClusters.length - 1 &&
-                      "border-b border-border-subtle"
-                  )}
-                >
-                  <td className="px-4 py-3">
-                    <span className="font-medium text-foreground">
-                      {bug.cluster}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <SeverityBadge severity={bug.severity} />
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-cream font-mono text-xs font-semibold text-foreground">
-                      #{bug.priority}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <span className="font-mono text-sm text-foreground-muted">
-                      {bug.frequency}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <span className="font-mono text-sm font-semibold text-foreground">
-                      {bug.score.toFixed(1)}
-                    </span>
-                  </td>
-                  <td className="max-w-xs px-4 py-3">
-                    <p className="line-clamp-2 text-sm text-foreground-muted">
-                      {bug.reproHints}
-                    </p>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex justify-center gap-1">
-                      {bug.sources.map((source) => (
-                        <SourceIcon key={source} source={source} />
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <StatusBadge status={bug.status} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Mobile cards */}
-        <div className="space-y-3 md:hidden">
-          {bugClusters.map((bug) => (
-            <BugCard key={bug.id} bug={bug} />
-          ))}
+        <div className="rounded-[1.25rem] border border-border-subtle bg-surface px-4 py-3 shadow-card">
+          <div className="eyebrow">{t(locale, 'visible_bug_clusters')}</div>
+          <div className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">{rows.length}</div>
         </div>
       </div>
+
+      {rows.length ? (
+        <>
+          <div className="hidden overflow-hidden rounded-[1.75rem] border border-border-subtle bg-surface shadow-card lg:block">
+            <div className="max-h-[720px] overflow-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>{t(locale, 'bug_th_cluster')}</th>
+                    <th>{t(locale, 'bug_th_severity')}</th>
+                    <th>{t(locale, 'bug_th_priority')}</th>
+                    <th>{t(locale, 'bug_th_frequency')}</th>
+                    <th>{t(locale, 'bug_th_score')}</th>
+                    <th>{t(locale, 'bug_th_hints')}</th>
+                    <th>{t(locale, 'bug_th_sources')}</th>
+                  </tr>
+                </thead>
+                <tbody id="bugRows">
+                  {rows.map((row) => (
+                    <tr key={row.name}>
+                      <td className="min-w-[180px]">
+                        <div className="font-medium text-foreground">{themeLabel(locale, row.name)}</div>
+                        <span className="table-detail">{t(locale, 'bug_detail_symptom')}: {row.repro_notes}</span>
+                      </td>
+                      <td><span className={severityClass[row.severity]}>{row.severity === 'critical' ? t(locale, 'severity_critical') : row.severity === 'major' ? t(locale, 'severity_major') : t(locale, 'severity_minor')}</span></td>
+                      <td><span className={priorityClass[row.priority]}>{row.priority}</span></td>
+                      <td>
+                        <div className="font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{row.frequency}</div>
+                        <span className="table-detail">{locale === 'ru' ? 'упоминаний' : 'mentions'}</span>
+                      </td>
+                      <td>
+                        <div className="font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{row.score.toFixed(2)}</div>
+                        <span className="table-detail">PriorityScore</span>
+                      </td>
+                      <td className="min-w-[320px]">
+                        <span className="table-detail"><strong>{t(locale, 'bug_detail_cause')}:</strong> {inferBugCause(locale, row.name)}</span>
+                        <span className="table-detail"><strong>{t(locale, 'bug_detail_track')}:</strong> {inferFixTrack(locale, row.priority)}</span>
+                      </td>
+                      <td>
+                        <div className="flex flex-wrap gap-2">
+                          {Object.entries(row.source_breakdown).map(([source, count]) => (
+                            <span key={source} className="badge-base badge-muted">{sourceLabel(locale, source.includes('steam') ? 'Steam' : source.includes('discord') ? (source.includes('forum') ? 'Forum' : 'Discord') : source.includes('youtube') ? 'YouTube' : 'Forum')} · {count}</span>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="space-y-4 lg:hidden">
+            {rows.map((row) => (
+              <article key={row.name} className="surface-card p-4">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <div className="eyebrow">{t(locale, 'bug_th_cluster')}</div>
+                    <h3 className="mt-2 font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{themeLabel(locale, row.name)}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <span className={severityClass[row.severity]}>{row.severity === 'critical' ? t(locale, 'severity_critical') : row.severity === 'major' ? t(locale, 'severity_major') : t(locale, 'severity_minor')}</span>
+                    <span className={priorityClass[row.priority]}>{row.priority}</span>
+                  </div>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'bug_th_frequency')}</div><div className="mt-1 font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">{row.frequency}</div></div>
+                  <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'bug_th_score')}</div><div className="mt-1 font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">{row.score.toFixed(2)}</div></div>
+                </div>
+                <div className="mt-4 space-y-3 rounded-[1.25rem] border border-border-subtle bg-[rgba(255,250,243,0.72)] p-4 text-sm leading-6">
+                  <div><span className="eyebrow">{t(locale, 'bug_detail_symptom')}</span><p className="mt-1 text-foreground-muted">{row.repro_notes}</p></div>
+                  <div><span className="eyebrow">{t(locale, 'bug_detail_cause')}</span><p className="mt-1 text-foreground-muted">{inferBugCause(locale, row.name)}</p></div>
+                  <div><span className="eyebrow">{t(locale, 'bug_detail_track')}</span><p className="mt-1 text-foreground">{inferFixTrack(locale, row.priority)}</p></div>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {Object.entries(row.source_breakdown).map(([source, count]) => (
+                    <span key={source} className="badge-base badge-muted">{sourceLabel(locale, source.includes('steam') ? 'Steam' : source.includes('discord') ? (source.includes('forum') ? 'Forum' : 'Discord') : source.includes('youtube') ? 'YouTube' : 'Forum')} · {count}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="surface-card p-5 text-sm leading-6 text-foreground-muted"><div className="flex items-center gap-2 text-foreground"><TriangleAlert className="h-4 w-4" />{t(locale, 'no_bug_clusters')}</div></div>
+      )}
     </section>
-  );
-}
-
-function BugCard({ bug }: { bug: BugCluster }) {
-  return (
-    <div className="transition-card rounded-xl border border-border-subtle bg-surface p-4 shadow-card">
-      <div className="mb-3 flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-cream font-mono text-xs font-semibold text-foreground-muted">
-            #{bug.priority}
-          </span>
-          <SeverityBadge severity={bug.severity} />
-        </div>
-        <StatusBadge status={bug.status} />
-      </div>
-
-      <h3 className="mb-2 font-medium text-foreground">{bug.cluster}</h3>
-
-      <p className="mb-3 text-sm text-foreground-muted">{bug.reproHints}</p>
-
-      <div className="flex items-center justify-between">
-        <div className="flex gap-1">
-          {bug.sources.map((source) => (
-            <SourceIcon key={source} source={source} />
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-xs text-foreground-muted">
-            Freq: {bug.frequency}
-          </span>
-          <span className="font-mono text-sm font-semibold text-foreground">
-            {bug.score.toFixed(1)}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SeverityBadge({ severity }: { severity: BugCluster["severity"] }) {
-  const styles = {
-    critical: "bg-critical-bg text-critical border-critical/20",
-    high: "bg-high-bg text-high border-high/20",
-    medium: "bg-medium-bg text-medium border-medium/20",
-    low: "bg-low-bg text-low border-low/20",
-  };
-
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-md border px-2 py-0.5 font-mono text-[10px] font-medium uppercase",
-        styles[severity]
-      )}
-    >
-      {severity}
-    </span>
-  );
-}
-
-function StatusBadge({ status }: { status: BugCluster["status"] }) {
-  const styles = {
-    open: "bg-cream text-foreground-muted",
-    investigating: "bg-medium-bg text-medium",
-    fixing: "bg-primary/10 text-primary",
-    resolved: "bg-low-bg text-low",
-  };
-
-  const labels = {
-    open: "Open",
-    investigating: "Investigating",
-    fixing: "Fixing",
-    resolved: "Resolved",
-  };
-
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[10px] font-medium",
-        styles[status]
-      )}
-    >
-      {labels[status]}
-    </span>
-  );
-}
-
-function SourceIcon({ source }: { source: string }) {
-  const colors: Record<string, string> = {
-    steam: "bg-[#1b2838] text-white",
-    discord: "bg-[#5865f2] text-white",
-    youtube: "bg-[#ff0000] text-white",
-    forum: "bg-stone text-surface",
-  };
-
-  return (
-    <span
-      className={cn(
-        "inline-flex h-5 w-5 items-center justify-center rounded font-mono text-[9px] font-bold uppercase",
-        colors[source] || "bg-cream text-foreground-muted"
-      )}
-      title={source}
-    >
-      {source.charAt(0)}
-    </span>
   );
 }

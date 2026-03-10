@@ -1,284 +1,182 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import {
-  Filter,
-  RotateCcw,
-  ChevronDown,
-  Check,
-  X,
-} from "lucide-react";
-
-interface FilterOption {
-  value: string;
-  label: string;
-  count?: number;
-}
-
-const themeOptions: FilterOption[] = [
-  { value: "all", label: "All Themes" },
-  { value: "save-loss", label: "Save Loss", count: 37 },
-  { value: "co-op", label: "Co-op Stability", count: 36 },
-  { value: "performance", label: "Performance", count: 33 },
-  { value: "atmosphere", label: "Atmosphere", count: 23 },
-  { value: "controls", label: "Controls/UI", count: 9 },
-];
-
-const sourceOptions: FilterOption[] = [
-  { value: "all", label: "All Sources" },
-  { value: "steam", label: "Steam", count: 312 },
-  { value: "discord", label: "Discord", count: 198 },
-  { value: "youtube", label: "YouTube", count: 112 },
-  { value: "forum", label: "Forum", count: 54 },
-];
-
-const severityOptions: FilterOption[] = [
-  { value: "all", label: "All Severity" },
-  { value: "critical", label: "Critical" },
-  { value: "high", label: "High" },
-  { value: "medium", label: "Medium" },
-  { value: "low", label: "Low" },
-];
-
-const statusOptions: FilterOption[] = [
-  { value: "all", label: "All Status" },
-  { value: "open", label: "Open" },
-  { value: "investigating", label: "Investigating" },
-  { value: "fixing", label: "Fixing" },
-  { value: "resolved", label: "Resolved" },
-];
-
-const sortOptions: FilterOption[] = [
-  { value: "priority", label: "Priority Score" },
-  { value: "frequency", label: "Frequency" },
-  { value: "recency", label: "Recency" },
-  { value: "severity", label: "Severity" },
-];
-
-export interface Filters {
-  theme: string;
-  source: string;
-  severity: string;
-  status: string;
-  sort: string;
-}
+import type { Category, DashboardUIState, Locale, Severity, Source } from '@/lib/data';
+import { categoryLabel, sourceLabel, t, themeLabel } from '@/lib/i18n';
+import { CATEGORY_OPTIONS, SEVERITY_OPTIONS, SORT_OPTIONS } from '@/lib/selectors';
+import { RotateCcw, SlidersHorizontal, X } from 'lucide-react';
 
 interface GlobalFiltersProps {
-  filters: Filters;
-  onFiltersChange: (filters: Filters) => void;
+  locale: Locale;
+  uiState: DashboardUIState;
+  themes: string[];
+  sources: Source[];
+  onChange: (patch: Partial<DashboardUIState>) => void;
+  onReset: () => void;
 }
 
-export function GlobalFilters({ filters, onFiltersChange }: GlobalFiltersProps) {
-  const hasActiveFilters =
-    filters.theme !== "all" ||
-    filters.source !== "all" ||
-    filters.severity !== "all" ||
-    filters.status !== "all";
-
-  const resetFilters = () => {
-    onFiltersChange({
-      theme: "all",
-      source: "all",
-      severity: "all",
-      status: "all",
-      sort: "priority",
-    });
-  };
-
-  const activeFilterCount = [
-    filters.theme !== "all",
-    filters.source !== "all",
-    filters.severity !== "all",
-    filters.status !== "all",
-  ].filter(Boolean).length;
-
+export function GlobalFilters({ locale, uiState, themes, sources, onChange, onReset }: GlobalFiltersProps) {
   return (
-    <div className="sticky top-0 z-40 border-b border-border-subtle bg-surface/95 backdrop-blur-sm">
-      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Filter icon */}
-          <div className="mr-1 flex items-center gap-2 text-foreground-muted">
-            <Filter className="h-4 w-4" />
-            <span className="hidden font-mono text-xs uppercase tracking-wider sm:inline">
-              Filters
-            </span>
-            {activeFilterCount > 0 && (
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary font-mono text-[10px] font-medium text-primary-foreground">
-                {activeFilterCount}
-              </span>
-            )}
+    <section
+      id="filters"
+      data-section="filters"
+      data-collapsed="false"
+      className="border-b border-border-subtle/80 bg-[rgba(246,241,232,0.86)] backdrop-blur supports-[backdrop-filter]:bg-[rgba(246,241,232,0.74)] md:sticky md:top-0 md:z-20"
+    >
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div className="surface-card rounded-[1.75rem] p-4 md:p-5">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+                  <SlidersHorizontal className="h-3.5 w-3.5" />
+                  {t(locale, 'filters_title')}
+                </div>
+                <p className="max-w-3xl text-sm leading-6 text-foreground-muted">{t(locale, 'filters_desc')}</p>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-foreground-soft">
+                <span>{t(locale, 'filters_state_prefix')}</span>
+                <span className="rounded-full bg-accent-soft px-2 py-1 text-[0.68rem] text-foreground">sort={uiState.sort}</span>
+              </div>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+              <FilterField
+                label={t(locale, 'label_theme')}
+                value={uiState.theme}
+                onChange={(value) => onChange({ theme: value })}
+                options={[{ value: 'all', label: t(locale, 'all_themes') }, ...themes.map((theme) => ({ value: theme, label: themeLabel(locale, theme) }))]}
+              />
+              <FilterField
+                label={t(locale, 'label_source')}
+                value={uiState.source}
+                onChange={(value) => onChange({ source: value as DashboardUIState['source'] })}
+                options={[{ value: 'all', label: t(locale, 'all_sources') }, ...sources.map((source) => ({ value: source, label: sourceLabel(locale, source) }))]}
+              />
+              <FilterField
+                label={t(locale, 'label_severity')}
+                value={uiState.severity}
+                onChange={(value) => onChange({ severity: value as Severity | 'all' })}
+                options={SEVERITY_OPTIONS.map((severity) => ({
+                  value: severity,
+                  label:
+                    severity === 'all'
+                      ? t(locale, 'all_severity')
+                      : severity === 'critical'
+                        ? t(locale, 'severity_critical')
+                        : severity === 'major'
+                          ? t(locale, 'severity_major')
+                          : t(locale, 'severity_minor'),
+                }))}
+              />
+              <FilterField
+                label={t(locale, 'label_category')}
+                value={uiState.category}
+                onChange={(value) => onChange({ category: value as Category | 'all' })}
+                options={CATEGORY_OPTIONS.map((category) => ({
+                  value: category,
+                  label: category === 'all' ? t(locale, 'all_categories') : categoryLabel(locale, category),
+                }))}
+              />
+              <FilterField
+                label={t(locale, 'label_status')}
+                value={uiState.status}
+                onChange={(value) => onChange({ status: value as DashboardUIState['status'] })}
+                options={[
+                  { value: 'all', label: t(locale, 'all_statuses') },
+                  { value: 'shipping', label: t(locale, 'status_shipping') },
+                  { value: 'hypothesis', label: t(locale, 'status_hypothesis') },
+                ]}
+              />
+              <FilterField
+                label={t(locale, 'label_sort')}
+                value={uiState.sort}
+                onChange={(value) => onChange({ sort: value as DashboardUIState['sort'] })}
+                options={SORT_OPTIONS.map((sort) => ({ value: sort, label: sort === 'desc' ? t(locale, 'sort_desc') : t(locale, 'sort_asc') }))}
+              />
+            </div>
+
+            <div className="flex items-center justify-end">
+              <button
+                type="button"
+                onClick={onReset}
+                className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-4 py-2 font-mono text-[0.74rem] uppercase tracking-[0.12em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                {t(locale, 'reset_btn')}
+              </button>
+            </div>
           </div>
-
-          {/* Filter dropdowns */}
-          <FilterDropdown
-            label="Theme"
-            options={themeOptions}
-            value={filters.theme}
-            onChange={(value) => onFiltersChange({ ...filters, theme: value })}
-          />
-
-          <FilterDropdown
-            label="Source"
-            options={sourceOptions}
-            value={filters.source}
-            onChange={(value) => onFiltersChange({ ...filters, source: value })}
-          />
-
-          <FilterDropdown
-            label="Severity"
-            options={severityOptions}
-            value={filters.severity}
-            onChange={(value) => onFiltersChange({ ...filters, severity: value })}
-          />
-
-          <FilterDropdown
-            label="Status"
-            options={statusOptions}
-            value={filters.status}
-            onChange={(value) => onFiltersChange({ ...filters, status: value })}
-          />
-
-          <div className="mx-1 hidden h-4 w-px bg-border-subtle sm:block" />
-
-          <FilterDropdown
-            label="Sort"
-            options={sortOptions}
-            value={filters.sort}
-            onChange={(value) => onFiltersChange({ ...filters, sort: value })}
-            showCheck
-          />
-
-          {/* Reset button */}
-          {hasActiveFilters && (
-            <button
-              onClick={resetFilters}
-              className="ml-auto flex items-center gap-1.5 rounded-lg border border-border-subtle bg-surface px-3 py-1.5 text-sm font-medium text-foreground-muted transition-all hover:border-accent hover:text-accent"
-            >
-              <RotateCcw className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Reset</span>
-            </button>
-          )}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-function FilterDropdown({
+function FilterField({
   label,
-  options,
   value,
   onChange,
-  showCheck,
+  options,
 }: {
   label: string;
-  options: FilterOption[];
   value: string;
   onChange: (value: string) => void;
-  showCheck?: boolean;
+  options: Array<{ value: string; label: string }>;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const selectedOption = options.find((o) => o.value === value) || options[0];
-  const isActive = value !== "all" && value !== "priority";
-
   return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        onBlur={() => setTimeout(() => setIsOpen(false), 150)}
-        className={cn(
-          "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition-all",
-          isActive
-            ? "border-primary bg-primary/5 text-primary"
-            : "border-border-subtle bg-surface text-foreground hover:border-stone"
-        )}
-      >
-        <span className="max-w-[120px] truncate">{selectedOption.label}</span>
-        <ChevronDown
-          className={cn(
-            "h-3.5 w-3.5 transition-transform",
-            isOpen && "rotate-180"
-          )}
-        />
-      </button>
-
-      {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-1 min-w-[180px] rounded-xl border border-border-subtle bg-surface-elevated p-1 shadow-lg">
-          {options.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => {
-                onChange(option.value);
-                setIsOpen(false);
-              }}
-              className={cn(
-                "flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors",
-                option.value === value
-                  ? "bg-primary/10 text-primary"
-                  : "text-foreground hover:bg-cream"
-              )}
-            >
-              <span className="flex items-center gap-2">
-                {showCheck && option.value === value && (
-                  <Check className="h-3.5 w-3.5" />
-                )}
-                {option.label}
-              </span>
-              {option.count !== undefined && (
-                <span className="font-mono text-xs text-foreground-muted">
-                  {option.count}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+    <label className="flex min-w-0 flex-col gap-2">
+      <span className="eyebrow">{label}</span>
+      <select className="filter-select" value={value} onChange={(event) => onChange(event.target.value)}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
-// Active filter chips display
-export function ActiveFilterChips({
-  filters,
-  onFiltersChange,
-}: GlobalFiltersProps) {
-  const activeFilters: { key: keyof Filters; value: string; label: string }[] = [];
+interface ActiveFilterChipsProps {
+  locale: Locale;
+  uiState: DashboardUIState;
+  onChange: (patch: Partial<DashboardUIState>) => void;
+  onReset: () => void;
+}
 
-  if (filters.theme !== "all") {
-    const opt = themeOptions.find((o) => o.value === filters.theme);
-    if (opt) activeFilters.push({ key: "theme", value: "all", label: opt.label });
-  }
-  if (filters.source !== "all") {
-    const opt = sourceOptions.find((o) => o.value === filters.source);
-    if (opt) activeFilters.push({ key: "source", value: "all", label: opt.label });
-  }
-  if (filters.severity !== "all") {
-    const opt = severityOptions.find((o) => o.value === filters.severity);
-    if (opt) activeFilters.push({ key: "severity", value: "all", label: opt.label });
-  }
-  if (filters.status !== "all") {
-    const opt = statusOptions.find((o) => o.value === filters.status);
-    if (opt) activeFilters.push({ key: "status", value: "all", label: opt.label });
-  }
+export function ActiveFilterChips({ locale, uiState, onChange, onReset }: ActiveFilterChipsProps) {
+  const chips: Array<{ key: keyof DashboardUIState; label: string; clear: Partial<DashboardUIState> }> = [];
 
-  if (activeFilters.length === 0) return null;
+  if (uiState.theme !== 'all') chips.push({ key: 'theme', label: `${t(locale, 'label_theme')}: ${themeLabel(locale, uiState.theme)}`, clear: { theme: 'all' } });
+  if (uiState.source !== 'all') chips.push({ key: 'source', label: `${t(locale, 'label_source')}: ${sourceLabel(locale, uiState.source)}`, clear: { source: 'all' } });
+  if (uiState.severity !== 'all') chips.push({ key: 'severity', label: `${t(locale, 'label_severity')}: ${uiState.severity === 'critical' ? t(locale, 'severity_critical') : uiState.severity === 'major' ? t(locale, 'severity_major') : t(locale, 'severity_minor')}`, clear: { severity: 'all' } });
+  if (uiState.category !== 'all') chips.push({ key: 'category', label: `${t(locale, 'label_category')}: ${categoryLabel(locale, uiState.category)}`, clear: { category: 'all' } });
+  if (uiState.status !== 'all') chips.push({ key: 'status', label: `${t(locale, 'label_status')}: ${uiState.status === 'shipping' ? t(locale, 'status_shipping') : t(locale, 'status_hypothesis')}`, clear: { status: 'all' } });
+  if (uiState.sort !== 'desc') chips.push({ key: 'sort', label: `${t(locale, 'label_sort')}: ${uiState.sort === 'asc' ? t(locale, 'sort_asc') : t(locale, 'sort_desc')}`, clear: { sort: 'desc' } });
+
+  if (!chips.length) return null;
 
   return (
-    <div className="flex flex-wrap items-center gap-2 px-4 py-2 sm:px-6 lg:px-8">
-      <span className="font-mono text-xs text-foreground-muted">Active:</span>
-      {activeFilters.map((filter) => (
+    <div className="mt-4 flex flex-wrap items-center gap-2">
+      {chips.map((chip) => (
         <button
-          key={filter.key}
-          onClick={() =>
-            onFiltersChange({ ...filters, [filter.key]: filter.value })
-          }
-          className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+          key={String(chip.key)}
+          type="button"
+          onClick={() => onChange(chip.clear)}
+          className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
         >
-          {filter.label}
-          <X className="h-3 w-3" />
+          <span>{chip.label}</span>
+          <X className="h-3.5 w-3.5" />
         </button>
       ))}
+      <button
+        type="button"
+        onClick={onReset}
+        className="inline-flex items-center gap-2 rounded-full bg-foreground px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-white"
+      >
+        <RotateCcw className="h-3.5 w-3.5" />
+        {t(locale, 'label_reset')}
+      </button>
     </div>
   );
 }

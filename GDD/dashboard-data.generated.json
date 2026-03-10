@@ -1,0 +1,2441 @@
+{
+  "meta": {
+    "actuality_date": "2026-03-09",
+    "signals_raw": 705,
+    "signals_unique": 662,
+    "method": "PriorityScore = 0.5×Frequency + 0.3×Severity + 0.2×Recency",
+    "docs_loaded": {
+      "market_md_lines": 218,
+      "deep_md_lines": 426,
+      "insight_txt_lines": 339,
+      "comp_english_samples": 0
+    }
+  },
+  "theme_scores": [
+    {
+      "theme": "Save loss",
+      "sentiment": "negative",
+      "frequency": 37,
+      "frequency_score": 5,
+      "severity_score": 5,
+      "recency_score": 4.8,
+      "priority_score": 4.96
+    },
+    {
+      "theme": "Co-op stability",
+      "sentiment": "negative",
+      "frequency": 36,
+      "frequency_score": 4.89,
+      "severity_score": 4,
+      "recency_score": 4.46,
+      "priority_score": 4.54
+    },
+    {
+      "theme": "Performance",
+      "sentiment": "negative",
+      "frequency": 37,
+      "frequency_score": 4.62,
+      "severity_score": 4.5,
+      "recency_score": 4.28,
+      "priority_score": 4.48
+    },
+    {
+      "theme": "Atmosphere/Cozy",
+      "sentiment": "positive",
+      "frequency": 28,
+      "frequency_score": 3.62,
+      "severity_score": 2,
+      "recency_score": 4.22,
+      "priority_score": 3.25
+    },
+    {
+      "theme": "Controls/UI friction",
+      "sentiment": "negative",
+      "frequency": 9,
+      "frequency_score": 1.97,
+      "severity_score": 3.5,
+      "recency_score": 3.5,
+      "priority_score": 2.74
+    },
+    {
+      "theme": "AI-art perception",
+      "sentiment": "negative",
+      "frequency": 7,
+      "frequency_score": 1.76,
+      "severity_score": 3.5,
+      "recency_score": 3.71,
+      "priority_score": 2.67
+    },
+    {
+      "theme": "No-pressure flow",
+      "sentiment": "positive",
+      "frequency": 4,
+      "frequency_score": 1.43,
+      "severity_score": 2.5,
+      "recency_score": 3.88,
+      "priority_score": 2.24
+    },
+    {
+      "theme": "Localization",
+      "sentiment": "negative",
+      "frequency": 2,
+      "frequency_score": 1.22,
+      "severity_score": 2.5,
+      "recency_score": 3.5,
+      "priority_score": 2.06
+    },
+    {
+      "theme": "Audio/ASMR",
+      "sentiment": "positive",
+      "frequency": 1,
+      "frequency_score": 1.11,
+      "severity_score": 2,
+      "recency_score": 3.5,
+      "priority_score": 1.85
+    },
+    {
+      "theme": "Inventory friction",
+      "sentiment": "negative",
+      "frequency": 4,
+      "frequency_score": 3.22,
+      "severity_score": 3.5,
+      "recency_score": 4.22,
+      "priority_score": 3.57
+    },
+    {
+      "theme": "Steam Deck cursor/input",
+      "sentiment": "negative",
+      "frequency": 4,
+      "frequency_score": 3.08,
+      "severity_score": 4,
+      "recency_score": 4.46,
+      "priority_score": 3.72
+    },
+    {
+      "theme": "Day-cycle challenge",
+      "sentiment": "negative",
+      "frequency": 4,
+      "frequency_score": 2.96,
+      "severity_score": 3,
+      "recency_score": 4.18,
+      "priority_score": 3.2
+    },
+    {
+      "theme": "Co-op task sync",
+      "sentiment": "negative",
+      "frequency": 3,
+      "frequency_score": 2.84,
+      "severity_score": 4,
+      "recency_score": 4.14,
+      "priority_score": 3.49
+    }
+  ],
+  "bug_clusters": [
+    {
+      "name": "Save loss",
+      "severity": "critical",
+      "frequency": 37,
+      "priority": "P0",
+      "score": 4.96,
+      "priority_score": 4.96,
+      "repro_notes": "Save/Load Hi all,  Played this for 2 hours in co-op but could not find any way of saving, and then when coming back to the game today and wanting to play in co-op again could not find a way of loading my existing cafe, instead it starting a",
+      "source_count": 3,
+      "source_breakdown": {
+        "steam_forum": 3,
+        "discord_chat": 32,
+        "discord_bug_forum": 2
+      }
+    },
+    {
+      "name": "Co-op stability",
+      "severity": "critical",
+      "frequency": 36,
+      "priority": "P0",
+      "score": 4.54,
+      "priority_score": 4.54,
+      "repro_notes": "I cant wait release of the game fallen in love in this game since firs time opened demo. Luve it. Cant wait till release.  aloso noticed. that in co-op version everithing works OK. But in solo game i got bug with crashing game and it becase",
+      "source_count": 3,
+      "source_breakdown": {
+        "steam_forum": 8,
+        "discord_chat": 26,
+        "discord_bug_forum": 2
+      }
+    },
+    {
+      "name": "Performance",
+      "severity": "major",
+      "frequency": 33,
+      "priority": "P0",
+      "score": 4.44,
+      "priority_score": 4.44,
+      "repro_notes": "Demo feedback; enjoyable and a good start but it is jank Honestly I liked immediately the vibe of the old town; it feels really homely and reminds me a lot of games like \"on your tail\" in terms of environment. Not sure if the devs are Itali",
+      "source_count": 3,
+      "source_breakdown": {
+        "steam_forum": 16,
+        "discord_chat": 12,
+        "discord_bug_forum": 5
+      }
+    },
+    {
+      "name": "Controls/UI friction",
+      "severity": "major",
+      "frequency": 9,
+      "priority": "P1",
+      "score": 2.74,
+      "priority_score": 2.74,
+      "repro_notes": "Unable to Remove Sign Text Once Placed When creating a sign for the building I can remove the background, I can remove the image but I can't remove the name.",
+      "source_count": 2,
+      "source_breakdown": {
+        "steam_forum": 6,
+        "discord_bug_forum": 3
+      }
+    },
+    {
+      "name": "AI-art perception",
+      "severity": "major",
+      "frequency": 7,
+      "priority": "P1",
+      "score": 2.67,
+      "priority_score": 2.67,
+      "repro_notes": "AI IMAGE EVERYWHERE I like the concept of the game but I am really sad about the fact that every picture/drawing even maybe some design in the game are possibly made by Artificial intelligence. Also there is no mention of it in the steam pa",
+      "source_count": 3,
+      "source_breakdown": {
+        "steam_forum": 3,
+        "discord_chat": 1,
+        "discord_bug_forum": 3
+      }
+    },
+    {
+      "name": "Localization",
+      "severity": "minor",
+      "frequency": 2,
+      "priority": "P2",
+      "score": 2.06,
+      "priority_score": 2.06,
+      "repro_notes": "A Letter to the Development Team I was delighted to be invited to participate in this playtest. In my opinion, 《Vacation Cafe Simulator》 is already a fairly polished and enjoyable game. Unlike other simulator games, this one leans more towa",
+      "source_count": 1,
+      "source_breakdown": {
+        "steam_forum": 2
+      }
+    },
+    {
+      "name": "Steam Deck cursor/input",
+      "severity": "major",
+      "frequency": 8,
+      "priority": "P1",
+      "score": 3.92,
+      "priority_score": 3.92,
+      "repro_notes": "Cursor disappears in menu and mid-recipe on Steam Deck; cleaning hold interaction inconsistent.",
+      "source_count": 3,
+      "source_breakdown": {
+        "Steam": 5,
+        "Discord": 2,
+        "YouTube": 1
+      }
+    },
+    {
+      "name": "Co-op task sync",
+      "severity": "major",
+      "frequency": 4,
+      "priority": "P1",
+      "score": 3.64,
+      "priority_score": 3.64,
+      "repro_notes": "Level 7 shared objectives do not sync if non-host buys furniture; checklist remains blocked.",
+      "source_count": 2,
+      "source_breakdown": {
+        "Steam": 3,
+        "Discord": 1
+      }
+    },
+    {
+      "name": "Recipe authenticity",
+      "severity": "minor",
+      "frequency": 3,
+      "priority": "P2",
+      "score": 2.28,
+      "priority_score": 2.28,
+      "repro_notes": "Players flag non-authentic ingredients (e.g., milk in pizza dough) as immersion-breakers.",
+      "source_count": 1,
+      "source_breakdown": {
+        "Steam": 3
+      }
+    },
+    {
+      "name": "Customer flow stall",
+      "severity": "major",
+      "frequency": 4,
+      "priority": "P1",
+      "score": 3.74,
+      "priority_score": 3.74,
+      "repro_notes": "After level 6-8, the cafe can stay open in daylight with no clients arriving for 10-20+ minutes, even after restart.",
+      "source_count": 1,
+      "source_breakdown": {
+        "Discord": 4
+      }
+    },
+    {
+      "name": "Shutdown hang",
+      "severity": "major",
+      "frequency": 2,
+      "priority": "P1",
+      "score": 3.22,
+      "priority_score": 3.22,
+      "repro_notes": "Closing the game leaves Steam stuck on \"stopping\", blocking relaunch until full system restart.",
+      "source_count": 1,
+      "source_breakdown": {
+        "Discord": 2
+      }
+    },
+    {
+      "name": "Object placement lock",
+      "severity": "major",
+      "frequency": 2,
+      "priority": "P1",
+      "score": 3.08,
+      "priority_score": 3.08,
+      "repro_notes": "Prepared items cannot be placed back onto counters or other surfaces; soft-lock resolves only after waiting or random reset.",
+      "source_count": 1,
+      "source_breakdown": {
+        "Discord": 2
+      }
+    }
+  ],
+  "feedback_signals": [
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-09-jank-vibe",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Players like the small Italian village vibe and relaxing loop, but still describe the demo as janky and in need of interaction polish.",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "positive"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-09-patience-toggle",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Players ask for an optional patience bar or timer so challenge level can be tuned without breaking the cozy mode.",
+      "theme": "Day-cycle challenge",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-09-prep-storage",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Prep friction: players want to batch-cut ingredients, store them in the fridge, and serve prepared dishes later without constant backtracking.",
+      "theme": "Inventory friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-09-store-exploit",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Store exploit report: players can walk away with food in the basket without paying.",
+      "theme": "Store economy exploit",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-09-delivery-fantasy",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Multiple requests ask for deliveries, scooters, and gameplay beyond the village to add co-op challenge and world fantasy.",
+      "theme": "Delivery loop fantasy",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-09-spoilage-realism",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Simulation realism request: optional spoilage, order mistakes, and actual money loss would add restaurant stakes missing in the demo.",
+      "theme": "Simulation realism",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-09-small-pc-optimization",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Players with smaller PCs and even some strong rigs still ask for optimization and better FPS consistency.",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-demo-mp-save",
+      "url": "",
+      "quote": "Multiplayer sessions in the demo do not save reliably, which needs explicit messaging and a release-ready save path.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-hotbar-trash",
+      "url": "",
+      "quote": "Inventory QoL request: players want hotbar reordering and a trash can for extra cut ingredients that waste slots.",
+      "theme": "Inventory friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-customer-stall-l6",
+      "url": "",
+      "quote": "Level 6 report: no new clients enter the cafe even though it is open and daylight, blocking further progress.",
+      "theme": "Customer flow stall",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-customer-stall-l78",
+      "url": "",
+      "quote": "Mods confirm repeated reports that levels 7-8 can go 15-20 minutes or longer with no customers, even when the cafe remains open.",
+      "theme": "Customer flow stall",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-shutdown-hang",
+      "url": "",
+      "quote": "Close-game issue: the app appears closed, but Steam stays on stopping and players cannot relaunch until reboot.",
+      "theme": "Shutdown hang",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-placement-lock",
+      "url": "",
+      "quote": "Item placement lock: prepared food and drinks cannot be put back on counters or anywhere else, creating a prep soft-lock.",
+      "theme": "Object placement lock",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-steamdeck-outline",
+      "url": "",
+      "quote": "Steam Deck players report the pizza cursor is nearly invisible in menus and mini-games until they learn to track a faint outline.",
+      "theme": "Steam Deck cursor/input",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-linux-proton",
+      "url": "",
+      "quote": "Linux workaround: Proton Experimental often loses the cursor, Proton 10.x restores it, and Alt+Tab can temporarily mitigate the issue.",
+      "theme": "Steam Deck cursor/input",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "YouTube",
+      "id": "youtube-2026-03-09-cut-table-repro",
+      "url": "https://www.youtube.com/watch?v=PZDs36EO6pA",
+      "quote": "Video repro shows the cursor bug reliably appears after using the cutting table, leaving only tiny white cursor artifacts.",
+      "theme": "Steam Deck cursor/input",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-09-demo-retention-signal",
+      "url": "",
+      "quote": "Positive demand signal: players ask to keep the demo open longer, call it therapeutic, and report 8-hour co-op sessions.",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "positive"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-deck-cursor",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Steam Deck report: pizza cursor disappears in menu and mid-recipe; issue persists with docked keyboard + mouse.",
+      "theme": "Steam Deck cursor/input",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-mop-hold",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Left click mop interaction feels one-second long and does not hold consistently while cleaning stains.",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-level7-coop-checklist",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "In co-op level 7, when another player buys furniture, checklist task remains unresolved for host.",
+      "theme": "Co-op task sync",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-wall-clock",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Wall clock appears static and does not track in-game time.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-end-of-day",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Players ask for end-of-day cutoff with daily ledger (gains/losses) to improve pacing and progression clarity.",
+      "theme": "Day-cycle challenge",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-economy-challenge",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Economy feels too fail-safe; players want order mistakes to affect tips and reviews.",
+      "theme": "Day-cycle challenge",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-coop-scaling",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Patio customer volume appears not to scale with party size in co-op sessions.",
+      "theme": "Co-op task sync",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-pizza-dough-auth",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Recipe authenticity feedback: milk in pizza dough breaks immersion for core cooking audience.",
+      "theme": "Recipe authenticity",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "steam-2026-03-05-lag-report",
+      "url": "https://steamcommunity.com/app/3196440/discussions/",
+      "quote": "Players still report occasional lag despite overall positive cozy impression.",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-05-progress-carryover",
+      "url": "",
+      "quote": "FAQ signal: demo progress will not carry over to full release, needs explicit onboarding communication.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-05-coop-cap",
+      "url": "",
+      "quote": "Co-op expectation signal: current launch target is host +3 (4 total), community asks about future expansion.",
+      "theme": "Co-op stability",
+      "severity": "minor",
+      "sentiment": "neutral"
+    },
+    {
+      "source": "Discord",
+      "id": "discord-2026-03-05-therapeutic-cozy",
+      "url": "",
+      "quote": "Positive sentiment: players describe demo as therapeutic, satisfying, and are asking to keep demo available longer.",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "positive"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/",
+      "quote": "Demo feedback; enjoyable and a good start but it is jank Honestly I liked immediately the vibe of the old town; it feels really homely and reminds me a lot of games like \"on your tail\" in terms of environment. Not sure if the devs are Itali",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+      "quote": "Enjoyable demo but have some suggestions My friends and I found this game and decided to give it a try. We've enjoyed it so far and based on almost an hour of gameplay: The things we liked: - We loved the ASMR sounds of the cooking, chop",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664461024288/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664461024288/",
+      "quote": "A little Feedback I have no idea why I enjoyed this little demo so much. I suppose I found it relaxing. I like that I'm not rushed by sulky customers and I like the aesthetic and the idea but here are just a few thoughts. Allow me to just",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196322932/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196322932/",
+      "quote": "Demo Feedback First off I'd like to say that this game is beautiful! I loved the scenery. It also ran perfectly, no bugs or glitches. I also loved how there was plenty of playtime to get a good feel of the game and how it works. Also, t",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196419710/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196419710/",
+      "quote": "VRAM problem for computers that reach the minimum requirements I played the first playtest and everything went well, but this demo didn't run on my laptop. I have the minimum requirements and I was on low graphics but it still went down to",
+      "theme": "Atmosphere/Cozy",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+      "quote": "A Letter to the Development Team I was delighted to be invited to participate in this playtest. In my opinion, 《Vacation Cafe Simulator》 is already a fairly polished and enjoyable game. Unlike other simulator games, this one leans more towa",
+      "theme": "No-pressure flow",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477987158500311150",
+      "url": "",
+      "quote": "The best thing is there is no timer, yesterday me and my wife were playing it and i was cutting onion like someone was waiting for me, she said chill there is no rush",
+      "theme": "No-pressure flow",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+      "quote": "Hardware specs are off On the store site, it states that the minimum hardware is a GTX 560 and recommended a GTX 970. I have a GTX 1070, but even on lowest settings and FPS limit my GPU usage is at 96 %. Something is really off here...",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460879116/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460879116/",
+      "quote": "Adding olive oil I found difficult and slow to add evo oil on 3 points on the food: You could just add a fill bar while holding down the mouse so the oil goes down, you did for the wine and for the dough, you should do here as well. Oil als",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+      "quote": "Save/Load Hi all, Played this for 2 hours in co-op but could not find any way of saving, and then when coming back to the game today and wanting to play in co-op again could not find a way of loading my existing cafe, instead it starting a",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460831148/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460831148/",
+      "quote": "FANTASTIC START TO A NEW GAME Just finished the demo and was surprised at how well it ran. I have read a lot of the post already on here before posting my own. I do not have the best of computers but can play all games i have downloaded of",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460881535/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460881535/",
+      "quote": "More suggestions I liked the demo, the game it's unique in this type, also with wine yard, a own farm as well maybe, that each could be a DLC. I would like to point out some suggestions, some could be already pointed by others. - 1st, Fix",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476282943440818307",
+      "url": "",
+      "quote": "Good evening, Is there a way to recover a co-op and solo save file? I restarted the game and my save file is gone, even though automatic saving is enabled.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476302741939687444",
+      "url": "",
+      "quote": "bro the new update deleted my multiplayer save with my friend :cccc",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196467789/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196467789/",
+      "quote": "I cant wait release of the game fallen in love in this game since firs time opened demo. Luve it. Cant wait till release. aloso noticed. that in co-op version everithing works OK. But in solo game i got bug with crashing game and it becase",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/591768845513977654/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/591768845513977654/",
+      "quote": "This will be splitscreen? I really hope so! Been looking for a relaxing local co-op game to play with my wife after endlessly playing Stardew.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+      "quote": "Please put multiplayer into the play test <3 Me and my husband tested your game last night and we both put our heads together to leave feedback when we closed the game. There are lots of minor bugs and many things that do not feel good, but",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/601917139265584707/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/601917139265584707/",
+      "quote": "Peut-on sauvegarder ? J'ai joué une petite heure en multi. J'ai été bloquée dans la pierre. J'ai quitté. Mon ami hostait la game, pour me réinviter il a quitté car il n'y a pas de possibilité de le faire in game (??) sauf via steam. Mais no",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460921786/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460921786/",
+      "quote": "Unable to Remove Sign Text Once Placed When creating a sign for the building I can remove the background, I can remove the image but I can't remove the name.",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196361657/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196361657/",
+      "quote": "axis inversion th axis inversion option invert Y ans X axis, is it possible to have the option for Y axis only ?",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460848007/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460848007/",
+      "quote": "look inversion can you make separate x and y inversion because right now \"look inversion\" inverts both",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/",
+      "quote": "AI IMAGE EVERYWHERE I like the concept of the game but I am really sad about the fact that every picture/drawing even maybe some design in the game are possibly made by Artificial intelligence. Also there is no mention of it in the steam pa",
+      "theme": "AI-art perception",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437371805383387/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437371805383387/",
+      "quote": "Thought it was cute! But then... I really liked the concept and idea of this game and from a small video I saw I was interested, I opened up the game and was immediately suspicious about the art, but I was hoping it was just a style. Then o",
+      "theme": "AI-art perception",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437371805555716/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437371805555716/",
+      "quote": "Ai EVERYWHERE???? Ai is used in basically every piece of \"artwork\" of food and photos showing people. When is the Ai planned on being removed from the portions of the game that players directly interact with? And why isn't it posted anywhe",
+      "theme": "AI-art perception",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478193365748154429",
+      "url": "",
+      "quote": "can you explain this? do you not have a team to pitch concepts? i’m confused bc i came in late when most of whatever was discussed was deleted, but i also don’t really want to support games that are using gen AI in certain ways nowadays so",
+      "theme": "AI-art perception",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "forum_14",
+      "url": "",
+      "quote": "TC — 23.02.2026, 21:00 I'm loving the game, the gameplay, scenario... But i don't like seeing that many AI art everywhere. In my case, every time I see AI in video games, no matter how good the game is, it makes me lose the desire to play",
+      "theme": "AI-art perception",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477020991233327335",
+      "url": "",
+      "quote": "It is a common thing for the small game in pre-release phase. We add something that is not compatible with the previous game version, so your previous game save would just crash. I know it is still frustrating, but it is the development process.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478034198022459442",
+      "url": "",
+      "quote": "I understand your sadness, I feel the same way, but at the latest in the full version, the game scores will be saved even after updates. Unfortunately, this is the case with many demo games, so they are not saved.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477081371985055745",
+      "url": "",
+      "quote": "Okay. Don't see why everyone is so upset. Like I said before, MOST demos don't have a save. So this is a PLUS. Besides, new code over old code isn't always the best way to do things.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478034450838323280",
+      "url": "",
+      "quote": "yeah i understand, i may have uninstalled the game out of anger of losing my saved solo but i might come back again someday.. i really vibe with this game so i dont wanna abandon it",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476938160519905341",
+      "url": "",
+      "quote": "no im not talking about saved, i cannot go in a solo game, it starts to load (the painting) then my screen gets white and it tells me the game is not responding :)",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476935268903948318",
+      "url": "",
+      "quote": ", you can't save CoOp 🫩 sole and coop are also different games. Start a new solo, clean the floors and log out. Try logging back in and it should have saved.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475292854208299190",
+      "url": "",
+      "quote": "I’m hosting and it takes 5 minutes to load and then most of the other people don’t load in and they freeze when they interact with anything",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476449282352615557",
+      "url": "",
+      "quote": "Pleaaaase tell me save option for coop has been added. My friends and i are planning to play later",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478353074396598453",
+      "url": "",
+      "quote": "I thought she meant if you will be able to transfer you demo progress to the releaser version 🥹",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476973005119946752",
+      "url": "",
+      "quote": "Your Co-Ops do get saved if you created it. They get deleted if the Demo gets an update though.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478501778751488123",
+      "url": "",
+      "quote": "Question. If I play the demo, will my progress carry over to the full game when it’s released?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476989605721931827",
+      "url": "",
+      "quote": "I have played tons of Demos that don't even save your game. So this is atleast something.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477875584750325820",
+      "url": "",
+      "quote": "Hii , i jsut started playing the demo and i wonder, how do you save your game ?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478353943028301886",
+      "url": "",
+      "quote": "oh no haha, she wanted to know if they can save the game after its release",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477063189731606588",
+      "url": "",
+      "quote": "guys is it normal that I have lost all my progress after the update??",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476172900783620191",
+      "url": "",
+      "quote": "Will we be able to move our progress from the demo to the main game?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478033684987772949",
+      "url": "",
+      "quote": "so it really deletes the saved solo games once there's updates?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478350876090437643",
+      "url": "",
+      "quote": "would we save our progress when we get the game? or start over?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478352063858737263",
+      "url": "",
+      "quote": "Once the game is fully released, we can save our games right?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477981357673025611",
+      "url": "",
+      "quote": "so every update in the demo will wipe out my current save?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478356043720429639",
+      "url": "",
+      "quote": "okay, my bad. You can't transfer the demo progress sadly",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478351833461162136",
+      "url": "",
+      "quote": "Progress won't be saved you will need to start over.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476668421772148746",
+      "url": "",
+      "quote": "Agreed, but most Demo's do not have a save option.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477510439356334223",
+      "url": "",
+      "quote": "When the game is updated, it deletes the old save.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477000177981329532",
+      "url": "",
+      "quote": "hello i updated the game and my save is gone",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476988591870705787",
+      "url": "",
+      "quote": "Its like that every update erase your save",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477558621863936061",
+      "url": "",
+      "quote": "do any of yall know how to save the game",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476543401469149256",
+      "url": "",
+      "quote": "Hello, I launched the game and created a multiplayer group for myself and a friend, but each time one of us can't do anything. The person who created the group does everything, and the other can't buy anything, can only clean the floor, can't even open the restaurant or take plates. Is this a bug?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476924829574893792",
+      "url": "",
+      "quote": "hmm also when i first tried the demo i tried it with a friend in co-op mode, then i tried solo playing it twice but it neevr loads me in the game i create. it always says the app is not responding and ends up closing it, is it just me?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475331750925176974",
+      "url": "",
+      "quote": "I had the issue of other people not loading in, I went back to main menu and the host restarted the lobby, we could see eachother then. Idk if it’s just after character customisation you can’t see other ppl in the lobby",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476019052630511617",
+      "url": "",
+      "quote": "Demo is out now. You can Co-Op easily and password protect your server if you and your friend are wanting to play. You can reach Level 8 and then the customers will slowly stop coming by. I highly recommend playing it.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475333401866272841",
+      "url": "",
+      "quote": "I haven’t experienced many bugs except for the multiplayer one, I mostly played single player. The graphics are a little fuzzy and pixelated however even on high settings",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478519572146426097",
+      "url": "",
+      "quote": "The developer has expressed that host +3 will be the Co-Op number at launch. Will there be more down the road? Who knows. IMO, 4 people in that kitchen was way plenty.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332455828557854",
+      "url": "",
+      "quote": "I haven’t been a host yet so idk what that side of it is like, pretty sure host could see me tho I just couldn’t see them, so we started the lobby",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476991373008703571",
+      "url": "",
+      "quote": "does anyone want to play a Coop game with me, ( on another simulator Game) would love to run a business with freinds.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475779243941298307",
+      "url": "",
+      "quote": "why i cant play with friends we got in same lobby and when i start only me join everyone still in lobby",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475943252476694714",
+      "url": "",
+      "quote": "Will the number of players in multiplayer increase, and will we have, let's say, AI employees?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476315405210615838",
+      "url": "",
+      "quote": "By password protecting the Co-Op. That's the only way. Publish their names here may help.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332239863582882",
+      "url": "",
+      "quote": "yeah mine was kinda odd it only happened when i hosted and i couldnt join other people",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476550170043879485",
+      "url": "",
+      "quote": "we kinda wanna rejoin our old lobby from last night. cant seem to find it",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476293302247489661",
+      "url": "",
+      "quote": "i want to make a lobby to play but it gives a error anyone knows why?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475292678693453825",
+      "url": "",
+      "quote": "Is anyone else having issues with multiplayer",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477765936118239396",
+      "url": "",
+      "quote": "I can not join multi",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478406462802890792",
+      "url": "",
+      "quote": "Perso depuis la dernière maj j'ai vraiment bcp moins de lag alors que j'ai pas une machine de guerre du tout",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476306123274457211",
+      "url": "",
+      "quote": "I had better FPS on the last version. Running 12.17 now and it gets laggy in the shops.",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476304128799150130",
+      "url": "",
+      "quote": "thanks... very much less FPS since the update",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476304232759164938",
+      "url": "",
+      "quote": "i had more fps on the 12.12 version",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476733808526229595",
+      "url": "",
+      "quote": "Although the game is only a demo at the moment, I must say that it looks promising. I hope that it will be optimized when it launches, because my PC, despite being an average PC, can't handle it very well. Otherwise, as I said, it seems like a well-made game, but if I may offer some advice (as an Italian), I would change some of the recipes, such as the carbonara, which, honestly, with cream, is just inedible.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478193365748154429",
+      "url": "",
+      "quote": "can you explain this? do you not have a team to pitch concepts? i’m confused bc i came in late when most of whatever was discussed was deleted, but i also don’t really want to support games that are using gen AI in certain ways nowadays so can you elaborate a bit more?",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476990360424153139",
+      "url": "",
+      "quote": "It's a demo version, they expect players to help them develop the game better by giving information on bugs, required features, etc. in this phase. I believe the game could be much better after it's launch",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477690059762303139",
+      "url": "",
+      "quote": "Hey I have a problem not getting guests it’s middle of the day i have been waiting for 15 minutes not a single guest the open sign is on open?",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332579258531950",
+      "url": "",
+      "quote": "I’ve seen other people having the same issue of players not loading in, all the interaction is there just not their actual body lmao",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476116731230556161",
+      "url": "",
+      "quote": "Please, describe the situation in detail in the survey after playing the game. This will help us solve the problem faster and better",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476116991482925097",
+      "url": "",
+      "quote": "We're glad to hear you love the game. We can't give an exact release date, since we have much to polish and add to the final version",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476264747711332433",
+      "url": "",
+      "quote": "is anyone else having a problem with the demo. as soon as it says to clean the restraunt i turn to look and my game crashes",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476733782718550292",
+      "url": "",
+      "quote": "guys im stuck at lvl 3 it says i gotta grab the box and go to the restaurant but i cant find the damn thing. help plsss",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477721723347402903",
+      "url": "",
+      "quote": "Are you utilizing the Sign? Wondering if that might be an issue. Maybe Close and then Open the Cafe to spark something?",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477072557906858054",
+      "url": "",
+      "quote": "j'ai un probleme avec mon jeu car javais commencer a jouer avec ma pote et mon serveur a disparu tout seul",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477886002659065856",
+      "url": "",
+      "quote": "As far as I can tell, game saves automatically. But during the demo, game saves are wiped after any update",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476730368844497059",
+      "url": "",
+      "quote": "Hey all. Do you have to play fullscreen? I can't change it to play in a window with a smaller resolution.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478097423984234496",
+      "url": "",
+      "quote": "you can't download the demo anymore but I downloaded it during Next Fest and I can still play for now",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475554699108159690",
+      "url": "",
+      "quote": "Hi !! Some have a problem with mouse, when i ḿ cooking or similar actions, the mouse dissapear...",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478402341907599493",
+      "url": "",
+      "quote": "C’est l’opti du jeu, pareil j’ai le pc de la nasa mais ça bug depuis la mise a jour…",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476120798879289374",
+      "url": "",
+      "quote": "please, tell about the problem in detail in the Google-form after your game session",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476303763730858226",
+      "url": "",
+      "quote": "All saves get deleted when there is an update. The Dev was working on a fix for it.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478345958864584808",
+      "url": "",
+      "quote": "However, I take issue with major studios using it despite having the funds....",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332885887193180",
+      "url": "",
+      "quote": "every time he joined he would be stuck with his camera next to the door",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475337289646473276",
+      "url": "",
+      "quote": "Some of these issues might be stemming from a bad ISP Connection.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477986597935911005",
+      "url": "",
+      "quote": "since the update crashes their previous server after every update",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478352237108400301",
+      "url": "",
+      "quote": "Of course 😊 The saves issue is only for development stage",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476988496207020183",
+      "url": "",
+      "quote": "I just updated the game and i lost my last game help",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476977781630963742",
+      "url": "",
+      "quote": "Hi, thank you for responding, so very bug fix lol",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477471836039155930",
+      "url": "",
+      "quote": "IT'S A GOOD GAME BUT IT HAS MORE BUGS THAN GAME",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475334338165080124",
+      "url": "",
+      "quote": "That would be an aweful bug to have. Sheesh...",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477081854648778935",
+      "url": "",
+      "quote": "Saves get deleted when there is an update.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477683816058454067",
+      "url": "",
+      "quote": "but data gets deleted after every update",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332786104832111",
+      "url": "",
+      "quote": "one of them had an oddly specific bug",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476306216148926717",
+      "url": "",
+      "quote": "Yeah… first « big crash » just now",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477471910064422943",
+      "url": "",
+      "quote": "THERE'S A LITTLE GAME IN YOUR BUG",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332353671827599",
+      "url": "",
+      "quote": "idk what the issue couldve been",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476551088189735068",
+      "url": "",
+      "quote": "The updates erase the saves.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475333110018216036",
+      "url": "",
+      "quote": "Wow that bug seems annoying",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+      "quote": "Played 2 hours in co-op and progress looked lost when returning.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+      "quote": "Please put multiplayer into playtest, many sync issues.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+      "quote": "GTX 1070 at lowest settings still near 96% GPU usage.",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476282943440818307",
+      "url": "",
+      "quote": "Is there a way to recover co-op and solo save file? mine is gone.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "mhtml#save",
+      "url": "",
+      "quote": "Saved multiplayer progress is gone after update.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+      "quote": "Constant clicking fatigue, need hold-to-chop.",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Steam",
+      "id": "https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/",
+      "url": "https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/",
+      "quote": "Concern about AI image authenticity.",
+      "theme": "AI-art perception",
+      "severity": "major",
+      "sentiment": "negative"
+    }
+  ],
+  "actions": [
+    {
+      "id": "A1",
+      "category": "QoL",
+      "status": "shipping",
+      "theme": "Save loss",
+      "severity": "critical",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+      "solution": "Save Guardrail System: autosave + manual slot + recovery snapshot.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P0",
+      "kpi": "-60% save-loss complaints; >=99.5% successful reloads",
+      "owner": "Backend",
+      "eta": "Week 1-2"
+    },
+    {
+      "id": "A2",
+      "category": "QoL",
+      "status": "shipping",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+      "solution": "Reconnect flow + fallback resync + network diagnostics.",
+      "impact": "High",
+      "effort": "L",
+      "priority": "P0",
+      "kpi": "-50% co-op bug reports; +15% co-op sessions >30 min",
+      "owner": "Netcode",
+      "eta": "Week 3-6"
+    },
+    {
+      "id": "A3",
+      "category": "Gameplay",
+      "status": "shipping",
+      "theme": "Performance",
+      "severity": "major",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+      "solution": "Dynamic quality profile + split graphics controls.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P0",
+      "kpi": "-40% perf complaints; +20% median FPS",
+      "owner": "Engine",
+      "eta": "Week 4-7"
+    },
+    {
+      "id": "A4",
+      "category": "QoL",
+      "status": "shipping",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+      "solution": "Hold-to-chop + input comfort + sign-text fix.",
+      "impact": "High",
+      "effort": "S",
+      "priority": "P1",
+      "kpi": "-30% click-fatigue complaints",
+      "owner": "UX",
+      "eta": "Week 2-3"
+    },
+    {
+      "id": "A5",
+      "category": "QoL",
+      "status": "shipping",
+      "theme": "Inventory friction",
+      "severity": "major",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460799201/",
+      "solution": "Inventory relief and return-to-storage QoL.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-25% inventory friction complaints",
+      "owner": "Gameplay",
+      "eta": "Week 2-4"
+    },
+    {
+      "id": "A6",
+      "category": "Retention",
+      "status": "shipping",
+      "theme": "Dishwashing burnout",
+      "severity": "major",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437998196285495/",
+      "solution": "Dishwashing automation unlock at Level 4.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "+8% D7 retention in 8h+ segment",
+      "owner": "Systems",
+      "eta": "Week 4-6"
+    },
+    {
+      "id": "A7",
+      "category": "Gameplay",
+      "status": "shipping",
+      "theme": "Progression anchor",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437998196293522/",
+      "solution": "Pizza Oven milestone at Level 7.",
+      "impact": "High",
+      "effort": "L",
+      "priority": "P2",
+      "kpi": "+15% D14 retention at level 7",
+      "owner": "Content",
+      "eta": "Week 8-12"
+    },
+    {
+      "id": "A8",
+      "category": "QoL",
+      "status": "hypothesis",
+      "theme": "Memory load",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+      "solution": "Barista notebook for pinned preferences.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P2",
+      "kpi": "-15% frustration mentions (A/B)",
+      "owner": "UX",
+      "eta": "Backlog"
+    },
+    {
+      "id": "A9",
+      "category": "Gameplay",
+      "status": "hypothesis",
+      "theme": "Layout strategy",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/",
+      "solution": "VIP zoning with smart zone detection.",
+      "impact": "High",
+      "effort": "L",
+      "priority": "P2",
+      "kpi": "+session length and layout depth",
+      "owner": "Design",
+      "eta": "Backlog"
+    },
+    {
+      "id": "A10",
+      "category": "QoL",
+      "status": "shipping",
+      "theme": "Steam Deck cursor/input",
+      "severity": "major",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Steam Deck input reliability pass: cursor persistence, UI focus guardrails, hold-to-clean behavior parity.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-40% Steam Deck input complaints; +successful first-session completion",
+      "owner": "Input/UX",
+      "eta": "Week 1-3"
+    },
+    {
+      "id": "A11",
+      "category": "Gameplay",
+      "status": "shipping",
+      "theme": "Co-op task sync",
+      "severity": "major",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Co-op objective state sync patch for shared purchases and checklist clearing logic.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-35% co-op progression blockers",
+      "owner": "Netcode",
+      "eta": "Week 2-4"
+    },
+    {
+      "id": "A12",
+      "category": "Retention",
+      "status": "hypothesis",
+      "theme": "Day-cycle challenge",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "End-of-day cycle + daily ledger prototype (income, expenses, service quality).",
+      "impact": "Medium",
+      "effort": "M",
+      "priority": "P2",
+      "kpi": "+session return intent in survey cohorts",
+      "owner": "Systems",
+      "eta": "Backlog"
+    },
+    {
+      "id": "A13",
+      "category": "Gameplay",
+      "status": "hypothesis",
+      "theme": "Recipe authenticity",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Recipe authenticity pass for core Italian dishes + visual consistency in recipe book.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P2",
+      "kpi": "+authenticity sentiment in community feedback",
+      "owner": "Design",
+      "eta": "Backlog"
+    },
+    {
+      "id": "A14",
+      "category": "Gameplay",
+      "status": "shipping",
+      "theme": "Customer flow stall",
+      "severity": "major",
+      "problem_link": "",
+      "solution": "Add customer-spawn watchdog, open-state telemetry, and fallback spawn recovery for level 6-8 stalls.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-80% no-client stall reports after level 6; +completed demo runs",
+      "owner": "Systems",
+      "eta": "Week 1-2"
+    },
+    {
+      "id": "A15",
+      "category": "QoL",
+      "status": "shipping",
+      "theme": "Shutdown hang",
+      "severity": "major",
+      "problem_link": "",
+      "solution": "Graceful shutdown pass: close Steam hooks cleanly, clear overlays, and add exit-state logging for stuck stopping cases.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-90% stuck-on-stopping reports",
+      "owner": "Engine",
+      "eta": "Week 1-3"
+    },
+    {
+      "id": "A16",
+      "category": "Gameplay",
+      "status": "shipping",
+      "theme": "Object placement lock",
+      "severity": "major",
+      "problem_link": "",
+      "solution": "Recovery path for held items: reset invalid placement state, rebind counters, and surface a safe drop fallback.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-70% prep soft-lock reports",
+      "owner": "Gameplay",
+      "eta": "Week 1-3"
+    },
+    {
+      "id": "A17",
+      "category": "Gameplay",
+      "status": "shipping",
+      "theme": "Store economy exploit",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Validate checkout state and lock inventory exit when basket contents are unpaid.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P2",
+      "kpi": "0 unpaid basket exploit repros",
+      "owner": "Systems",
+      "eta": "Week 2-3"
+    },
+    {
+      "id": "A18",
+      "category": "Retention",
+      "status": "hypothesis",
+      "theme": "Day-cycle challenge",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Difficulty preset with optional customer patience timer and visible service-pressure toggle.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P2",
+      "kpi": "+challenge satisfaction in surveys without hurting cozy segment",
+      "owner": "Design",
+      "eta": "Backlog"
+    },
+    {
+      "id": "A19",
+      "category": "QoL",
+      "status": "shipping",
+      "theme": "Inventory friction",
+      "severity": "major",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Prep/storage QoL pack: hotbar reorder, trash can, prep bins, and clearer surface storage behavior.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-35% inventory and prep-friction complaints",
+      "owner": "UX",
+      "eta": "Week 2-4"
+    },
+    {
+      "id": "A20",
+      "category": "Gameplay",
+      "status": "hypothesis",
+      "theme": "Simulation realism",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Prototype optional spoilage, order-failure penalties, and daily stakes to make restaurant mastery meaningful.",
+      "impact": "Medium",
+      "effort": "M",
+      "priority": "P2",
+      "kpi": "+simulation-depth mentions and challenge satisfaction",
+      "owner": "Systems",
+      "eta": "Backlog"
+    },
+    {
+      "id": "A21",
+      "category": "USP",
+      "status": "hypothesis",
+      "theme": "Delivery loop fantasy",
+      "severity": "minor",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Prototype food deliveries with scooter routing and multi-order carrying to expand the co-op fantasy beyond the patio.",
+      "impact": "Medium",
+      "effort": "L",
+      "priority": "P2",
+      "kpi": "+wishlist intent and world-expansion sentiment in surveys",
+      "owner": "Content",
+      "eta": "Backlog"
+    }
+  ],
+  "improvements": [
+    {
+      "id": "I1",
+      "stage": "Quick Wins",
+      "category": "QoL",
+      "linked_theme": "Save loss",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+      "solution": "Save Guardrail System: autosave, manual slot, recovery snapshot.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P0",
+      "kpi": "-60% жалоб на потерю прогресса."
+    },
+    {
+      "id": "I4",
+      "stage": "Quick Wins",
+      "category": "QoL",
+      "linked_theme": "Controls/UI friction",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460921786/",
+      "solution": "Input Comfort Bundle: hold-to-action, inventory reorder, sign-text fix.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P1",
+      "kpi": "-35% UI/control жалоб."
+    },
+    {
+      "id": "I2",
+      "stage": "Mid-term",
+      "category": "QoL",
+      "linked_theme": "Co-op stability",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+      "solution": "Reconnect flow, fallback resync, diagnostics UI.",
+      "impact": "High",
+      "effort": "L",
+      "priority": "P0",
+      "kpi": "-50% co-op bug reports."
+    },
+    {
+      "id": "I3",
+      "stage": "Mid-term",
+      "category": "Gameplay",
+      "linked_theme": "Performance",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+      "solution": "Performance triage + dynamic quality controls.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P0",
+      "kpi": "-40% perf complaints."
+    },
+    {
+      "id": "I6",
+      "stage": "Mid-term",
+      "category": "Retention",
+      "linked_theme": "Atmosphere/Cozy",
+      "problem_link": "https://steamcommunity.com/app/3196440/discussions/",
+      "solution": "Weekly resort loop: mini-events + goals board.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "+10pp D7 retention."
+    },
+    {
+      "id": "I7",
+      "stage": "Big Bet",
+      "category": "USP",
+      "linked_theme": "Atmosphere/Cozy",
+      "problem_link": "https://store.steampowered.com/app/1796790/Chef_RPG/",
+      "solution": "Named tourists and postcard stories.",
+      "impact": "High",
+      "effort": "L",
+      "priority": "P2",
+      "kpi": "+20% UGC mentions."
+    }
+  ],
+  "insights_shipping": [
+    {
+      "id": "IC1",
+      "title": "Hold-to-chop / Long-press input",
+      "status": "shipping",
+      "category": "QoL",
+      "solution": "Reduce repetitive clicking by hold action with progress.",
+      "impact": "High",
+      "effort": "S",
+      "priority": "P1",
+      "kpi": "-30% click fatigue complaints",
+      "evidence_strength": "Strong",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/"
+      ]
+    },
+    {
+      "id": "IC2",
+      "title": "Inventory wall fix",
+      "status": "shipping",
+      "category": "QoL",
+      "solution": "Expand inventory or allow prep in place.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-25% inventory friction complaints",
+      "evidence_strength": "Strong",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/0/767437664460799201/"
+      ]
+    },
+    {
+      "id": "IC3",
+      "title": "Dishwashing automation",
+      "status": "shipping",
+      "category": "QoL",
+      "solution": "Unlock dishwashing helper role at level 4.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "+D7 retention in 8h+ segment",
+      "evidence_strength": "Strong",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/0/767437998196285495/"
+      ]
+    },
+    {
+      "id": "IC7",
+      "title": "Steam Deck input reliability",
+      "status": "shipping",
+      "category": "QoL",
+      "solution": "Fix disappearing cursor + persistent hold interactions for cleaning and recipe flow.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-Deck-specific blockers during first 20 minutes",
+      "evidence_strength": "Strong",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/"
+      ]
+    },
+    {
+      "id": "IC8",
+      "title": "Co-op objective synchronization",
+      "status": "shipping",
+      "category": "Gameplay",
+      "solution": "Repair shared to-do progression when teammate actions should clear host checklist.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-co-op progression bug mentions",
+      "evidence_strength": "Strong",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/"
+      ]
+    },
+    {
+      "id": "IC11",
+      "title": "Customer spawn watchdog",
+      "status": "shipping",
+      "category": "Gameplay",
+      "solution": "Add a watchdog for open-state stalls so customer flow self-recovers before the session becomes unwinnable.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-no-client blocker reports after pizza level",
+      "evidence_strength": "Strong",
+      "source_refs": []
+    },
+    {
+      "id": "IC12",
+      "title": "Item placement recovery path",
+      "status": "shipping",
+      "category": "QoL",
+      "solution": "Detect invalid held-item states and offer a safe drop/reset path instead of trapping the player in prep flow.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-object placement soft-lock mentions",
+      "evidence_strength": "Strong",
+      "source_refs": []
+    },
+    {
+      "id": "IC13",
+      "title": "Graceful shutdown integrity",
+      "status": "shipping",
+      "category": "QoL",
+      "solution": "Close the game cleanly in Steam and remove residual overlay state so players can relaunch without rebooting.",
+      "impact": "High",
+      "effort": "M",
+      "priority": "P1",
+      "kpi": "-shutdown hang reports",
+      "evidence_strength": "Strong",
+      "source_refs": []
+    }
+  ],
+  "insights_hypothesis": [
+    {
+      "id": "IC5",
+      "title": "Barista notebook",
+      "status": "hypothesis",
+      "category": "QoL",
+      "solution": "Pinned recipes and guest preferences.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P2",
+      "kpi": "A/B: -15% frustration mentions",
+      "evidence_strength": "Low",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/"
+      ]
+    },
+    {
+      "id": "IC6",
+      "title": "VIP zoning",
+      "status": "hypothesis",
+      "category": "Gameplay",
+      "solution": "Smart zone detection and guest type assignment.",
+      "impact": "High",
+      "effort": "L",
+      "priority": "P2",
+      "kpi": "+session length",
+      "evidence_strength": "Medium",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/"
+      ]
+    },
+    {
+      "id": "IC9",
+      "title": "End-of-day cadence + ledger",
+      "status": "hypothesis",
+      "category": "Retention",
+      "solution": "Introduce daily closure ritual and summary screen to strengthen loop clarity and stakes.",
+      "impact": "Medium",
+      "effort": "M",
+      "priority": "P2",
+      "kpi": "+retention intent in post-session survey",
+      "evidence_strength": "Medium",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/"
+      ]
+    },
+    {
+      "id": "IC10",
+      "title": "Recipe authenticity pass",
+      "status": "hypothesis",
+      "category": "Gameplay",
+      "solution": "Align iconic recipes with expected culinary logic and reduce immersion-breaking ingredients.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P2",
+      "kpi": "+authenticity mentions, -recipe criticism",
+      "evidence_strength": "Medium",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/"
+      ]
+    },
+    {
+      "id": "IC14",
+      "title": "Simulation stakes mode",
+      "status": "hypothesis",
+      "category": "Gameplay",
+      "solution": "Offer an optional realism mode with spoilage and mistake penalties for players who want restaurant stakes.",
+      "impact": "Medium",
+      "effort": "M",
+      "priority": "P2",
+      "kpi": "+simulation satisfaction in advanced cohorts",
+      "evidence_strength": "Medium",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/"
+      ]
+    },
+    {
+      "id": "IC15",
+      "title": "Delivery loop prototype",
+      "status": "hypothesis",
+      "category": "USP",
+      "solution": "Test whether deliveries, scooter traversal, and multi-order carrying deepen co-op novelty without collapsing pacing.",
+      "impact": "Medium",
+      "effort": "L",
+      "priority": "P2",
+      "kpi": "+world-expansion mentions and co-op replay intent",
+      "evidence_strength": "Medium",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/"
+      ]
+    },
+    {
+      "id": "IC16",
+      "title": "Patience timer option",
+      "status": "hypothesis",
+      "category": "Retention",
+      "solution": "Validate whether an optional patience bar increases mastery appeal while preserving the cozy default mode.",
+      "impact": "Medium",
+      "effort": "S",
+      "priority": "P2",
+      "kpi": "+challenge satisfaction without reducing session comfort",
+      "evidence_strength": "Medium",
+      "source_refs": [
+        "https://steamcommunity.com/app/3196440/discussions/"
+      ]
+    }
+  ],
+  "psychology": {
+    "personas": [
+      {
+        "name": "Медитативный Дзен",
+        "role": "The Zen Potterer",
+        "desc": "Заходит на короткие сессии ради ритуала и расслабления.",
+        "action": "Усилять ASMR и сезонные спокойные активности."
+      },
+      {
+        "name": "Архитектор-Перфекционист",
+        "role": "The Perfectionist",
+        "desc": "Строит сложные layout-схемы и упирается в UX-ограничения.",
+        "action": "Grid snapping, зоны и гибкие инструменты декора."
+      },
+      {
+        "name": "Магнат-Коллекционер",
+        "role": "The Wealth Grinder",
+        "desc": "Быстро достигает потолка и требует масштабной меты.",
+        "action": "Prestige-система и долгий progression tail."
+      }
+    ],
+    "friction": [
+      {
+        "trigger": "3-й стол / mid-run prep",
+        "issue": "Inventory wall и forced backtracking.",
+        "solution": "Storage QoL + prep in place.",
+        "impact": "High"
+      },
+      {
+        "trigger": "Нарезка ингредиентов",
+        "issue": "Clicking fatigue разрушает relaxed flow.",
+        "solution": "Hold-to-chop с сохранением звукового фидбэка.",
+        "impact": "Critical"
+      },
+      {
+        "trigger": "Мытье посуды",
+        "issue": "Рутина выжигает после нескольких часов.",
+        "solution": "Ранний automation unlock.",
+        "impact": "High"
+      },
+      {
+        "trigger": "Заказы с тегами",
+        "issue": "Memory pressure вместо chill-loop.",
+        "solution": "Barista notebook / order pinning.",
+        "impact": "Medium"
+      }
+    ],
+    "dopamine": [
+      {
+        "name": "Pizza Oven Level 7",
+        "desc": "Сильный milestone и эмоциональный пик прогрессии."
+      },
+      {
+        "name": "Открытие внешних зон",
+        "desc": "Новый слой целей вне базовой кухни."
+      },
+      {
+        "name": "Memorable guests",
+        "desc": "UGC и шэринг через уникальные туристические истории."
+      }
+    ]
+  },
+  "competitor_snapshot": [
+    {
+      "game": "Espresso Tycoon",
+      "market_role": "Классический coffee tycoon",
+      "strengths": "Review: Very Positive; words+: got, while, sale, i'm",
+      "weaknesses": "words-: lite, skjerm, under, spill",
+      "opportunity": "VCS может выиграть за счет reliability + cozy pacing."
+    },
+    {
+      "game": "Travellers Rest",
+      "market_role": "Глубокий cozy tavern sim",
+      "strengths": "Review: Very Positive; words+: tavern, more, but, like",
+      "weaknesses": "words-: non, more, che, gioco",
+      "opportunity": "VCS: быстрее к удовольствию без тяжелого grind."
+    },
+    {
+      "game": "Coffee Caravan",
+      "market_role": "Roguelite mobile cafe loop",
+      "strengths": "Review: Very Positive; words+: more, it's, but, would",
+      "weaknesses": "words-: there, but, have, space",
+      "opportunity": "VCS: глубже мета при сохранении доступности."
+    },
+    {
+      "game": "Chef RPG",
+      "market_role": "Life-sim + restaurant",
+      "strengths": "Review: Very Positive; words+: but, like, can, all",
+      "weaknesses": "words-: not, but, like, it's",
+      "opportunity": "VCS может дифференцироваться по co-op UX."
+    }
+  ],
+  "roadmap": [
+    {
+      "window": "Week 1-2",
+      "initiative": "A1 Save Guardrail System",
+      "dependency": "Блокер reliability #1",
+      "urgency": "critical"
+    },
+    {
+      "window": "Week 2-3",
+      "initiative": "A4 Hold-to-chop + input comfort",
+      "dependency": "Quick QoL drop for friction",
+      "urgency": "major"
+    },
+    {
+      "window": "Week 2-4",
+      "initiative": "A5 Inventory wall fix",
+      "dependency": "Prep flow unblocking",
+      "urgency": "major"
+    },
+    {
+      "window": "Week 3-6",
+      "initiative": "A2 Co-op stability pack",
+      "dependency": "После базовой save-stability",
+      "urgency": "critical"
+    },
+    {
+      "window": "Week 4-7",
+      "initiative": "A3 Performance triage",
+      "dependency": "После первой телеметрии патча",
+      "urgency": "major"
+    },
+    {
+      "window": "Week 8-12",
+      "initiative": "A7 Pizza milestone",
+      "dependency": "После закрытия P0 reliability",
+      "urgency": "minor"
+    },
+    {
+      "window": "Week 1-2",
+      "initiative": "A14 Customer flow watchdog",
+      "dependency": "Protect demo progression after pizza levels",
+      "urgency": "major"
+    },
+    {
+      "window": "Week 1-3",
+      "initiative": "A15 Graceful shutdown pass",
+      "dependency": "Stabilize close/relaunch loop before next public build",
+      "urgency": "major"
+    },
+    {
+      "window": "Week 1-3",
+      "initiative": "A16 Placement recovery path",
+      "dependency": "Remove prep-flow soft-locks before content expansion",
+      "urgency": "major"
+    },
+    {
+      "window": "Week 2-4",
+      "initiative": "A19 Inventory QoL pack",
+      "dependency": "Pairs with hold-to-action and prep-flow cleanup",
+      "urgency": "major"
+    },
+    {
+      "window": "Backlog",
+      "initiative": "A18 Patience toggle prototype",
+      "dependency": "After reliability fixes and survey segmentation",
+      "urgency": "minor"
+    },
+    {
+      "window": "Backlog",
+      "initiative": "A20 Simulation realism prototype",
+      "dependency": "After base restaurant loop is stable",
+      "urgency": "minor"
+    },
+    {
+      "window": "Backlog",
+      "initiative": "A21 Delivery loop prototype",
+      "dependency": "After core kitchen flow and performance stabilize",
+      "urgency": "minor"
+    }
+  ],
+  "source_snapshot": {
+    "steam_store_status": {
+      "name": "Vacation Cafe Simulator",
+      "release_date": "2026",
+      "review_state": "No user reviews",
+      "platforms": {
+        "windows": true,
+        "mac": false,
+        "linux": false
+      }
+    },
+    "verified_at": "2026-03-09",
+    "url_checks": [
+      {
+        "url": "https://store.steampowered.com/app/3196440/Vacation_Cafe_Simulator/",
+        "status": 200
+      },
+      {
+        "url": "https://steamcommunity.com/app/3196440/discussions/",
+        "status": 200
+      },
+      {
+        "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+        "status": 200
+      },
+      {
+        "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+        "status": 200
+      },
+      {
+        "url": "https://store.steampowered.com/app/1543280/Espresso_Tycoon/",
+        "status": 200
+      },
+      {
+        "url": "https://store.steampowered.com/app/1139980/Travellers_Rest/",
+        "status": 200
+      },
+      {
+        "url": "https://store.steampowered.com/app/2649080/Coffee_Caravan/",
+        "status": 200
+      },
+      {
+        "url": "https://store.steampowered.com/app/1796790/Chef_RPG/",
+        "status": 200
+      }
+    ],
+    "compiled_artifacts": [
+      "polyKalshi/README.md (offline compiled source)"
+    ],
+    "update_notes": [
+      "README-derived signals were normalized into the dashboard dataset on 2026-03-09.",
+      "GitHub Pages runtime does not read local absolute files; this README was used only as an offline compilation source."
+    ]
+  }
+}

@@ -1,186 +1,122 @@
-"use client";
-
-import { useState } from "react";
-import { dashboardMeta } from "@/lib/data";
-import { formatNumber } from "@/lib/utils";
-import {
-  Database,
-  Signal,
-  Sparkles,
-  Calculator,
-  ChevronDown,
-} from "lucide-react";
+import type { DashboardData, Locale } from '@/lib/data';
+import { formatNumber } from '@/lib/utils';
+import { t } from '@/lib/i18n';
+import { CalendarDays, Languages, Signal, Sparkles, Sigma } from 'lucide-react';
 
 const sections = [
-  { id: "risks", label: "Top Risks" },
-  { id: "triage", label: "Bug Triage" },
-  { id: "evidence", label: "Evidence" },
-  { id: "actions", label: "Actions" },
-  { id: "psychology", label: "Psychology" },
-  { id: "competitors", label: "Competitors" },
-  { id: "roadmap", label: "Roadmap" },
-];
+  { id: 'risks', key: 'nav_risks' },
+  { id: 'bugs', key: 'nav_bugs' },
+  { id: 'evidence', key: 'nav_evidence' },
+  { id: 'actions', key: 'nav_actions' },
+  { id: 'psychology', key: 'nav_psychology' },
+  { id: 'improvements', key: 'nav_improvements' },
+  { id: 'insights', key: 'nav_insights' },
+  { id: 'competitors', key: 'nav_competitors' },
+  { id: 'roadmap', key: 'nav_roadmap' },
+  { id: 'sources', key: 'nav_sources' },
+] as const;
 
-export function HeroHeader() {
-  const [locale, setLocale] = useState<"en" | "ru">("en");
+interface HeroHeaderProps {
+  locale: Locale;
+  data: DashboardData;
+  onLocaleChange: (locale: Locale) => void;
+}
 
-  const labels = {
-    en: {
-      title: "Product Feedback Dashboard",
-      subtitle:
-        "Aggregated insights from Steam, Discord, YouTube reviews, and community discussions",
-      dataActuality: "Data Actuality",
-      rawSignals: "Raw Signals",
-      uniqueSignals: "Unique Signals",
-      scoringMethod: "Scoring Method",
-    },
-    ru: {
-      title: "Панель Обратной Связи",
-      subtitle:
-        "Агрегированные данные из Steam, Discord, YouTube обзоров и сообщества",
-      dataActuality: "Актуальность",
-      rawSignals: "Сигналов",
-      uniqueSignals: "Уникальных",
-      scoringMethod: "Метод Оценки",
-    },
-  };
-
-  const t = labels[locale];
+export function HeroHeader({ locale, data, onLocaleChange }: HeroHeaderProps) {
+  const metaCards = [
+    { icon: CalendarDays, label: t(locale, 'meta_date'), value: data.meta.actuality_date },
+    { icon: Signal, label: t(locale, 'meta_raw'), value: formatNumber(data.meta.signals_raw) },
+    { icon: Sparkles, label: t(locale, 'meta_unique'), value: formatNumber(data.meta.signals_unique) },
+    { icon: Sigma, label: t(locale, 'meta_method'), value: '0.5F / 0.3S / 0.2R', hint: data.meta.method },
+  ];
 
   return (
-    <header className="relative pb-6 pt-8 md:pt-12">
-      {/* Background gradient */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-cream via-parchment to-transparent" />
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Top bar with locale switch */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs uppercase tracking-wider text-muted">
-              VCS
-            </span>
-            <span className="text-stone">/</span>
-            <span className="font-mono text-xs text-muted">v0.9.2</span>
+    <header className="relative overflow-hidden border-b border-border-subtle/80 bg-[linear-gradient(180deg,rgba(255,252,247,0.92),rgba(246,241,232,0.42))]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(196,120,90,0.12),transparent_34%),radial-gradient(circle_at_top_right,rgba(40,95,89,0.08),transparent_36%)]" />
+      <div className="relative mx-auto max-w-7xl px-4 pb-8 pt-7 sm:px-6 lg:px-8 lg:pb-10 lg:pt-8">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl space-y-4">
+            <div className="flex flex-wrap items-center gap-2 text-[0.72rem] uppercase tracking-[0.16em] text-foreground-soft">
+              <span className="rounded-full border border-border-subtle bg-surface/80 px-3 py-1 font-mono">Vacation Cafe Simulator</span>
+              <span className="rounded-full border border-border-subtle bg-surface/70 px-3 py-1 font-mono">Bug-first cockpit</span>
+              <span className="rounded-full border border-border-subtle bg-surface/70 px-3 py-1 font-mono">GitHub Pages static export</span>
+            </div>
+            <div className="space-y-3">
+              <p className="eyebrow">{locale === 'ru' ? 'Product feedback operating layer' : 'Product feedback operating layer'}</p>
+              <h1 className="max-w-4xl text-balance font-display text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl xl:text-[3.5rem] xl:leading-[1.02]">
+                {t(locale, 'hero_title')}
+              </h1>
+              <p className="max-w-3xl text-pretty text-[1rem] leading-7 text-foreground-muted sm:text-[1.05rem]">
+                {t(locale, 'hero_sub')} <span className="font-semibold text-foreground">{data.meta.actuality_date}</span>
+              </p>
+            </div>
           </div>
 
-          {/* Locale switch */}
-          <div className="flex items-center rounded-lg border border-border-subtle bg-surface p-0.5 shadow-sm">
-            <button
-              onClick={() => setLocale("en")}
-              className={`rounded-md px-3 py-1.5 font-mono text-xs font-medium transition-all ${
-                locale === "en"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted hover:text-foreground"
-              }`}
+          <div className="flex flex-col items-start gap-3 lg:items-end">
+            <div
+              id="localeSwitch"
+              className="inline-flex items-center gap-1 rounded-full border border-border-subtle bg-surface/90 p-1 shadow-card"
+              role="group"
+              aria-label="Locale switch"
             >
-              EN
-            </button>
-            <button
-              onClick={() => setLocale("ru")}
-              className={`rounded-md px-3 py-1.5 font-mono text-xs font-medium transition-all ${
-                locale === "ru"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted hover:text-foreground"
-              }`}
-            >
-              RU
-            </button>
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft/60 text-foreground-soft">
+                <Languages className="h-4 w-4" />
+              </span>
+              {(['ru', 'en'] as const).map((value) => {
+                const active = locale === value;
+                return (
+                  <button
+                    key={value}
+                    id={value === 'ru' ? 'localeRuBtn' : 'localeEnBtn'}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => onLocaleChange(value)}
+                    className={active
+                      ? 'rounded-full bg-foreground px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-white transition'
+                      : 'rounded-full px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-foreground-soft transition hover:text-foreground'}
+                  >
+                    {value.toUpperCase()}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="max-w-sm text-right text-sm leading-6 text-foreground-soft">
+              {locale === 'ru'
+                ? 'Главный экран отвечает на один вопрос: что чинить и выпускать первым, чтобы не сломать cozy-ядро игры.'
+                : 'The first screen answers one question: what must ship or be fixed first to protect the cozy core of the game.'}
+            </p>
           </div>
         </div>
 
-        {/* Main title */}
-        <div className="mb-8">
-          <h1
-            className="mb-3 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Vacation Cafe Simulator
-          </h1>
-          <p
-            className="mb-2 text-xl font-medium text-primary md:text-2xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {t.title}
-          </p>
-          <p className="max-w-2xl text-pretty text-foreground-muted">
-            {t.subtitle}
-          </p>
+        <div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {metaCards.map(({ icon: Icon, label, value, hint }) => (
+            <div key={label} className="surface-card surface-card-hover flex min-h-[108px] flex-col justify-between p-4">
+              <div className="flex items-center justify-between gap-3">
+                <span className="eyebrow">{label}</span>
+                <Icon className="h-4 w-4 text-foreground-soft" />
+              </div>
+              <div>
+                <div className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">
+                  {value}
+                </div>
+                {hint ? <p className="mt-2 text-sm leading-6 text-foreground-muted">{hint}</p> : null}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Meta cards */}
-        <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <MetaCard
-            icon={<Database className="h-4 w-4" />}
-            label={t.dataActuality}
-            value={dashboardMeta.dataActuality}
-          />
-          <MetaCard
-            icon={<Signal className="h-4 w-4" />}
-            label={t.rawSignals}
-            value={formatNumber(dashboardMeta.rawSignals)}
-          />
-          <MetaCard
-            icon={<Sparkles className="h-4 w-4" />}
-            label={t.uniqueSignals}
-            value={formatNumber(dashboardMeta.uniqueSignals)}
-          />
-          <MetaCard
-            icon={<Calculator className="h-4 w-4" />}
-            label={t.scoringMethod}
-            value="FxSxR"
-            tooltip={dashboardMeta.scoringMethod}
-          />
-        </div>
-
-        {/* Section navigation */}
-        <nav className="flex flex-wrap gap-2">
+        <nav className="mt-6 flex flex-wrap gap-2" aria-label="Section anchors">
           {sections.map((section) => (
             <a
               key={section.id}
               href={`#${section.id}`}
-              className="inline-flex items-center gap-1 rounded-lg border border-border-subtle bg-surface px-3 py-1.5 text-sm font-medium text-foreground-muted transition-all hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="inline-flex items-center rounded-full border border-border-subtle bg-surface/90 px-4 py-2 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
             >
-              {section.label}
-              <ChevronDown className="h-3 w-3" />
+              {t(locale, section.key)}
             </a>
           ))}
         </nav>
       </div>
     </header>
-  );
-}
-
-function MetaCard({
-  icon,
-  label,
-  value,
-  tooltip,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  tooltip?: string;
-}) {
-  return (
-    <div
-      className="transition-card group relative rounded-xl border border-border-subtle bg-surface p-3 shadow-card hover:shadow-card-hover"
-      title={tooltip}
-    >
-      <div className="mb-1 flex items-center gap-1.5 text-foreground-muted">
-        {icon}
-        <span className="font-mono text-[10px] uppercase tracking-wider">
-          {label}
-        </span>
-      </div>
-      <div className="font-mono text-sm font-medium text-foreground">
-        {value}
-      </div>
-      {tooltip && (
-        <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-espresso px-3 py-2 text-xs text-parchment opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
-          {tooltip}
-          <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-espresso" />
-        </div>
-      )}
-    </div>
   );
 }
