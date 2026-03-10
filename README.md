@@ -9,10 +9,11 @@ Static dashboard package for `Vacation Cafe Simulator` product feedback analysis
 
 ## Included data
 
-- Steam review and discussion snapshots
-- Discord-derived signal cache
-- Competitor snapshots
-- Supporting markdown and text analysis artifacts
+- Single compact bundle: `GDD/dashboard-data-bundle.json`
+- Runtime UI: `GDD/report_final.html`
+
+The published dashboard no longer fetches multiple raw `json/md/txt` source files from the repo.
+Those inputs were compacted into one bundle to reduce repository noise and GitHub Pages requests.
 
 ## GitHub Pages
 

@@ -3727,19 +3727,18 @@
 
     async function loadDashboardDataV3() {
       try {
-        const [themeScoresJson, feedbackSummaryJson, reviewSummariesJson, appDetailsJson, compPosJson, compNegJson, compEnJson, dialogCacheJson, marketMd, deepMd, insightTxt] = await Promise.all([
-          fetchJsonOrThrow('./analysis_theme_scores.json'),
-          fetchJsonOrThrow('./vcs_feedback_summary.json'),
-          fetchJsonOrThrow('./steam_review_summaries.json'),
-          fetchJsonOrThrow('./steam_appdetails_snapshot.json'),
-          fetchJsonOrThrow('./competitor_positive_reviews_snapshot.json'),
-          fetchJsonOrThrow('./competitor_negative_reviews_snapshot.json'),
-          fetchJsonOrThrow('./competitor_english_reviews_samples.json'),
-          fetchJsonOrThrow('./dialog_signals_cache.json').catch(() => null),
-          fetchTextOrEmpty('./09_VCS_Market_Feedback_Analysis_2026-03-04.md'),
-          fetchTextOrEmpty('./VCS_Deep_Analysis_Report_RU.md'),
-          fetchTextFirstAvailable(['./vacation insight.txt', '../vacation insight.txt'])
-        ]);
+        const bundle = await fetchJsonOrThrow('./dashboard-data-bundle.json');
+        const themeScoresJson = bundle.analysis_theme_scores || {};
+        const feedbackSummaryJson = bundle.vcs_feedback_summary || {};
+        const reviewSummariesJson = bundle.steam_review_summaries || {};
+        const appDetailsJson = bundle.steam_appdetails_snapshot || {};
+        const compPosJson = bundle.competitor_positive_reviews_snapshot || {};
+        const compNegJson = bundle.competitor_negative_reviews_snapshot || {};
+        const compEnJson = bundle.competitor_english_reviews_samples || {};
+        const dialogCacheJson = bundle.dialog_signals_cache || null;
+        const marketMd = bundle.market_feedback_md || '';
+        const deepMd = bundle.deep_analysis_ru_md || '';
+        const insightTxt = bundle.vacation_insight_txt || '';
 
         const themeScores = Array.isArray(themeScoresJson?.theme_scores) ? themeScoresJson.theme_scores : fallbackData.theme_scores;
         const feedbackSignalsFromSummary = mapFeedbackSummarySignals(feedbackSummaryJson);
