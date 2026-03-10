@@ -15,6 +15,7 @@
       --bg-soft: #f0eae1;
       --surface: #fffdf8;
       --surface-alt: #f7f2ea;
+      --surface-strong: #fbf6ee;
       --line: #d3c8b9;
       --line-strong: #b7a794;
       --text: #2a2018;
@@ -22,6 +23,7 @@
       --text-soft: #8f7f6c;
       --accent: #7a5c3e;
       --accent-2: #285f59;
+      --accent-3: #9b3d2c;
       --critical: #c2422e;
       --critical-bg: #ffe4de;
       --major: #bd6a1b;
@@ -36,6 +38,7 @@
       --radius: 12px;
       --max-w: 1400px;
       --shadow: 0 8px 18px rgba(60, 35, 10, 0.06);
+      --shadow-strong: 0 18px 34px rgba(71, 39, 12, 0.09);
       --focus: #285f59;
     }
 
@@ -44,7 +47,10 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: radial-gradient(circle at 10% -10%, #fff7ee 0%, var(--bg) 55%, #efe7da 100%);
+      background:
+        radial-gradient(circle at 10% -10%, rgba(255, 247, 238, 0.98) 0%, rgba(245, 241, 235, 0.82) 55%, rgba(239, 231, 218, 0.94) 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(122, 92, 62, 0.02)),
+        repeating-linear-gradient(90deg, rgba(122, 92, 62, 0.018) 0, rgba(122, 92, 62, 0.018) 1px, transparent 1px, transparent 22px);
       color: var(--text);
       font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.5;
@@ -72,9 +78,25 @@
     .hero {
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      background: linear-gradient(140deg, #fffdf8 0%, #f7efe2 48%, #f0ece6 100%);
-      box-shadow: var(--shadow);
-      padding: 20px;
+      background:
+        linear-gradient(140deg, rgba(255, 253, 248, 0.98) 0%, rgba(247, 239, 226, 0.98) 46%, rgba(240, 236, 230, 0.98) 100%),
+        radial-gradient(circle at top right, rgba(40, 95, 89, 0.08), transparent 34%);
+      box-shadow: var(--shadow-strong);
+      padding: 18px 18px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(40, 95, 89, 0.12) 0%, rgba(40, 95, 89, 0.03) 42%, transparent 66%);
+      pointer-events: none;
     }
 
     .hero h1 {
@@ -89,7 +111,9 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 12px;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .locale-switch {
@@ -121,25 +145,27 @@
     }
 
     .hero-sub {
-      margin: 12px 0 0;
+      margin: 10px 0 0;
       color: var(--text-muted);
-      max-width: 1020px;
-      font-size: 0.96rem;
+      max-width: 860px;
+      font-size: 0.93rem;
     }
 
     .meta-grid {
-      margin-top: 18px;
+      margin-top: 14px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 10px;
+      position: relative;
+      z-index: 1;
     }
 
     .meta-card {
       border: 1px solid var(--line);
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 10px 12px;
-      min-height: 72px;
+      background: rgba(255, 255, 255, 0.78);
+      padding: 9px 11px;
+      min-height: 66px;
     }
 
     .meta-card small {
@@ -164,12 +190,16 @@
     }
 
     .anchor-row {
-      margin-top: 16px;
+      margin-top: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(183, 167, 148, 0.5);
+      padding-top: 12px;
     }
 
     .anchor-nav a {
@@ -195,7 +225,7 @@
       margin-top: 14px;
       border: 1px solid var(--line);
       border-radius: var(--radius-lg);
-      background: var(--surface);
+      background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(251, 246, 238, 0.98));
       box-shadow: var(--shadow);
       overflow: hidden;
       transition: box-shadow 0.18s ease, border-color 0.18s ease;
@@ -222,26 +252,49 @@
 
     .section-head {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 12px;
       padding: 14px 16px;
       border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, #fefcf8 0%, #f7f1e8 100%);
+      background:
+        linear-gradient(180deg, rgba(254, 252, 248, 0.98) 0%, rgba(247, 241, 232, 0.96) 100%),
+        repeating-linear-gradient(90deg, rgba(122, 92, 62, 0.02) 0, rgba(122, 92, 62, 0.02) 1px, transparent 1px, transparent 20px);
     }
 
     .section-head h2 {
       margin: 0;
       font-family: "Sora", sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.04rem;
       letter-spacing: -0.02em;
     }
 
     .section-head p {
-      margin: 6px 0 0;
+      margin: 4px 0 0;
       color: var(--text-muted);
-      font-size: 0.88rem;
-      max-width: 960px;
+      font-size: 0.84rem;
+      max-width: 860px;
+      line-height: 1.42;
+    }
+
+    .section-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .section-kpi {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--text-soft);
+      font: 700 0.7rem "JetBrains Mono", monospace;
+      letter-spacing: 0.03em;
     }
 
     .toggle-btn {
@@ -275,6 +328,13 @@
 
     .critical-zone {
       border-left: 4px solid var(--critical);
+      background: linear-gradient(180deg, rgba(255, 251, 248, 0.98), rgba(253, 246, 240, 0.98));
+    }
+
+    .critical-zone .section-head {
+      background:
+        linear-gradient(180deg, rgba(255, 249, 245, 0.98) 0%, rgba(249, 239, 230, 0.98) 100%),
+        repeating-linear-gradient(90deg, rgba(194, 66, 46, 0.025) 0, rgba(194, 66, 46, 0.025) 1px, transparent 1px, transparent 20px);
     }
 
     .filters-grid {
@@ -295,7 +355,7 @@
     .field label {
       display: block;
       margin-bottom: 5px;
-      color: var(--text-soft);
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       font: 600 0.67rem "JetBrains Mono", monospace;
@@ -308,7 +368,7 @@
       border-radius: 10px;
       border: 1px solid var(--line-strong);
       padding: 0 10px;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.94);
       color: var(--text);
       font-size: 0.9rem;
     }
@@ -336,6 +396,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
       gap: 10px;
+      align-items: stretch;
     }
 
     .risk-card,
@@ -344,6 +405,8 @@
       border-radius: 12px;
       background: var(--surface-alt);
       padding: 12px;
+      display: flex;
+      flex-direction: column;
       transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, background-color 0.18s ease;
     }
 
@@ -352,6 +415,11 @@
       border-color: var(--line-strong);
       box-shadow: 0 8px 16px rgba(60, 35, 10, 0.08);
       transform: translateY(-1px);
+    }
+
+    .risk-card > p:last-child,
+    .card > p:last-child {
+      margin-top: auto;
     }
 
     .risk-top,
@@ -368,6 +436,7 @@
       font-size: 1rem;
       font-weight: 700;
       letter-spacing: -0.01em;
+      max-width: 22ch;
     }
 
     .metrics {
@@ -432,6 +501,13 @@
       background: #fff;
     }
 
+    .table-wrap thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      box-shadow: inset 0 -1px 0 #ebdfd0;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -470,6 +546,10 @@
       margin: 0;
       color: var(--text);
       font-size: 0.92rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .section-intro {
@@ -486,6 +566,7 @@
       border-radius: 10px;
       background: #fff;
       padding: 8px 10px;
+      flex: 1;
     }
 
     .risk-narrative p {
@@ -493,6 +574,10 @@
       font-size: 0.84rem;
       color: var(--text-muted);
       line-height: 1.42;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .table-cell-detail {
@@ -510,6 +595,19 @@
       color: var(--text-muted);
       font-size: 0.83rem;
       line-height: 1.42;
+    }
+
+    .evidence-details summary {
+      cursor: pointer;
+      list-style: none;
+      font: 700 0.72rem "JetBrains Mono", monospace;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .evidence-details summary::-webkit-details-marker {
+      display: none;
     }
 
     .source-toggle {
@@ -539,6 +637,16 @@
     .source-chip:hover {
       transform: translateY(-1px);
       border-color: var(--accent);
+    }
+
+    .source-group-label {
+      font: 700 0.72rem "JetBrains Mono", monospace;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #d9cebf;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -581,6 +689,21 @@
       background: #fff;
     }
 
+    @media (min-width: 961px) {
+      #filters {
+        position: sticky;
+        top: 12px;
+        z-index: 15;
+        backdrop-filter: blur(6px);
+      }
+
+      .section + .critical-zone,
+      .critical-zone + .critical-zone,
+      .critical-zone + .section {
+        scroll-margin-top: 112px;
+      }
+    }
+
     a {
       color: var(--accent-2);
       text-decoration: none;
@@ -605,7 +728,9 @@
     @media (max-width: 960px) {
       .section-head {
         flex-direction: column;
+        align-items: flex-start;
       }
+      .section-actions,
       .toggle-btn {
         align-self: flex-start;
       }
@@ -623,6 +748,9 @@
     @media (max-width: 768px) {
       .app { padding: 12px 10px 40px; }
       .meta-grid { grid-template-columns: 1fr 1fr; }
+      .section-body { padding: 12px; }
+      .section-head { padding: 12px; }
+      .section-kpi { min-height: 28px; }
       table.mobile-stack,
       table.mobile-stack thead,
       table.mobile-stack tbody,
@@ -636,7 +764,12 @@
         display: none;
       }
       table.mobile-stack tr {
-        border-bottom: 1px solid #ebdfd0;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(251, 246, 238, 0.98), rgba(255, 255, 255, 0.98));
+        box-shadow: 0 6px 16px rgba(71, 39, 12, 0.05);
+        margin: 0 0 10px;
+        overflow: hidden;
       }
       table.mobile-stack td {
         border: 0;
@@ -657,10 +790,6 @@
     <header class="hero">
       <div class="hero-top">
         <h1 id="heroTitle">VCS - Bug-First Executive Dashboard</h1>
-        <div class="locale-switch" id="localeSwitch" role="group" aria-label="Language switch">
-          <button class="locale-btn" id="localeRuBtn" type="button" aria-pressed="true">RU</button>
-          <button class="locale-btn" id="localeEnBtn" type="button" aria-pressed="false">EN</button>
-        </div>
       </div>
       <p class="hero-sub" id="heroSub">
         Dashboard для принятия продуктовых решений: сначала критичные баги и обратная связь игроков,
@@ -682,6 +811,10 @@
           <a href="#roadmap" id="navLinkRoadmap">Roadmap</a>
           <a href="#sources" id="navLinkSources">Sources</a>
         </nav>
+        <div class="locale-switch" id="localeSwitch" role="group" aria-label="Language switch">
+          <button class="locale-btn" id="localeRuBtn" type="button" aria-pressed="true">RU</button>
+          <button class="locale-btn" id="localeEnBtn" type="button" aria-pressed="false">EN</button>
+        </div>
       </div>
     </header>
 
@@ -692,7 +825,9 @@
             <h2 id="filtersTitle">Global Filters</h2>
             <p id="filtersDesc">Фильтры влияют на риски, triage, evidence, actions, improvements и insights. <code>Reset</code> возвращает <code>sort=desc</code>.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="filters" aria-expanded="true"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <button class="toggle-btn" type="button" data-toggle="filters" aria-expanded="true"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <div class="filters-grid">
@@ -740,7 +875,10 @@
             <h2 id="risksTitle">Top Feedback Risks</h2>
             <p id="risksDesc">Above the fold: 3 главных риска по <code>PriorityScore</code> для немедленных решений.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="risks" aria-expanded="true"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="riskHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="risks" aria-expanded="true"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="riskIntro"></p>
@@ -756,7 +894,10 @@
             <h2 id="bugsTitle">Bug Triage Board</h2>
             <p id="bugsDesc">Кластеры багов и операционный приоритет (<code>P0/P1/P2</code>): source-backed, severity-aware.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="bugs" aria-expanded="true"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="bugHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="bugs" aria-expanded="true"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="bugIntro"></p>
@@ -786,7 +927,10 @@
             <h2 id="evidenceTitle">Evidence Drawer</h2>
             <p id="evidenceDesc">Нормализованные сигналы из <code>Steam / Discord / Forum</code>, включая локальный парсинг <code>chatlogs-*.html</code> и <code>107-*.mhtml</code>.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="evidence" aria-expanded="true"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="evidenceHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="evidence" aria-expanded="true"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="evidenceIntro"></p>
@@ -808,7 +952,10 @@
             <h2 id="actionsTitle">Action Board</h2>
             <p id="actionsDesc">Перенесено из предыдущих dashboard: owner + ETA + KPI + source traceability.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="actions" aria-expanded="false"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="actionHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="actions" aria-expanded="false"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="actionsIntro"></p>
@@ -841,7 +988,10 @@
             <h2 id="psychologyTitle">Psychology / Friction / Dopamine</h2>
             <p id="psychologyDesc">Структуры из master-dashboard: late-game personas, friction points и мотивационные якоря.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="psychology" aria-expanded="false"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="psychologyHeadCount">0/0/0</span>
+            <button class="toggle-btn" type="button" data-toggle="psychology" aria-expanded="false"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="psychologyIntro"></p>
@@ -869,7 +1019,10 @@
             <h2 id="improvementsTitle">Shipping Improvements</h2>
             <p id="improvementsDesc">Initiative groups: Quick Wins / Mid-term / Big Bet.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="improvements" aria-expanded="false"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="improvementsHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="improvements" aria-expanded="false"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="improvementsIntro"></p>
@@ -883,7 +1036,10 @@
             <h2 id="insightsTitle">Insight Validation Board</h2>
             <p id="insightsDesc">Shipping и hypothesis инсайты со ссылками на источники и KPI.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="insights" aria-expanded="false"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="insightHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="insights" aria-expanded="false"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="insightsIntro"></p>
@@ -898,7 +1054,10 @@
             <h2 id="competitorsTitle">Competitor Snapshot</h2>
             <p id="competitorsDesc">Собран на основе локальных snapshots и review summaries.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="competitors" aria-expanded="false"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="competitorsHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="competitors" aria-expanded="false"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="competitorsIntro"></p>
@@ -919,7 +1078,10 @@
             <h2 id="roadmapTitle">Roadmap 0-3 months</h2>
             <p id="roadmapDesc">Dependency-aware порядок внедрения: сначала reliability, затем growth.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="roadmap" aria-expanded="false"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="roadmapHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="roadmap" aria-expanded="false"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="roadmapIntro"></p>
@@ -933,7 +1095,10 @@
             <h2 id="sourcesTitle">Source Snapshot</h2>
             <p id="sourcesDesc">Техническая сводка по источникам, версии данных и ссылкам.</p>
           </div>
-          <button class="toggle-btn" type="button" data-toggle="sources" aria-expanded="false"><span class="expand-label"></span></button>
+          <div class="section-actions">
+            <span class="section-kpi" id="sourcesHeadCount">0</span>
+            <button class="toggle-btn" type="button" data-toggle="sources" aria-expanded="false"><span class="expand-label"></span></button>
+          </div>
         </div>
         <div class="section-body">
           <p class="section-intro" id="sourcesIntro"></p>
@@ -2838,6 +3003,11 @@
       if (node) node.innerHTML = value;
     }
 
+    function setCountChip(id, value) {
+      const node = document.getElementById(id);
+      if (node) node.textContent = String(value ?? '0');
+    }
+
     function renderHeroSub() {
       const meta = DashboardDataV3.meta || fallbackData.meta;
       const date = meta.actuality_date || '-';
@@ -3808,6 +3978,7 @@
 
       const top = sortByScore(rows).slice(0, 3);
       document.getElementById('riskCount').textContent = `${t('visible_top_risks')}: ${top.length}`;
+      setCountChip('riskHeadCount', top.length);
       const node = document.getElementById('riskGrid');
 
       if (!top.length) {
@@ -3877,6 +4048,7 @@
       }));
 
       document.getElementById('bugCount').textContent = `${t('visible_bug_clusters')}: ${rows.length}`;
+      setCountChip('bugHeadCount', rows.length);
       const node = document.getElementById('bugRows');
       if (!rows.length) {
         node.innerHTML = `<tr><td colspan="7">${t('no_bug_clusters')}</td></tr>`;
@@ -3914,6 +4086,7 @@
       });
 
       document.getElementById('evidenceCount').textContent = `${t('signals_in_view')}: ${rows.length}`;
+      setCountChip('evidenceHeadCount', rows.length);
       const node = document.getElementById('evidenceGrid');
 
       if (!rows.length) {
@@ -3953,6 +4126,7 @@
         .sort((a, b) => (rank[b.priority] || 0) - (rank[a.priority] || 0));
 
       document.getElementById('actionCount').textContent = `${t('visible_actions')}: ${rows.length}`;
+      setCountChip('actionHeadCount', rows.length);
       const node = document.getElementById('actionRows');
       if (!rows.length) {
         node.innerHTML = `<tr><td colspan="10">${t('no_actions')}</td></tr>`;
@@ -3986,6 +4160,10 @@
 
     function renderPsychology() {
       const psych = DashboardDataV3.psychology || fallbackData.psychology;
+      const personaCount = Array.isArray(psych.personas) ? psych.personas.length : 0;
+      const frictionCount = Array.isArray(psych.friction) ? psych.friction.length : 0;
+      const dopamineCount = Array.isArray(psych.dopamine) ? psych.dopamine.length : 0;
+      setCountChip('psychologyHeadCount', `${personaCount}/${frictionCount}/${dopamineCount}`);
 
       document.getElementById('personasGrid').innerHTML = (psych.personas || []).map((row) => {
         const p = localizedPersona(row);
@@ -4031,6 +4209,7 @@
       });
 
       const stages = ['Quick Wins', 'Mid-term', 'Big Bet'];
+      setCountChip('improvementsHeadCount', rows.length);
       const stageLabel = (stage) => {
         if (UIStateV3.locale === 'en') return stage;
         if (stage === 'Quick Wins') return 'Быстрые победы';
@@ -4073,6 +4252,7 @@
       const all = [...(DashboardDataV3.insights_shipping || []), ...(DashboardDataV3.insights_hypothesis || [])]
         .filter((x) => matchesBaseFilters(x));
       document.getElementById('insightCount').textContent = `${t('visible_insights')}: ${all.length}`;
+      setCountChip('insightHeadCount', all.length);
       const node = document.getElementById('insightGrid');
 
       if (!all.length) {
@@ -4104,6 +4284,7 @@
 
     function renderCompetitors() {
       const rows = DashboardDataV3.competitor_snapshot || [];
+      setCountChip('competitorsHeadCount', rows.length);
       const node = document.getElementById('competitorRows');
       node.innerHTML = rows.length ? rows.map((raw) => {
         const x = localizedCompetitor(raw);
@@ -4119,6 +4300,7 @@
 
     function renderRoadmap() {
       const rows = DashboardDataV3.roadmap || [];
+      setCountChip('roadmapHeadCount', rows.length);
       const node = document.getElementById('timelineRows');
       node.innerHTML = rows.length ? rows.map((x) => `<div class="timeline-step ${esc(x.urgency || 'minor')}">
         <div class="timeline-window">${esc(x.window)}</div>
@@ -4134,23 +4316,41 @@
       const okCount = checks.filter((x) => Number(x.status) === 200).length;
       const compiledArtifacts = Array.isArray(src.compiled_artifacts) ? src.compiled_artifacts : [];
       const updateNotes = Array.isArray(src.update_notes) ? src.update_notes : [];
+      const localizeSourceNoteRu = (line) => {
+        if (line === 'README-derived signals were normalized into the dashboard dataset on 2026-03-09.') {
+          return 'Сигналы из README были нормализованы и встроены в датасет дашборда 2026-03-09.';
+        }
+        if (line === 'GitHub Pages runtime does not read local absolute files; this README was used only as an offline compilation source.') {
+          return 'GitHub Pages в рантайме не читает локальные абсолютные пути; этот README использовался только как офлайн-источник для компиляции.';
+        }
+        return line;
+      };
+      setCountChip('sourcesHeadCount', checks.length + compiledArtifacts.length + updateNotes.length);
       if (UIStateV3.locale === 'ru') {
         document.getElementById('steamStatus').textContent = 'Обсуждения Steam + отзывы Steam + карточка игры.';
         document.getElementById('platforms').textContent = 'Discord каналы: отчеты о багах, обратная связь и общий чат.';
         document.getElementById('verifiedAt').textContent = src.verified_at || 'n/a';
         document.getElementById('httpSummary').textContent = 'YouTube-обзоры + конкурентные срезы + локальный парсинг логов.';
-        document.getElementById('sourceLinks').innerHTML = [
+        const humanLines = [
           'Учтены темы и дискуссии из Steam Community (баги, обратная связь по пользовательскому опыту, баланс, кооператив).',
           'Учтены сообщения из Discord (включая отчеты о багах, обратную связь и FAQ-потоки).',
           'Включены локально распарсенные выгрузки чатов и mhtml-репорты по багам.',
           'Добавлены агрегированные сигналы из сводок Steam-отзывов.',
           'Учтены обзоры и комментарии с YouTube как качественные сигналы по тону, сложности и темпу игры.',
           'Новый слой на 2026-03-09 скомпилирован из внешнего README как curated-артефакт, но сам GitHub Pages-дашборд не читает этот локальный файл в рантайме.',
-          'Проведено сравнение с конкурентами: Espresso Tycoon, Travellers Rest, Coffee Caravan, Chef RPG.',
+          'Проведено сравнение с конкурентами: Espresso Tycoon, Travellers Rest, Coffee Caravan, Chef RPG.'
+        ];
+        const technicalLines = [
           ...compiledArtifacts.map((path) => `Скомпилированный внешний артефакт: ${path}`),
-          ...updateNotes,
+          ...updateNotes.map(localizeSourceNoteRu),
           `Техническая проверка ссылок: ${okCount}/${checks.length} URL ответили HTTP 200.`
-        ].map((line) => `<li style="font-size:0.88rem;color:var(--text-muted)">${esc(line)}</li>`).join('');
+        ];
+        document.getElementById('sourceLinks').innerHTML = [
+          '<li class="source-group-label">Охват исследования</li>',
+          ...humanLines.map((line) => `<li style="font-size:0.88rem;color:var(--text-muted)">${esc(line)}</li>`),
+          '<li class="source-group-label">Технический аудит</li>',
+          ...technicalLines.map((line) => `<li style="font-size:0.88rem;color:var(--text-muted)">${esc(line)}</li>`)
+        ].join('');
         return;
       }
 
@@ -4162,15 +4362,28 @@
       document.getElementById('platforms').textContent = platforms || 'n/a';
       document.getElementById('verifiedAt').textContent = src.verified_at || 'n/a';
       document.getElementById('httpSummary').textContent = `${okCount}/${checks.length} HTTP 200`;
-      const extraLines = [
-        ...compiledArtifacts.map((path) => `Compiled artifact: ${path}`),
-        ...updateNotes
+      const humanLines = [
+        'Coverage includes Steam discussions, Steam reviews, Discord feedback channels, bug channels, and FAQ/chat threads.',
+        'Locally parsed chatlogs and MHTML bug reports are normalized into the evidence layer instead of being read at runtime.',
+        'YouTube reviews and comments are used as qualitative signals for pacing, tone, challenge, and onboarding friction.',
+        'The 2026-03-09 update was compiled from an external README artifact, but the GitHub Pages dashboard does not depend on that local file at runtime.',
+        'Competitor framing covers Espresso Tycoon, Travellers Rest, Coffee Caravan, and Chef RPG.'
       ].map((line) => `<li style="font-size:0.84rem;color:var(--text-muted)">${esc(line)}</li>`);
+      const extraLines = compiledArtifacts
+        .map((path) => `Compiled artifact: ${path}`)
+        .concat(updateNotes)
+        .map((line) => `<li style="font-size:0.84rem;color:var(--text-muted)">${esc(line)}</li>`);
       const checkLines = checks.map((x) => `<li style="display:flex;align-items:center;gap:8px;font-size:0.84rem">
         <span class="badge ${Number(x.status) === 200 ? 'status-shipping' : 'severity-critical'}">HTTP ${Number(x.status || 0)}</span>
         <a target="_blank" rel="noopener noreferrer" href="${esc(x.url)}">${esc(trunc(x.url, 96))}</a>
       </li>`);
-      document.getElementById('sourceLinks').innerHTML = [...extraLines, ...checkLines].join('');
+      document.getElementById('sourceLinks').innerHTML = [
+        '<li class="source-group-label">Coverage</li>',
+        ...humanLines,
+        '<li class="source-group-label">Technical audit</li>',
+        ...extraLines,
+        ...checkLines
+      ].join('');
     }
 
     function renderAll() {
