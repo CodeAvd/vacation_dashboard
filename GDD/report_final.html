@@ -794,6 +794,7 @@
             <button class="source-chip" id="sourceChipAll" type="button" data-source="all" aria-pressed="true">All</button>
             <button class="source-chip" id="sourceChipSteam" type="button" data-source="Steam" aria-pressed="false">Steam</button>
             <button class="source-chip" id="sourceChipDiscord" type="button" data-source="Discord" aria-pressed="false">Discord</button>
+            <button class="source-chip" id="sourceChipYoutube" type="button" data-source="YouTube" aria-pressed="false">YouTube</button>
             <button class="source-chip" id="sourceChipForum" type="button" data-source="Forum" aria-pressed="false">Forum</button>
           </div>
           <p class="count-line" id="evidenceCount"></p>
@@ -961,7 +962,8 @@
       discord_bug_forum: 'Forum',
       Steam: 'Steam',
       Discord: 'Discord',
-      Forum: 'Forum'
+      Forum: 'Forum',
+      YouTube: 'YouTube'
     };
 
     const SEVERITY_BY_THEME = {
@@ -982,7 +984,13 @@
       'Steam Deck cursor/input': 'major',
       'Co-op task sync': 'major',
       'Recipe authenticity': 'minor',
-      'Day-cycle challenge': 'minor'
+      'Day-cycle challenge': 'minor',
+      'Customer flow stall': 'major',
+      'Shutdown hang': 'major',
+      'Object placement lock': 'major',
+      'Store economy exploit': 'minor',
+      'Simulation realism': 'minor',
+      'Delivery loop fantasy': 'minor'
     };
 
     const mhtmlFileList = [
@@ -1382,6 +1390,444 @@
       ]
     };
 
+    const README_MAR9_UPDATE = {
+      meta: {
+        actuality_date: '2026-03-09'
+      },
+      theme_scores: [
+        { theme: 'Performance', sentiment: 'negative', frequency: 4, frequency_score: 4.62, severity_score: 4.5, recency_score: 4.28, priority_score: 4.48 },
+        { theme: 'Inventory friction', sentiment: 'negative', frequency: 4, frequency_score: 3.22, severity_score: 3.5, recency_score: 4.22, priority_score: 3.57 },
+        { theme: 'Steam Deck cursor/input', sentiment: 'negative', frequency: 4, frequency_score: 3.08, severity_score: 4.0, recency_score: 4.46, priority_score: 3.72 },
+        { theme: 'Day-cycle challenge', sentiment: 'negative', frequency: 4, frequency_score: 2.96, severity_score: 3.0, recency_score: 4.18, priority_score: 3.20 },
+        { theme: 'Co-op task sync', sentiment: 'negative', frequency: 3, frequency_score: 2.84, severity_score: 4.0, recency_score: 4.14, priority_score: 3.49 },
+        { theme: 'Atmosphere/Cozy', sentiment: 'positive', frequency: 5, frequency_score: 3.62, severity_score: 2.0, recency_score: 4.22, priority_score: 3.25 }
+      ],
+      feedback_signals: [
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-09-jank-vibe',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Players like the small Italian village vibe and relaxing loop, but still describe the demo as janky and in need of interaction polish.',
+          theme: 'Atmosphere/Cozy',
+          sentiment: 'positive',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-09-patience-toggle',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Players ask for an optional patience bar or timer so challenge level can be tuned without breaking the cozy mode.',
+          theme: 'Day-cycle challenge',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-09-prep-storage',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Prep friction: players want to batch-cut ingredients, store them in the fridge, and serve prepared dishes later without constant backtracking.',
+          theme: 'Inventory friction',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-09-store-exploit',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Store exploit report: players can walk away with food in the basket without paying.',
+          theme: 'Store economy exploit',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-09-delivery-fantasy',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Multiple requests ask for deliveries, scooters, and gameplay beyond the village to add co-op challenge and world fantasy.',
+          theme: 'Delivery loop fantasy',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-09-spoilage-realism',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Simulation realism request: optional spoilage, order mistakes, and actual money loss would add restaurant stakes missing in the demo.',
+          theme: 'Simulation realism',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-09-small-pc-optimization',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Players with smaller PCs and even some strong rigs still ask for optimization and better FPS consistency.',
+          theme: 'Performance',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-demo-mp-save',
+          url: '',
+          quote: 'Multiplayer sessions in the demo do not save reliably, which needs explicit messaging and a release-ready save path.',
+          theme: 'Save loss',
+          sentiment: 'negative',
+          severity: 'critical'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-hotbar-trash',
+          url: '',
+          quote: 'Inventory QoL request: players want hotbar reordering and a trash can for extra cut ingredients that waste slots.',
+          theme: 'Inventory friction',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-customer-stall-l6',
+          url: '',
+          quote: 'Level 6 report: no new clients enter the cafe even though it is open and daylight, blocking further progress.',
+          theme: 'Customer flow stall',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-customer-stall-l78',
+          url: '',
+          quote: 'Mods confirm repeated reports that levels 7-8 can go 15-20 minutes or longer with no customers, even when the cafe remains open.',
+          theme: 'Customer flow stall',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-shutdown-hang',
+          url: '',
+          quote: 'Close-game issue: the app appears closed, but Steam stays on stopping and players cannot relaunch until reboot.',
+          theme: 'Shutdown hang',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-placement-lock',
+          url: '',
+          quote: 'Item placement lock: prepared food and drinks cannot be put back on counters or anywhere else, creating a prep soft-lock.',
+          theme: 'Object placement lock',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-steamdeck-outline',
+          url: '',
+          quote: 'Steam Deck players report the pizza cursor is nearly invisible in menus and mini-games until they learn to track a faint outline.',
+          theme: 'Steam Deck cursor/input',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-linux-proton',
+          url: '',
+          quote: 'Linux workaround: Proton Experimental often loses the cursor, Proton 10.x restores it, and Alt+Tab can temporarily mitigate the issue.',
+          theme: 'Steam Deck cursor/input',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'YouTube',
+          id: 'youtube-2026-03-09-cut-table-repro',
+          url: 'https://www.youtube.com/watch?v=PZDs36EO6pA',
+          quote: 'Video repro shows the cursor bug reliably appears after using the cutting table, leaving only tiny white cursor artifacts.',
+          theme: 'Steam Deck cursor/input',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-09-demo-retention-signal',
+          url: '',
+          quote: 'Positive demand signal: players ask to keep the demo open longer, call it therapeutic, and report 8-hour co-op sessions.',
+          theme: 'Atmosphere/Cozy',
+          sentiment: 'positive',
+          severity: 'minor'
+        }
+      ],
+      bug_clusters: [
+        {
+          name: 'Customer flow stall',
+          severity: 'major',
+          frequency: 4,
+          priority: 'P1',
+          score: 3.74,
+          priority_score: 3.74,
+          repro_notes: 'After level 6-8, the cafe can stay open in daylight with no clients arriving for 10-20+ minutes, even after restart.',
+          source_count: 1,
+          source_breakdown: { Discord: 4 }
+        },
+        {
+          name: 'Shutdown hang',
+          severity: 'major',
+          frequency: 2,
+          priority: 'P1',
+          score: 3.22,
+          priority_score: 3.22,
+          repro_notes: 'Closing the game leaves Steam stuck on "stopping", blocking relaunch until full system restart.',
+          source_count: 1,
+          source_breakdown: { Discord: 2 }
+        },
+        {
+          name: 'Object placement lock',
+          severity: 'major',
+          frequency: 2,
+          priority: 'P1',
+          score: 3.08,
+          priority_score: 3.08,
+          repro_notes: 'Prepared items cannot be placed back onto counters or other surfaces; soft-lock resolves only after waiting or random reset.',
+          source_count: 1,
+          source_breakdown: { Discord: 2 }
+        },
+        {
+          name: 'Steam Deck cursor/input',
+          severity: 'major',
+          frequency: 3,
+          priority: 'P1',
+          score: 3.82,
+          priority_score: 3.82,
+          repro_notes: 'Cursor disappears or becomes barely visible on Steam Deck/Linux, especially after cutting-table interaction; Proton 10.x is a partial workaround.',
+          source_count: 2,
+          source_breakdown: { Discord: 2, YouTube: 1 }
+        }
+      ],
+      actions: [
+        {
+          id: 'A14',
+          category: 'Gameplay',
+          status: 'shipping',
+          theme: 'Customer flow stall',
+          severity: 'major',
+          problem_link: '',
+          solution: 'Add customer-spawn watchdog, open-state telemetry, and fallback spawn recovery for level 6-8 stalls.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-80% no-client stall reports after level 6; +completed demo runs',
+          owner: 'Systems',
+          eta: 'Week 1-2'
+        },
+        {
+          id: 'A15',
+          category: 'QoL',
+          status: 'shipping',
+          theme: 'Shutdown hang',
+          severity: 'major',
+          problem_link: '',
+          solution: 'Graceful shutdown pass: close Steam hooks cleanly, clear overlays, and add exit-state logging for stuck stopping cases.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-90% stuck-on-stopping reports',
+          owner: 'Engine',
+          eta: 'Week 1-3'
+        },
+        {
+          id: 'A16',
+          category: 'Gameplay',
+          status: 'shipping',
+          theme: 'Object placement lock',
+          severity: 'major',
+          problem_link: '',
+          solution: 'Recovery path for held items: reset invalid placement state, rebind counters, and surface a safe drop fallback.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-70% prep soft-lock reports',
+          owner: 'Gameplay',
+          eta: 'Week 1-3'
+        },
+        {
+          id: 'A17',
+          category: 'Gameplay',
+          status: 'shipping',
+          theme: 'Store economy exploit',
+          severity: 'minor',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Validate checkout state and lock inventory exit when basket contents are unpaid.',
+          impact: 'Medium',
+          effort: 'S',
+          priority: 'P2',
+          kpi: '0 unpaid basket exploit repros',
+          owner: 'Systems',
+          eta: 'Week 2-3'
+        },
+        {
+          id: 'A18',
+          category: 'Retention',
+          status: 'hypothesis',
+          theme: 'Day-cycle challenge',
+          severity: 'minor',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Difficulty preset with optional customer patience timer and visible service-pressure toggle.',
+          impact: 'Medium',
+          effort: 'S',
+          priority: 'P2',
+          kpi: '+challenge satisfaction in surveys without hurting cozy segment',
+          owner: 'Design',
+          eta: 'Backlog'
+        },
+        {
+          id: 'A19',
+          category: 'QoL',
+          status: 'shipping',
+          theme: 'Inventory friction',
+          severity: 'major',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Prep/storage QoL pack: hotbar reorder, trash can, prep bins, and clearer surface storage behavior.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-35% inventory and prep-friction complaints',
+          owner: 'UX',
+          eta: 'Week 2-4'
+        },
+        {
+          id: 'A20',
+          category: 'Gameplay',
+          status: 'hypothesis',
+          theme: 'Simulation realism',
+          severity: 'minor',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Prototype optional spoilage, order-failure penalties, and daily stakes to make restaurant mastery meaningful.',
+          impact: 'Medium',
+          effort: 'M',
+          priority: 'P2',
+          kpi: '+simulation-depth mentions and challenge satisfaction',
+          owner: 'Systems',
+          eta: 'Backlog'
+        },
+        {
+          id: 'A21',
+          category: 'USP',
+          status: 'hypothesis',
+          theme: 'Delivery loop fantasy',
+          severity: 'minor',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Prototype food deliveries with scooter routing and multi-order carrying to expand the co-op fantasy beyond the patio.',
+          impact: 'Medium',
+          effort: 'L',
+          priority: 'P2',
+          kpi: '+wishlist intent and world-expansion sentiment in surveys',
+          owner: 'Content',
+          eta: 'Backlog'
+        }
+      ],
+      insights_shipping: [
+        {
+          id: 'IC11',
+          title: 'Customer spawn watchdog',
+          status: 'shipping',
+          category: 'Gameplay',
+          solution: 'Add a watchdog for open-state stalls so customer flow self-recovers before the session becomes unwinnable.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-no-client blocker reports after pizza level',
+          evidence_strength: 'Strong',
+          source_refs: []
+        },
+        {
+          id: 'IC12',
+          title: 'Item placement recovery path',
+          status: 'shipping',
+          category: 'QoL',
+          solution: 'Detect invalid held-item states and offer a safe drop/reset path instead of trapping the player in prep flow.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-object placement soft-lock mentions',
+          evidence_strength: 'Strong',
+          source_refs: []
+        },
+        {
+          id: 'IC13',
+          title: 'Graceful shutdown integrity',
+          status: 'shipping',
+          category: 'QoL',
+          solution: 'Close the game cleanly in Steam and remove residual overlay state so players can relaunch without rebooting.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-shutdown hang reports',
+          evidence_strength: 'Strong',
+          source_refs: []
+        }
+      ],
+      insights_hypothesis: [
+        {
+          id: 'IC14',
+          title: 'Simulation stakes mode',
+          status: 'hypothesis',
+          category: 'Gameplay',
+          solution: 'Offer an optional realism mode with spoilage and mistake penalties for players who want restaurant stakes.',
+          impact: 'Medium',
+          effort: 'M',
+          priority: 'P2',
+          kpi: '+simulation satisfaction in advanced cohorts',
+          evidence_strength: 'Medium',
+          source_refs: ['https://steamcommunity.com/app/3196440/discussions/']
+        },
+        {
+          id: 'IC15',
+          title: 'Delivery loop prototype',
+          status: 'hypothesis',
+          category: 'USP',
+          solution: 'Test whether deliveries, scooter traversal, and multi-order carrying deepen co-op novelty without collapsing pacing.',
+          impact: 'Medium',
+          effort: 'L',
+          priority: 'P2',
+          kpi: '+world-expansion mentions and co-op replay intent',
+          evidence_strength: 'Medium',
+          source_refs: ['https://steamcommunity.com/app/3196440/discussions/']
+        },
+        {
+          id: 'IC16',
+          title: 'Patience timer option',
+          status: 'hypothesis',
+          category: 'Retention',
+          solution: 'Validate whether an optional patience bar increases mastery appeal while preserving the cozy default mode.',
+          impact: 'Medium',
+          effort: 'S',
+          priority: 'P2',
+          kpi: '+challenge satisfaction without reducing session comfort',
+          evidence_strength: 'Medium',
+          source_refs: ['https://steamcommunity.com/app/3196440/discussions/']
+        }
+      ],
+      roadmap: [
+        { window: 'Week 1-2', initiative: 'A14 Customer flow watchdog', dependency: 'Protect demo progression after pizza levels', urgency: 'major' },
+        { window: 'Week 1-3', initiative: 'A15 Graceful shutdown pass', dependency: 'Stabilize close/relaunch loop before next public build', urgency: 'major' },
+        { window: 'Week 1-3', initiative: 'A16 Placement recovery path', dependency: 'Remove prep-flow soft-locks before content expansion', urgency: 'major' },
+        { window: 'Week 2-4', initiative: 'A19 Inventory QoL pack', dependency: 'Pairs with hold-to-action and prep-flow cleanup', urgency: 'major' },
+        { window: 'Backlog', initiative: 'A18 Patience toggle prototype', dependency: 'After reliability fixes and survey segmentation', urgency: 'minor' },
+        { window: 'Backlog', initiative: 'A20 Simulation realism prototype', dependency: 'After base restaurant loop is stable', urgency: 'minor' },
+        { window: 'Backlog', initiative: 'A21 Delivery loop prototype', dependency: 'After core kitchen flow and performance stabilize', urgency: 'minor' }
+      ],
+      source_snapshot: {
+        verified_at: '2026-03-09',
+        compiled_artifacts: [
+          'polyKalshi/README.md (offline compiled source)'
+        ],
+        update_notes: [
+          'README-derived signals were normalized into the dashboard dataset on 2026-03-09.',
+          'GitHub Pages runtime does not read local absolute files; this README was used only as an offline compilation source.'
+        ]
+      }
+    };
+
     const I18N = {
       ru: {
         skip_link: 'Перейти к содержанию',
@@ -1429,6 +1875,7 @@
         source_chip_all: 'Все',
         source_chip_steam: 'Steam',
         source_chip_discord: 'Discord',
+        source_chip_youtube: 'YouTube',
         source_chip_forum: 'Форум',
         source_toggle_aria: 'Быстрый выбор источника',
         risks_title: 'Топ рисков по обратной связи',
@@ -1446,8 +1893,8 @@
         bug_th_hints: 'Шаги воспроизведения',
         bug_th_sources: 'Источники',
         evidence_title: 'Панель сигналов',
-        evidence_desc: 'Нормализованные сигналы из <code>Steam / Discord / Форум</code>, включая локальный парсинг <code>chatlogs-*.html</code> и <code>107-*.mhtml</code>.',
-        evidence_intro: 'Карточки сигналов показывают короткий фрагмент и раскрываемый блок деталей: контекст, серьезность, тема и источник. Это ускоряет проверку гипотез без переключений между инструментами.',
+        evidence_desc: 'Нормализованные сигналы из <code>Steam / Discord / YouTube / Форум</code>, включая локальный парсинг <code>chatlogs-*.html</code> и <code>107-*.mhtml</code>.',
+        evidence_intro: 'Карточки сигналов показывают короткий фрагмент и раскрываемый блок деталей: контекст, серьезность, тема и источник. Слой нужен для быстрой проверки гипотез без переключения между Steam, Discord и внешними заметками.',
         actions_title: 'План действий',
         actions_desc: 'Перенесено из предыдущих дашбордов: владелец, срок, KPI и трассировка источников.',
         actions_intro: 'План действий связывает проблемы с конкретными решениями и KPI. Формат рассчитан на еженедельный обзор релизов: что запускаем сейчас, кто владелец и какой эффект ожидаем.',
@@ -1479,8 +1926,8 @@
         roadmap_desc: 'Порядок внедрения с учетом зависимостей: сначала стабильность ядра, затем рост.',
         roadmap_intro: 'Дорожная карта отражает критический порядок поставки: сначала исправляем системные блокеры, затем масштабируем инициативы роста без потери качества.',
         sources_title: 'Основание по источникам',
-        sources_desc: 'Кратко: какие источники данных были учтены в анализе и на какой дате зафиксирована выборка.',
-        sources_intro: 'В анализ включены обсуждения Steam, сигналы из Discord (каналы багов и обратной связи), локальный парсинг чатов, а также сравнительные данные по рынку и YouTube-обзорам.',
+        sources_desc: 'Кратко: какие источники данных были учтены в анализе, на какой дате зафиксирована выборка и какие офлайн-артефакты были скомпилированы в дашборд.',
+        sources_intro: 'В анализ включены обсуждения Steam, сигналы из Discord (каналы багов и обратной связи), локальный парсинг чатов, YouTube-обзоры и curated-обновления из внешних локальных артефактов без runtime-зависимости от них.',
         source_status: 'База по Steam',
         source_platforms: 'База по Discord',
         source_verified: 'Проверено',
@@ -1574,6 +2021,7 @@
         source_chip_all: 'All',
         source_chip_steam: 'Steam',
         source_chip_discord: 'Discord',
+        source_chip_youtube: 'YouTube',
         source_chip_forum: 'Forum',
         source_toggle_aria: 'Quick source switch',
         risks_title: 'Top Feedback Risks',
@@ -1591,8 +2039,8 @@
         bug_th_hints: 'Repro hints',
         bug_th_sources: 'Sources',
         evidence_title: 'Evidence Drawer',
-        evidence_desc: 'Normalized signals from <code>Steam / Discord / Forum</code>, including local parsing of <code>chatlogs-*.html</code> and <code>107-*.mhtml</code>.',
-        evidence_intro: 'Evidence cards provide a short preview plus expandable details: context, severity, mapped theme, and source traceability.',
+        evidence_desc: 'Normalized signals from <code>Steam / Discord / YouTube / Forum</code>, including local parsing of <code>chatlogs-*.html</code> and <code>107-*.mhtml</code>.',
+        evidence_intro: 'Evidence cards provide a short preview plus expandable details: context, severity, mapped theme, and source traceability across Steam, Discord, YouTube, and local compiled artifacts.',
         actions_title: 'Action Board',
         actions_desc: 'Migrated from previous dashboards: owner + ETA + KPI + source traceability.',
         actions_intro: 'Action Board maps each problem to a concrete solution and KPI. The layout is optimized for weekly delivery review and execution ownership.',
@@ -1624,8 +2072,8 @@
         roadmap_desc: 'Dependency-aware rollout order: reliability first, growth second.',
         roadmap_intro: 'Roadmap reflects the critical delivery sequence: stabilize core reliability first, then scale growth initiatives without quality debt.',
         sources_title: 'Source Snapshot',
-        sources_desc: 'Technical source summary, data versioning, and link health.',
-        sources_intro: 'This block is for data auditability: which sources were verified, when they were refreshed, and which URLs returned healthy responses.',
+        sources_desc: 'Technical source summary, data versioning, compiled artifacts, and link health.',
+        sources_intro: 'This block is for data auditability: which sources were verified, when they were refreshed, and which local artifacts were compiled into the dashboard without becoming runtime dependencies.',
         source_status: 'Steam status',
         source_platforms: 'Platforms',
         source_verified: 'Verified at',
@@ -1697,14 +2145,14 @@
         impact_en: 'Directly impacts D7 and organic co-op word-of-mouth growth.'
       },
       'Performance': {
-        summary_ru: 'Высокая нагрузка на GPU/CPU даже на низких настройках ухудшает базовый UX.',
-        summary_en: 'High GPU/CPU load even on low settings degrades baseline UX.',
-        risk_ru: 'Проблемы производительности уменьшают длительность сессии и повышают негатив в ранних отзывах.',
-        risk_en: 'Performance pain reduces session duration and increases negative early reviews.',
-        action_ru: 'Приоритетный техтриаж, динамические профили качества и прозрачные графические пресеты.',
-        action_en: 'Priority triage + dynamic quality profiles + transparent graphics presets.',
-        impact_ru: 'Влияет на тональность отзывов и снижает технический отток.',
-        impact_en: 'Affects review sentiment and technical churn reduction.'
+        summary_ru: 'Высокая нагрузка на GPU/CPU, просадки FPS и жалобы даже от игроков с сильными ПК бьют по базовому UX и доверию к релизной готовности.',
+        summary_en: 'High GPU/CPU load, FPS drops, and complaints even from players with solid PCs hurt baseline UX and launch-readiness trust.',
+        risk_ru: 'Проблемы производительности уменьшают длительность сессии, провоцируют ранние негативные отзывы и усиливают чувствительность к другим багам.',
+        risk_en: 'Performance pain cuts session duration, triggers early negative reviews, and amplifies frustration around other bugs.',
+        action_ru: 'Приоритетный техтриаж, динамические профили качества, прозрачные графические пресеты и отдельный разбор ошибок при закрытии игры.',
+        action_en: 'Priority triage, dynamic quality profiles, transparent presets, and a dedicated pass on shutdown-related technical failures.',
+        impact_ru: 'Влияет на тональность отзывов, снижает технический отток и повышает шанс, что игрок дойдет до длинной уютной сессии.',
+        impact_en: 'Affects review sentiment, technical churn, and the chance that players reach the long cozy session the game is built around.'
       },
       'Controls/UI friction': {
         summary_ru: 'Лишние клики и неочевидные паттерны взаимодействия создают усталость в основном игровом цикле.',
@@ -1715,6 +2163,116 @@
         action_en: 'Hold-to-action, input comfort bundle, and targeted UI fix patches.',
         impact_ru: 'Снижает отток после первых сессий и повышает долю завершения заказов.',
         impact_en: 'Lowers early-session churn and improves completion rate.'
+      },
+      'Inventory friction': {
+        summary_ru: 'Игрокам не хватает пространства и гибкости: неудобно переставлять хотбар, выбрасывать лишнее и готовить ингредиенты заранее.',
+        summary_en: 'Players lack space and flexibility: reordering the hotbar, discarding extras, and prepping ahead are all awkward.',
+        risk_ru: 'Если не разгрузить инвентарь, кулинарная петля становится не медитативной, а суетной, особенно в кооперативе и на поздних рецептах.',
+        risk_en: 'If inventory flow stays constrained, the cooking loop feels hectic instead of meditative, especially in co-op and late recipes.',
+        action_ru: 'Собрать QoL-пакет: переупорядочивание хотбара, корзина/мусорка, контейнеры для заготовок и понятные точки хранения.',
+        action_en: 'Ship a QoL pack: hotbar reorder, trash/bin handling, prep containers, and clearer storage surfaces.',
+        impact_ru: 'Снижает операционное трение, ускоряет сборку заказов и помогает игрокам дольше оставаться в потоке.',
+        impact_en: 'Reduces operational friction, speeds up order assembly, and helps players stay in flow longer.'
+      },
+      'Steam Deck cursor/input': {
+        summary_ru: 'На Steam Deck и Linux курсор может быть невидимым или ломаться после работы за столом нарезки; часть игроков находит только временные Proton-обходы.',
+        summary_en: 'On Steam Deck and Linux, the cursor can become invisible or break after cutting-table interaction; players rely on temporary Proton workarounds.',
+        risk_ru: 'Баг режет совместимость с заметной частью аудитории Steam и превращает первые минуты в блокер вместо уютного онбординга.',
+        risk_en: 'The bug cuts compatibility for a meaningful Steam audience and turns first-session onboarding into a blocker.',
+        action_ru: 'Исправить фокус и рендер курсора, пройти Linux/Proton матрицу и зафиксировать воспроизводимый сценарий через стол нарезки.',
+        action_en: 'Fix cursor focus/rendering, validate Linux/Proton paths, and lock a reliable cut-table repro for regression testing.',
+        impact_ru: 'Повышает долю успешного первого запуска, снижает платформенный негатив и открывает путь к Steam Deck-совместимости.',
+        impact_en: 'Improves first-session success, lowers platform-specific negativity, and clears the path toward Steam Deck compatibility.'
+      },
+      'Co-op task sync': {
+        summary_ru: 'В кооперативе часть общих задач и покупок не синхронизируется между участниками, что ломает прогрессию и ощущение командной игры.',
+        summary_en: 'Some shared tasks and purchases do not sync correctly in co-op, breaking progression and the team-play fantasy.',
+        risk_ru: 'Когда чеклист не закрывается после действий напарника, кооператив воспринимается как нестабильный и теряет магию совместной кухни.',
+        risk_en: 'When teammate actions fail to clear shared checklists, co-op feels unreliable and loses its shared-kitchen magic.',
+        action_ru: 'Приоритетно чинить общие состояния задач, масштабирование нагрузки и логику покупок, которую должен видеть весь лобби.',
+        action_en: 'Prioritize shared task state, scaling logic, and purchase ownership so the whole lobby sees the same progression.',
+        impact_ru: 'Напрямую влияет на повторные кооперативные сессии, сарафанный рост и удержание игровых компаний.',
+        impact_en: 'Directly affects repeat co-op sessions, word-of-mouth growth, and squad retention.'
+      },
+      'Day-cycle challenge': {
+        summary_ru: 'Игроки видят уют, но не чувствуют ставок: нет ясного конца дня, терпения клиентов и понятного ежедневного результата.',
+        summary_en: 'Players feel the coziness, but not the stakes: there is no clear end-of-day, customer patience, or daily outcome framing.',
+        risk_ru: 'Без этого цикл становится слишком безопасным и быстро теряет напряжение для игроков, которым нужен управляемый челлендж.',
+        risk_en: 'Without this layer, the loop feels too fail-safe and loses tension for players who want manageable challenge.',
+        action_ru: 'Протестировать конец дня, дневной отчет и опциональный таймер терпения, не ломая cozy-режим по умолчанию.',
+        action_en: 'Test end-of-day cadence, daily ledger, and an optional patience timer without breaking the default cozy mode.',
+        impact_ru: 'Даёт больше глубины D1/D7-петле и повышает вероятность, что игроки будут обсуждать не только атмосферу, но и мастерство.',
+        impact_en: 'Adds depth to the D1/D7 loop and increases the chance players talk about mastery, not just atmosphere.'
+      },
+      'Atmosphere/Cozy': {
+        summary_ru: 'Позитивный контур сильный: игроки хвалят уют, итальянскую атмосферу, терапевтичность и способность залипать на длинные сессии.',
+        summary_en: 'The positive contour is strong: players praise the coziness, Italian atmosphere, therapeutic feel, and long-session stickiness.',
+        risk_ru: 'Это главный эмоциональный актив проекта, поэтому любые технические баги и трение особенно опасны: они разрушают именно то, за что игру уже любят.',
+        risk_en: 'This is the project’s main emotional asset, so technical bugs and friction are especially dangerous because they damage what players already love.',
+        action_ru: 'Сохранять cozy-ядро, но защищать его надежностью, плавным UX и более четкой структурой прогрессии.',
+        action_en: 'Preserve the cozy core, but protect it with reliability, smoother UX, and clearer progression structure.',
+        impact_ru: 'Работает на рекомендации, долгие сессии и будущую конверсию в покупку после демо.',
+        impact_en: 'Supports word-of-mouth, long sessions, and eventual conversion from demo to purchase.'
+      },
+      'Customer flow stall': {
+        summary_ru: 'После уровней 6-8 у части игроков поток клиентов останавливается полностью, хотя кафе открыто и игровой день продолжается.',
+        summary_en: 'After levels 6-8, some players see customer flow stop completely even though the cafe is open and daytime continues.',
+        risk_ru: 'Это прямой блокер прогрессии: игрок больше не может продолжать сессию и уходит не по собственному желанию, а из-за поломанного цикла.',
+        risk_en: 'This is a direct progression blocker: players stop because the loop is broken, not because they chose to end the session.',
+        action_ru: 'Добавить watchdog на спавн клиентов, телеметрию состояния кафе и аварийное восстановление потока без перезапуска.',
+        action_en: 'Add a customer-spawn watchdog, cafe-state telemetry, and emergency recovery so flow resumes without restart.',
+        impact_ru: 'Снижает критичный отток в середине демо и защищает самую конверсионную часть петли после открытия новых рецептов.',
+        impact_en: 'Reduces critical mid-demo churn and protects the most conversion-relevant part of the loop after new recipes unlock.'
+      },
+      'Shutdown hang': {
+        summary_ru: 'Игра визуально закрывается, но Steam продолжает считать процесс активным и не дает быстро запустить новую сессию.',
+        summary_en: 'The game appears closed, but Steam still treats the process as active and blocks relaunch.',
+        risk_ru: 'Проблема ломает доверие к техническому качеству и превращает даже короткий тест в раздражающий опыт с перезагрузкой компьютера.',
+        risk_en: 'The issue undermines technical trust and turns even a short test into a frustrating reboot-required experience.',
+        action_ru: 'Исправить graceful shutdown, очистку overlay/Steam hooks и журналирование состояния выхода.',
+        action_en: 'Fix graceful shutdown, clear overlay/Steam hooks, and log exit-state failures.',
+        impact_ru: 'Снижает «технический rage quit» и повышает готовность игроков возвращаться к демо после первого сбоя.',
+        impact_en: 'Reduces technical rage-quits and increases the chance players return after the first failure.'
+      },
+      'Object placement lock': {
+        summary_ru: 'В поздней игре может сломаться размещение предметов: еду и напитки нельзя положить обратно на поверхности, что мягко блокирует кухню.',
+        summary_en: 'Late in the run, item placement can break so food and drinks cannot be put back on surfaces, softly locking the kitchen.',
+        risk_ru: 'Проблема разрушает весь prep-flow: игрок не может безопасно разгрузить руки и вынужден ждать случайного сброса состояния.',
+        risk_en: 'The issue breaks the entire prep flow: players cannot safely unload their hands and must wait for random state recovery.',
+        action_ru: 'Добавить безопасный recovery path для held-item state и перепривязку поверхностей при ошибке размещения.',
+        action_en: 'Add a safe held-item recovery path and surface rebinding when placement fails.',
+        impact_ru: 'Снижает мягкие блокеры кухни и повышает стабильность поздних кооперативных и соло-сессий.',
+        impact_en: 'Reduces kitchen soft-locks and improves late-session stability in solo and co-op.'
+      },
+      'Store economy exploit': {
+        summary_ru: 'Игроки заметили, что из магазина можно уйти с полной корзиной без оплаты, что ломает экономическую рамку.',
+        summary_en: 'Players noticed they can leave stores with a full basket without paying, breaking the economy frame.',
+        risk_ru: 'Даже редкий эксплойт подрывает ощущение «честного» симулятора и делает экономический баланс менее достоверным.',
+        risk_en: 'Even a niche exploit weakens the sense of a fair simulation and makes the economy feel less trustworthy.',
+        action_ru: 'Проверить логику покупки и заблокировать выход с неоплаченными товарами.',
+        action_en: 'Validate purchase state and block exits with unpaid goods.',
+        impact_ru: 'Поддерживает целостность экономики и снижает риск нелепых пользовательских гайдов по абьюзу.',
+        impact_en: 'Protects economy integrity and reduces the risk of exploit-focused community guides.'
+      },
+      'Simulation realism': {
+        summary_ru: 'Часть аудитории хочет более аутентичный ресторанный цикл: порчу продуктов, ошибки в заказах и возможность реально потерять деньги.',
+        summary_en: 'Part of the audience wants a more authentic restaurant loop: spoilage, order mistakes, and the ability to actually lose money.',
+        risk_ru: 'Без слоя ставок игра остается уютной, но для продвинутых игроков может показаться слишком безопасной и быстро исчерпаемой.',
+        risk_en: 'Without a stakes layer, the game stays cozy but may feel too safe and shallow for advanced players.',
+        action_ru: 'Проверить опциональный realism-mode вместо обязательного усложнения для всей аудитории.',
+        action_en: 'Validate an optional realism mode instead of forcing complexity on the full audience.',
+        impact_ru: 'Помогает расширить охват: сохранить cozy-базу и одновременно дать глубину игрокам, которым нужен ресторанный сим.',
+        impact_en: 'Helps widen the audience: keep the cozy base while offering depth to players who want a restaurant sim.'
+      },
+      'Delivery loop fantasy': {
+        summary_ru: 'Игроки видят потенциал мира за пределами патио: доставку, скутеры, новые локации и более живой кооперативный челлендж.',
+        summary_en: 'Players see fantasy potential beyond the patio: deliveries, scooters, new locations, and a livelier co-op challenge.',
+        risk_ru: 'Если не развивать эту фантазию, VCS может остаться только «уютной кухней», не раскрыв обещание отпускного мира и расширяемого сервиса.',
+        risk_en: 'If this fantasy is not explored, VCS may remain just a cozy kitchen instead of delivering on its vacation-world promise.',
+        action_ru: 'Прототипировать доставку и внешние маршруты как ограниченный слой, не руша базовую кухонную петлю.',
+        action_en: 'Prototype deliveries and external routes as a bounded layer that does not break the core kitchen loop.',
+        impact_ru: 'Даёт потенциал USP, контент для роликов и более сильный аргумент для покупки полной версии.',
+        impact_en: 'Creates USP potential, stronger video-friendly moments, and a better reason to buy the full version.'
       },
       __default: {
         summary_ru: 'Сигналы указывают на точку улучшения в игровом опыте, требующую приоритизации.',
@@ -1736,25 +2294,31 @@
         'Co-op stability': 'Стабильность кооператива',
         'Co-op task sync': 'Синхронизация задач в кооперативе',
         'Controls/UI friction': 'Трение в управлении/UI',
+        'Customer flow stall': 'Остановка потока клиентов',
         'Day-cycle challenge': 'Цикл дня и уровень челленджа',
+        'Delivery loop fantasy': 'Фантазия доставки и внешнего мира',
         'Dishwashing burnout': 'Выгорание от мойки посуды',
         'Inventory friction': 'Трение инвентаря',
         'Layout strategy': 'Стратегия расстановки',
         'Localization': 'Локализация',
         'Memory load': 'Когнитивная нагрузка',
         'No-pressure flow': 'Спокойный темп без давления',
+        'Object placement lock': 'Блокировка размещения предметов',
         'Performance': 'Производительность',
         'Progression anchor': 'Якорь прогрессии',
         'Recipe authenticity': 'Аутентичность рецептов',
+        'Shutdown hang': 'Зависание при закрытии',
         'Steam Deck cursor/input': 'Steam Deck: курсор и ввод',
-        'Save loss': 'Потеря сохранений'
+        'Store economy exploit': 'Эксплойт оплаты в магазине',
+        'Save loss': 'Потеря сохранений',
+        'Simulation realism': 'Реализм симуляции'
       },
       en: {}
     };
 
     const SOURCE_LABELS = {
-      ru: { Steam: 'Steam', Discord: 'Discord', Forum: 'Форум', Unknown: 'Неизвестно' },
-      en: { Steam: 'Steam', Discord: 'Discord', Forum: 'Forum', Unknown: 'Unknown' }
+      ru: { Steam: 'Steam', Discord: 'Discord', YouTube: 'YouTube', Forum: 'Форум', Unknown: 'Неизвестно' },
+      en: { Steam: 'Steam', Discord: 'Discord', YouTube: 'YouTube', Forum: 'Forum', Unknown: 'Unknown' }
     };
 
     const CATEGORY_LABELS = {
@@ -1845,6 +2409,38 @@
         A13: {
           solution: 'Пасс аутентичности рецептов для ключевых итальянских блюд + визуальная консистентность рецептурной книги.',
           kpi: '+упоминания аутентичности; -критика рецептов.'
+        },
+        A14: {
+          solution: 'Добавить watchdog на поток клиентов, телеметрию состояния открытия кафе и аварийное восстановление спавна для уровней 6-8.',
+          kpi: '-80% жалоб на отсутствие клиентов после уровня 6; +завершенные демо-сессии.'
+        },
+        A15: {
+          solution: 'Пасс корректного закрытия: чисто завершать Steam hooks, overlay и логировать состояние выхода для кейсов со stuck stopping.',
+          kpi: '-90% жалоб на зависание при закрытии.'
+        },
+        A16: {
+          solution: 'Добавить путь восстановления для предметов в руках: сброс невалидного состояния и безопасное размещение на поверхности.',
+          kpi: '-70% жалоб на soft-lock при подготовке заказов.'
+        },
+        A17: {
+          solution: 'Проверка оплаты в магазине и блокировка выхода с неоплаченными товарами.',
+          kpi: '0 воспроизводимых эксплойтов с бесплатной корзиной.'
+        },
+        A18: {
+          solution: 'Прототип пресета сложности с опциональным таймером терпения клиентов и видимым переключателем давления.',
+          kpi: '+удовлетворенность челленджем без просадки у cozy-сегмента.'
+        },
+        A19: {
+          solution: 'QoL-пакет подготовки: переупорядочивание хотбара, мусорка, контейнеры для заготовок и ясные точки хранения.',
+          kpi: '-35% жалоб на инвентарь и подготовку ингредиентов.'
+        },
+        A20: {
+          solution: 'Прототип опционального realism-mode: порча продуктов, штрафы за ошибки и реальные дневные ставки.',
+          kpi: '+упоминания глубины симуляции и удовлетворенность челленджем.'
+        },
+        A21: {
+          solution: 'Прототип доставок со скутером, маршрутами и переносом нескольких заказов за раз.',
+          kpi: '+намерение добавить в wishlist и обсуждения расширения мира.'
         }
       },
       improvements: {
@@ -1918,6 +2514,36 @@
           title: 'Пасс аутентичности рецептов',
           solution: 'Привести ключевые рецепты к ожидаемой кулинарной логике и убрать ингредиенты, выбивающие из погружения.',
           kpi: '+упоминания аутентичности, -критика рецептов.'
+        },
+        IC11: {
+          title: 'Watchdog потока клиентов',
+          solution: 'Добавить watchdog для открытого кафе, чтобы поток клиентов самовосстанавливался до того, как сессия станет непроходимой.',
+          kpi: '-блокеры «нет клиентов» после уровня с пиццей.'
+        },
+        IC12: {
+          title: 'Восстановление размещения предметов',
+          solution: 'Отлавливать невалидные состояния предметов в руках и давать безопасный путь сброса вместо soft-lock на кухне.',
+          kpi: '-упоминания soft-lock при размещении предметов.'
+        },
+        IC13: {
+          title: 'Надежное закрытие игры',
+          solution: 'Закрывать игру корректно в Steam и убирать остаточное состояние overlay, чтобы игрок мог сразу перезапустить сессию.',
+          kpi: '-жалобы на зависание при закрытии.'
+        },
+        IC14: {
+          title: 'Режим ресторанных ставок',
+          solution: 'Проверить опциональный режим реализма с порчей продуктов и штрафами за ошибки.',
+          kpi: '+удовлетворенность глубиной симуляции в продвинутых когортах.'
+        },
+        IC15: {
+          title: 'Прототип доставки',
+          solution: 'Проверить, усиливают ли доставки, скутеры и внешний маршрут кооперативную новизну без потери темпа.',
+          kpi: '+упоминания расширения мира и намерение вернуться в кооператив.'
+        },
+        IC16: {
+          title: 'Опция таймера терпения',
+          solution: 'Проверить, повышает ли опциональная шкала терпения ощущение мастерства без потери cozy-режима по умолчанию.',
+          kpi: '+удовлетворенность челленджем без снижения комфорта сессии.'
         }
       }
     };
@@ -2064,6 +2690,42 @@
 
     function sourceLabel(source) {
       return mapLabel(SOURCE_LABELS, source || 'Unknown');
+    }
+
+    function normalizeSourceFromUrl(url) {
+      const href = String(url || '').trim();
+      if (!href) return '';
+      try {
+        const host = new URL(href).hostname.toLowerCase();
+        if (host.includes('steamcommunity.com') || host.includes('steampowered.com')) return 'Steam';
+        if (host.includes('discord.com')) return 'Discord';
+        if (host.includes('youtube.com') || host.includes('youtu.be')) return 'YouTube';
+      } catch {}
+      return '';
+    }
+
+    function getCandidateSources(item) {
+      const sources = new Set();
+      const push = (value) => {
+        const normalized = normalizeSource(value);
+        if (normalized && normalized !== 'Unknown') sources.add(normalized);
+      };
+
+      if (!item || typeof item !== 'object') return ['Unknown'];
+
+      push(item.source);
+      push(normalizeSourceFromUrl(item.url));
+      push(normalizeSourceFromUrl(item.problem_link));
+      (item.source_refs || []).forEach((href) => push(normalizeSourceFromUrl(href)));
+
+      const theme = item.theme || item.linked_theme || item.name || '';
+      if (theme) {
+        (DashboardDataV3.feedback_signals || []).forEach((sig) => {
+          if (sig?.theme === theme) push(sig.source);
+        });
+      }
+
+      return sources.size ? [...sources] : ['Unknown'];
     }
 
     function categoryLabel(category) {
@@ -2250,6 +2912,7 @@
       setText('sourceChipAll', t('source_chip_all'));
       setText('sourceChipSteam', t('source_chip_steam'));
       setText('sourceChipDiscord', t('source_chip_discord'));
+      setText('sourceChipYoutube', t('source_chip_youtube'));
       setText('sourceChipForum', t('source_chip_forum'));
 
       setText('actionsTitle', t('actions_title'));
@@ -2401,6 +3064,13 @@
 
     function inferThemeAndSeverity(text) {
       const lower = String(text || '').toLowerCase();
+      if (/(steam deck|proton|cursor|controller has no input|cutting table|tiny white spots)/i.test(lower)) return { theme: 'Steam Deck cursor/input', severity: 'major' };
+      if (/(no new clients|no customers|clients stopped coming|stopped coming when we are open|15-20 mins without clients)/i.test(lower)) return { theme: 'Customer flow stall', severity: 'major' };
+      if (/(stopping mode|steam seems to think the game is still running|game appears to close|cannot relaunch until restart)/i.test(lower)) return { theme: 'Shutdown hang', severity: 'major' };
+      if (/(couldn.?t put any items|can't put them back down|put items on the counter|place.*counter|soft-lock)/i.test(lower)) return { theme: 'Object placement lock', severity: 'major' };
+      if (/(walk away with food|without pay|basket without paying|unpaid basket)/i.test(lower)) return { theme: 'Store economy exploit', severity: 'minor' };
+      if (/(spoil|spoilage|lose money|bad review|reduced payment|daily ledger|end of day|patience bar|timer)/i.test(lower)) return { theme: 'Day-cycle challenge', severity: 'minor' };
+      if (/(delivery|deliveries|vespa|scooter|outside the village|world outside)/i.test(lower)) return { theme: 'Delivery loop fantasy', severity: 'minor' };
       if (/(save|saved|saving|progress|load|slot|recover|deleted|gone|lost)/i.test(lower)) return { theme: 'Save loss', severity: 'critical' };
       if (/(co-op|coop|multiplayer|host|lobby|join|rejoin|disconnect|sync|desync)/i.test(lower)) return { theme: 'Co-op stability', severity: 'critical' };
       if (/(fps|stutter|freeze|lag|gpu|vram|optimization|performance|drops)/i.test(lower)) return { theme: 'Performance', severity: 'major' };
@@ -2549,14 +3219,24 @@
 
     function mergeRowsById(baseRows, extraRows) {
       const merged = [];
-      const seen = new Set();
+      const indexByKey = new Map();
+
       [...(baseRows || []), ...(extraRows || [])].forEach((row, idx) => {
         if (!row || typeof row !== 'object') return;
         const key = row.id || `${row.window || ''}|${row.initiative || ''}|${idx}`;
-        if (seen.has(key)) return;
-        seen.add(key);
-        merged.push(row);
+        if (!indexByKey.has(key)) {
+          indexByKey.set(key, merged.length);
+          merged.push({ ...row });
+          return;
+        }
+
+        const existingIdx = indexByKey.get(key);
+        merged[existingIdx] = {
+          ...merged[existingIdx],
+          ...row
+        };
       });
+
       return merged;
     }
 
@@ -2611,10 +3291,69 @@
       return Array.from(byName.values());
     }
 
+    function mergeThemeScores(baseRows, extraRows) {
+      const byTheme = new Map();
+
+      (baseRows || []).forEach((row) => {
+        const key = String(row?.theme || '').trim();
+        if (!key) return;
+        byTheme.set(key, { ...row });
+      });
+
+      (extraRows || []).forEach((row) => {
+        const key = String(row?.theme || '').trim();
+        if (!key) return;
+        const existing = byTheme.get(key);
+        if (!existing) {
+          byTheme.set(key, { ...row });
+          return;
+        }
+
+        existing.frequency = Number(existing.frequency || 0) + Number(row.frequency || 0);
+        existing.frequency_score = Math.max(Number(existing.frequency_score || 0), Number(row.frequency_score || 0));
+        existing.severity_score = Math.max(Number(existing.severity_score || 0), Number(row.severity_score || 0));
+        existing.recency_score = Math.max(Number(existing.recency_score || 0), Number(row.recency_score || 0));
+        existing.priority_score = Math.max(Number(existing.priority_score || 0), Number(row.priority_score || 0));
+        existing.sentiment = row.sentiment || existing.sentiment;
+      });
+
+      return Array.from(byTheme.values());
+    }
+
+    function mergeSourceSnapshot(baseSnapshot, extraSnapshot) {
+      const base = baseSnapshot || {};
+      const extra = extraSnapshot || {};
+      const mergeUnique = (left, right) => [...new Set([...(left || []), ...(right || [])])];
+      const urlByUrl = new Map();
+
+      [...(base.url_checks || []), ...(extra.url_checks || [])].forEach((row) => {
+        const key = String(row?.url || '').trim();
+        if (!key) return;
+        urlByUrl.set(key, { ...rowByUrlGet(urlByUrl, key), ...row });
+      });
+
+      return {
+        ...base,
+        ...extra,
+        steam_store_status: {
+          ...(base.steam_store_status || {}),
+          ...(extra.steam_store_status || {})
+        },
+        compiled_artifacts: mergeUnique(base.compiled_artifacts, extra.compiled_artifacts),
+        update_notes: mergeUnique(base.update_notes, extra.update_notes),
+        url_checks: Array.from(urlByUrl.values())
+      };
+    }
+
+    function rowByUrlGet(map, key) {
+      return map.get(key) || {};
+    }
+
     function applyMarch5Update(baseData) {
       const data = {
         ...baseData,
         meta: { ...(baseData.meta || {}) },
+        theme_scores: [...(baseData.theme_scores || [])],
         feedback_signals: [...(baseData.feedback_signals || [])],
         actions: [...(baseData.actions || [])],
         insights_shipping: [...(baseData.insights_shipping || [])],
@@ -2641,6 +3380,46 @@
         ...data.source_snapshot,
         verified_at: '2026-03-05'
       };
+
+      const signalCount = data.feedback_signals.length;
+      const baseUnique = Number(data.meta.signals_unique || 0);
+      const baseRaw = Number(data.meta.signals_raw || 0);
+      data.meta.signals_unique = baseUnique > 0 ? baseUnique + addedSignals : signalCount;
+      data.meta.signals_raw = baseRaw > 0 ? baseRaw + addedSignals : signalCount;
+
+      return data;
+    }
+
+    function applyReadmeMar9Update(baseData) {
+      const data = {
+        ...baseData,
+        meta: { ...(baseData.meta || {}) },
+        theme_scores: [...(baseData.theme_scores || [])],
+        feedback_signals: [...(baseData.feedback_signals || [])],
+        actions: [...(baseData.actions || [])],
+        insights_shipping: [...(baseData.insights_shipping || [])],
+        insights_hypothesis: [...(baseData.insights_hypothesis || [])],
+        bug_clusters: [...(baseData.bug_clusters || [])],
+        roadmap: [...(baseData.roadmap || [])],
+        source_snapshot: { ...(baseData.source_snapshot || {}) }
+      };
+
+      data.meta.actuality_date = README_MAR9_UPDATE.meta.actuality_date;
+      const beforeSignalsCount = data.feedback_signals.length;
+      data.feedback_signals = dedupeSignals([
+        ...(README_MAR9_UPDATE.feedback_signals || []),
+        ...data.feedback_signals
+      ]);
+      const afterSignalsCount = data.feedback_signals.length;
+      const addedSignals = Math.max(0, afterSignalsCount - beforeSignalsCount);
+
+      data.theme_scores = mergeThemeScores(data.theme_scores, README_MAR9_UPDATE.theme_scores);
+      data.actions = mergeRowsById(data.actions, README_MAR9_UPDATE.actions);
+      data.insights_shipping = mergeRowsById(data.insights_shipping, README_MAR9_UPDATE.insights_shipping);
+      data.insights_hypothesis = mergeRowsById(data.insights_hypothesis, README_MAR9_UPDATE.insights_hypothesis);
+      data.bug_clusters = mergeBugClusters(data.bug_clusters, README_MAR9_UPDATE.bug_clusters);
+      data.roadmap = mergeRoadmap(data.roadmap, README_MAR9_UPDATE.roadmap);
+      data.source_snapshot = mergeSourceSnapshot(data.source_snapshot, README_MAR9_UPDATE.source_snapshot);
 
       const signalCount = data.feedback_signals.length;
       const baseUnique = Number(data.meta.signals_unique || 0);
@@ -2831,10 +3610,10 @@
           source_snapshot: buildSourceSnapshot(appDetailsJson, themeScores)
         };
 
-        return applyMarch5Update(data);
+        return applyReadmeMar9Update(applyMarch5Update(data));
       } catch (error) {
         console.warn('JSON-first load failed, using inline fallback:', error);
-        return applyMarch5Update(fallbackData);
+        return applyReadmeMar9Update(applyMarch5Update(fallbackData));
       }
     }
 
@@ -2855,13 +3634,13 @@
 
     function matchesBaseFilters(item) {
       const theme = item.theme || item.name || item.linked_theme || '';
-      const source = normalizeSource(item.source || '');
+      const sources = getCandidateSources(item);
       const severity = item.severity || SEVERITY_BY_THEME[theme] || 'minor';
       const status = item.status || 'shipping';
       const category = item.category || 'QoL';
 
       const passTheme = UIStateV3.theme === 'all' || theme === UIStateV3.theme;
-      const passSource = UIStateV3.source === 'all' || source === UIStateV3.source;
+      const passSource = UIStateV3.source === 'all' || sources.includes(UIStateV3.source);
       const passSeverity = UIStateV3.severity === 'all' || severity === UIStateV3.severity;
       const passStatus = UIStateV3.status === 'all' || status === UIStateV3.status;
       const passCategory = UIStateV3.category === 'all' || category === UIStateV3.category;
@@ -3066,8 +3845,15 @@
       const map = {
         'Save loss': UIStateV3.locale === 'ru' ? 'Несогласованность формата сохранений между версиями и неполный путь восстановления.' : 'Save format drift between builds and incomplete recovery path.',
         'Co-op stability': UIStateV3.locale === 'ru' ? 'Сетевые таймауты и рассинхронизация состояния между хостом и клиентами.' : 'Network timeout/state desync between host and clients.',
+        'Co-op task sync': UIStateV3.locale === 'ru' ? 'Общая логика задач и покупок не синхронизирует состояние между участниками лобби.' : 'Shared task and purchase state is not synchronizing across lobby members.',
         'Performance': UIStateV3.locale === 'ru' ? 'Переизбыточная нагрузка рендера и неоптимальные графические профили.' : 'Render overload and non-optimal quality profiles.',
         'Controls/UI friction': UIStateV3.locale === 'ru' ? 'Неинтуитивные паттерны ввода и высокая стоимость действий в основном цикле.' : 'Unintuitive input patterns and high click-cost in the core loop.',
+        'Inventory friction': UIStateV3.locale === 'ru' ? 'Инвентарь и поверхность хранения не поддерживают нужную глубину подготовки и управления слотами.' : 'Inventory and storage surfaces do not support the prep depth and slot control players expect.',
+        'Steam Deck cursor/input': UIStateV3.locale === 'ru' ? 'Сбой фокуса курсора и платформенная несовместимость, воспроизводимая после стола нарезки на Steam Deck/Linux.' : 'Cursor focus/rendering failure with platform-specific incompatibility, reproducible after cut-table interaction on Steam Deck/Linux.',
+        'Day-cycle challenge': UIStateV3.locale === 'ru' ? 'В цикле дня отсутствуют явные ставки, таймер терпения и понятный ритуал завершения дня.' : 'The day loop lacks clear stakes, patience pressure, and a proper end-of-day ritual.',
+        'Customer flow stall': UIStateV3.locale === 'ru' ? 'Поток клиентов зависает из-за ошибки состояния открытия кафе или сломанного триггера спавна.' : 'Customer flow stalls due to broken open-state logic or a failed spawn trigger.',
+        'Shutdown hang': UIStateV3.locale === 'ru' ? 'Процесс закрытия не освобождает Steam/overlay hooks и оставляет игру в подвешенном состоянии.' : 'Shutdown does not fully release Steam/overlay hooks and leaves the app in a limbo state.',
+        'Object placement lock': UIStateV3.locale === 'ru' ? 'Состояние предмета в руках и валидность поверхностей расходятся, из-за чего игрок теряет возможность положить объект.' : 'Held-item state and valid surface binding drift apart, so the player can no longer place the object.',
         'AI-art perception': UIStateV3.locale === 'ru' ? 'Сигнал по доверию к бренду и ощущению визуальной аутентичности.' : 'Brand trust and perceived authenticity concern.',
         'Localization': UIStateV3.locale === 'ru' ? 'Нехватка языкового покрытия и непоследовательный текстовый слой интерфейса.' : 'Insufficient language coverage and inconsistent copy layer.'
       };
@@ -3176,11 +3962,15 @@
       node.innerHTML = rows.map((x) => {
         const solutionText = localizedField('actions', x, 'solution');
         const kpiText = localizedField('actions', x, 'kpi');
+        const problemLink = String(x.problem_link || '').trim();
+        const problemCell = problemLink
+          ? `<a target="_blank" rel="noopener noreferrer" href="${esc(problemLink)}">${t('source_link')}</a>`
+          : `<span style="color:var(--text-soft)">-</span>`;
         return `<tr>
         <td data-label="ID" class="mono">${esc(x.id)}</td>
         <td data-label="${esc(t('label_category'))}">${esc(categoryLabel(x.category))}</td>
         <td data-label="${esc(t('label_status'))}"><span class="badge ${x.status === 'hypothesis' ? 'status-hypothesis' : 'status-shipping'}">${x.status === 'hypothesis' ? t('status_hypothesis') : t('status_shipping')}</span></td>
-        <td data-label="${esc(t('label_problem'))}"><a target="_blank" rel="noopener noreferrer" href="${esc(x.problem_link)}">${t('source_link')}</a></td>
+        <td data-label="${esc(t('label_problem'))}">${problemCell}</td>
         <td data-label="${esc(t('label_solution'))}">
           ${esc(trunc(solutionText, 170))}
           <span class="table-cell-detail"><b>${t('kpi_label')}:</b> ${esc(trunc(kpiText, 90))}</span>
@@ -3236,7 +4026,8 @@
         const themeOk = UIStateV3.theme === 'all' || x.linked_theme === UIStateV3.theme;
         const severityOk = UIStateV3.severity === 'all' || (SEVERITY_BY_THEME[x.linked_theme] || 'minor') === UIStateV3.severity;
         const categoryOk = UIStateV3.category === 'all' || x.category === UIStateV3.category;
-        return themeOk && severityOk && categoryOk;
+        const sourceOk = UIStateV3.source === 'all' || getCandidateSources(x).includes(UIStateV3.source);
+        return themeOk && severityOk && categoryOk && sourceOk;
       });
 
       const stages = ['Quick Wins', 'Mid-term', 'Big Bet'];
@@ -3293,6 +4084,7 @@
         const titleText = localizedField('insights', x, 'title');
         const solutionText = localizedField('insights', x, 'solution');
         const kpiText = localizedField('insights', x, 'kpi');
+        const refsHtml = renderSourceRefs(x.source_refs);
         return `<article class="card">
         <div class="card-top">
           <h3 class="card-title">${esc(titleText || x.title)}</h3>
@@ -3305,7 +4097,7 @@
         </p>
         <p class="insight-text">${esc(trunc(solutionText, 220))}</p>
         <p style="margin:8px 0 0;color:var(--text-muted)"><b>${t('kpi_label')}:</b> ${esc(kpiText)}</p>
-        <p style="margin:8px 0 0">${renderSourceRefs(x.source_refs)}</p>
+        ${refsHtml ? `<p style="margin:8px 0 0">${refsHtml}</p>` : ''}
       </article>`;
       }).join('');
     }
@@ -3340,6 +4132,8 @@
       const src = DashboardDataV3.source_snapshot || fallbackData.source_snapshot;
       const checks = Array.isArray(src.url_checks) ? src.url_checks : [];
       const okCount = checks.filter((x) => Number(x.status) === 200).length;
+      const compiledArtifacts = Array.isArray(src.compiled_artifacts) ? src.compiled_artifacts : [];
+      const updateNotes = Array.isArray(src.update_notes) ? src.update_notes : [];
       if (UIStateV3.locale === 'ru') {
         document.getElementById('steamStatus').textContent = 'Обсуждения Steam + отзывы Steam + карточка игры.';
         document.getElementById('platforms').textContent = 'Discord каналы: отчеты о багах, обратная связь и общий чат.';
@@ -3351,7 +4145,10 @@
           'Включены локально распарсенные выгрузки чатов и mhtml-репорты по багам.',
           'Добавлены агрегированные сигналы из сводок Steam-отзывов.',
           'Учтены обзоры и комментарии с YouTube как качественные сигналы по тону, сложности и темпу игры.',
+          'Новый слой на 2026-03-09 скомпилирован из внешнего README как curated-артефакт, но сам GitHub Pages-дашборд не читает этот локальный файл в рантайме.',
           'Проведено сравнение с конкурентами: Espresso Tycoon, Travellers Rest, Coffee Caravan, Chef RPG.',
+          ...compiledArtifacts.map((path) => `Скомпилированный внешний артефакт: ${path}`),
+          ...updateNotes,
           `Техническая проверка ссылок: ${okCount}/${checks.length} URL ответили HTTP 200.`
         ].map((line) => `<li style="font-size:0.88rem;color:var(--text-muted)">${esc(line)}</li>`).join('');
         return;
@@ -3365,10 +4162,15 @@
       document.getElementById('platforms').textContent = platforms || 'n/a';
       document.getElementById('verifiedAt').textContent = src.verified_at || 'n/a';
       document.getElementById('httpSummary').textContent = `${okCount}/${checks.length} HTTP 200`;
-      document.getElementById('sourceLinks').innerHTML = checks.map((x) => `<li style="display:flex;align-items:center;gap:8px;font-size:0.84rem">
+      const extraLines = [
+        ...compiledArtifacts.map((path) => `Compiled artifact: ${path}`),
+        ...updateNotes
+      ].map((line) => `<li style="font-size:0.84rem;color:var(--text-muted)">${esc(line)}</li>`);
+      const checkLines = checks.map((x) => `<li style="display:flex;align-items:center;gap:8px;font-size:0.84rem">
         <span class="badge ${Number(x.status) === 200 ? 'status-shipping' : 'severity-critical'}">HTTP ${Number(x.status || 0)}</span>
         <a target="_blank" rel="noopener noreferrer" href="${esc(x.url)}">${esc(trunc(x.url, 96))}</a>
-      </li>`).join('');
+      </li>`);
+      document.getElementById('sourceLinks').innerHTML = [...extraLines, ...checkLines].join('');
     }
 
     function renderAll() {
