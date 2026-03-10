@@ -1,22 +1,18 @@
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Mono, IBM_Plex_Sans, Sora } from 'next/font/google';
+import { IBM_Plex_Sans, Sora } from 'next/font/google';
 import './globals.css';
 
 const sora = Sora({
   subsets: ['latin'],
+  preload: false,
   variable: '--font-display',
 });
 
 const plexSans = IBM_Plex_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  subsets: ['latin', 'cyrillic'],
+  preload: false,
+  weight: ['400', '600'],
   variable: '--font-body',
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
@@ -34,7 +30,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${sora.variable} ${plexSans.variable} ${plexMono.variable} bg-background font-body antialiased`}>
+      <body className={`${sora.variable} ${plexSans.variable} bg-background font-body antialiased`}>
         {children}
       </body>
     </html>

@@ -17,7 +17,7 @@ export function InsightValidation({ locale, rows }: InsightValidationProps) {
   if (!rows.length) return <div className="surface-card p-5 text-sm leading-6 text-foreground-muted">{t(locale, 'no_insights')}</div>;
 
   return (
-    <div className="grid gap-4 xl:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
       {rows.map((row) => (
         <article key={row.id} className="surface-card p-5">
           <div className="flex items-start justify-between gap-3">

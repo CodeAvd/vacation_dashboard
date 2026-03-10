@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Brain, CheckSquare, Database, Lightbulb, Map, Rocket, Users } from 'lucide-react';
-import { dashboardData, DEFAULT_UI_STATE, type DashboardUIState } from '@/lib/data';
+import dynamic from 'next/dynamic';
+import { startTransition, useDeferredValue, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { Brain, CheckSquare, Database, Lightbulb, Map, Rocket, Users, MessageSquareQuote } from 'lucide-react';
+import type { DashboardBootstrap, DashboardData, DashboardUIState } from '@/lib/data';
+import { DEFAULT_UI_STATE } from '@/lib/data';
+import { loadDashboardData } from '@/lib/dashboard-data-loader';
+import { getSectionManifest, type DashboardSectionId } from '@/lib/dashboard-sections';
 import { t } from '@/lib/i18n';
 import {
-  getAllSources,
-  getAllThemes,
   persistState,
   selectActions,
   selectBugClusters,
@@ -15,21 +17,44 @@ import {
   selectInsights,
   selectTopRisks,
 } from '@/lib/selectors';
-import { HeroHeader } from '@/components/hero-header';
+import { CollapsibleSection } from '@/components/collapsible-section';
+import { DecisionRail } from '@/components/decision-rail';
 import { ActiveFilterChips, GlobalFilters } from '@/components/global-filters';
+import { HeroHeader } from '@/components/hero-header';
+import { SectionSkeleton, SectionState } from '@/components/section-state';
 import { TopRisks } from '@/components/top-risks';
 import { BugTriage } from '@/components/bug-triage';
-import { EvidenceDrawer } from '@/components/evidence-drawer';
-import { CollapsibleSection } from '@/components/collapsible-section';
-import { ActionBoard } from '@/components/action-board';
-import { PsychologyInsights } from '@/components/psychology-insights';
-import { ImprovementGroups } from '@/components/improvement-groups';
-import { InsightValidation } from '@/components/insight-validation';
-import { CompetitorSection } from '@/components/competitors';
-import { RoadmapSection } from '@/components/roadmap';
-import { SourceBreakdown } from '@/components/source-breakdown';
 
-export function DashboardClient() {
+const EvidenceDrawer = dynamic(() => import('@/components/evidence-drawer').then((module) => module.EvidenceDrawer), {
+  loading: () => <SectionSkeleton />,
+});
+const ActionBoard = dynamic(() => import('@/components/action-board').then((module) => module.ActionBoard), {
+  loading: () => <SectionSkeleton />,
+});
+const PsychologyInsights = dynamic(() => import('@/components/psychology-insights').then((module) => module.PsychologyInsights), {
+  loading: () => <SectionSkeleton />,
+});
+const ImprovementGroups = dynamic(() => import('@/components/improvement-groups').then((module) => module.ImprovementGroups), {
+  loading: () => <SectionSkeleton />,
+});
+const InsightValidation = dynamic(() => import('@/components/insight-validation').then((module) => module.InsightValidation), {
+  loading: () => <SectionSkeleton />,
+});
+const CompetitorSection = dynamic(() => import('@/components/competitors').then((module) => module.CompetitorSection), {
+  loading: () => <SectionSkeleton />,
+});
+const RoadmapSection = dynamic(() => import('@/components/roadmap').then((module) => module.RoadmapSection), {
+  loading: () => <SectionSkeleton />,
+});
+const SourceBreakdown = dynamic(() => import('@/components/source-breakdown').then((module) => module.SourceBreakdown), {
+  loading: () => <SectionSkeleton />,
+});
+
+interface DashboardClientProps {
+  bootstrap: DashboardBootstrap;
+}
+
+export function DashboardClient({ bootstrap }: DashboardClientProps) {
   const persistedSnapshot = useSyncExternalStore(
     subscribeDashboardState,
     getDashboardStateSnapshot,
@@ -37,8 +62,36 @@ export function DashboardClient() {
   );
   const persistedState = useMemo(() => parseDashboardStateSnapshot(persistedSnapshot), [persistedSnapshot]);
   const [overrides, setOverrides] = useState<DashboardUIState | null>(null);
+  const [fullData, setFullData] = useState<DashboardData | null>(null);
+  const [dataStatus, setDataStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const hasMountedRef = useRef(false);
   const uiState = overrides ?? persistedState;
+  const deferredUiState = useDeferredValue(uiState);
+  const locale = uiState.locale;
+  const fullDataReady = dataStatus === 'ready' && fullData !== null;
+  const sectionState = dataStatus === 'error' ? 'error' : 'loading';
+
+  useEffect(() => {
+    let cancelled = false;
+
+    loadDashboardData()
+      .then((nextData) => {
+        if (cancelled) return;
+        startTransition(() => {
+          setFullData(nextData);
+          setDataStatus('ready');
+        });
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setDataStatus('error');
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = uiState.locale;
@@ -50,18 +103,52 @@ export function DashboardClient() {
     persistState(uiState);
   }, [uiState]);
 
-  const themes = useMemo(() => getAllThemes(dashboardData), []);
-  const sources = useMemo(() => getAllSources(dashboardData), []);
-  const topRisks = useMemo(() => selectTopRisks(uiState, dashboardData), [uiState]);
-  const bugClusters = useMemo(() => selectBugClusters(uiState, dashboardData), [uiState]);
-  const evidence = useMemo(() => selectEvidence(uiState, dashboardData), [uiState]);
-  const actions = useMemo(() => selectActions(uiState, dashboardData), [uiState]);
-  const improvements = useMemo(() => selectImprovements(uiState, dashboardData), [uiState]);
-  const insights = useMemo(() => selectInsights(uiState, dashboardData), [uiState]);
-  const locale = uiState.locale;
+  const topRisks = useMemo(
+    () => (fullDataReady ? selectTopRisks(deferredUiState, fullData) : bootstrap.initialTopRisks),
+    [bootstrap.initialTopRisks, deferredUiState, fullData, fullDataReady],
+  );
+  const bugClusters = useMemo(
+    () => (fullDataReady ? selectBugClusters(deferredUiState, fullData) : bootstrap.initialBugClusters),
+    [bootstrap.initialBugClusters, deferredUiState, fullData, fullDataReady],
+  );
+  const evidence = useMemo(
+    () => (fullDataReady ? selectEvidence(deferredUiState, fullData) : []),
+    [deferredUiState, fullData, fullDataReady],
+  );
+  const actions = useMemo(
+    () => (fullDataReady ? selectActions(deferredUiState, fullData) : []),
+    [deferredUiState, fullData, fullDataReady],
+  );
+  const improvements = useMemo(
+    () => (fullDataReady ? selectImprovements(deferredUiState, fullData) : []),
+    [deferredUiState, fullData, fullDataReady],
+  );
+  const insights = useMemo(
+    () => (fullDataReady ? selectInsights(deferredUiState, fullData) : []),
+    [deferredUiState, fullData, fullDataReady],
+  );
 
-  const setLocale = (locale: DashboardUIState['locale']) => {
-    setOverrides((current) => ({ ...(current ?? persistedState), locale }));
+  const sectionCounts = useMemo(
+    () =>
+      fullDataReady
+        ? {
+          actions: actions.length,
+          improvements: improvements.length,
+          insights: insights.length,
+          psychology: `${fullData.psychology.personas.length}/${fullData.psychology.friction.length}/${fullData.psychology.dopamine.length}`,
+          competitors: fullData.competitor_snapshot.length,
+          roadmap: fullData.roadmap.length,
+          sources:
+            fullData.source_snapshot.url_checks.length +
+            fullData.source_snapshot.compiled_artifacts.length +
+            fullData.source_snapshot.update_notes.length,
+        }
+        : bootstrap.sectionCounts,
+    [actions.length, bootstrap.sectionCounts, fullData, fullDataReady, improvements.length, insights.length],
+  );
+
+  const setLocale = (nextLocale: DashboardUIState['locale']) => {
+    setOverrides((current) => ({ ...(current ?? persistedState), locale: nextLocale }));
   };
 
   const setFilters = (patch: Partial<DashboardUIState>) => {
@@ -80,7 +167,7 @@ export function DashboardClient() {
     }));
   };
 
-  const toggleSection = (section: keyof DashboardUIState['expandedSections']) => {
+  const toggleSection = (section: DashboardSectionId) => {
     setOverrides((current) => {
       const base = current ?? persistedState;
       return {
@@ -93,20 +180,23 @@ export function DashboardClient() {
     });
   };
 
+  const activeFilterCount = countActiveFilters(uiState);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <HeroHeader
-        locale={locale}
-        data={dashboardData}
-        onLocaleChange={setLocale}
-      />
+      <HeroHeader locale={locale} meta={bootstrap.meta} leadRisk={topRisks[0]} onLocaleChange={setLocale} />
+      <DecisionRail locale={locale} />
 
       <GlobalFilters
         locale={locale}
         uiState={uiState}
-        themes={themes}
-        sources={sources}
+        themes={bootstrap.themes}
+        sources={bootstrap.sources}
+        activeCount={activeFilterCount}
+        isOpen={uiState.expandedSections.filters}
+        dataReady={fullDataReady}
         onChange={setFilters}
+        onToggleOpen={() => toggleSection('filters')}
         onReset={resetFilters}
       />
 
@@ -115,24 +205,51 @@ export function DashboardClient() {
       </div>
 
       <main id="main" className="pb-16">
-        <TopRisks locale={locale} risks={topRisks} signals={dashboardData.feedback_signals} />
+        <TopRisks locale={locale} risks={topRisks} />
         <BugTriage locale={locale} rows={bugClusters} />
-        <EvidenceDrawer locale={locale} rows={evidence} />
+
+        <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+          {fullDataReady ? (
+            <div className="overflow-hidden rounded-[2rem] border border-border-subtle bg-surface shadow-card [content-visibility:auto] [contain-intrinsic-size:auto_800px]">
+              <CollapsibleSection
+                id="evidence"
+                locale={locale}
+                title={t(locale, 'evidence_title')}
+                description={t(locale, 'evidence_desc')}
+                summary={t(locale, 'evidence_intro')}
+                count={fullDataReady ? evidence.length : undefined}
+                open={uiState.expandedSections.evidence}
+                onToggle={() => toggleSection('evidence')}
+                icon={<MessageSquareQuote className="h-5 w-5" />}
+                lazyMount={getSectionManifest('evidence').lazy === 'on-demand'}
+                motionDelayMs={getSectionManifest('evidence').motionDelayMs}
+              >
+                <EvidenceDrawer locale={locale} rows={evidence} />
+              </CollapsibleSection>
+            </div>
+          ) : (
+            <section id="evidence" data-section="evidence" data-collapsed="false" className="motion-fade-up">
+              <SectionState locale={locale} status={sectionState} />
+            </section>
+          )}
+        </div>
 
         <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-[2rem] border border-border-subtle bg-surface shadow-card">
+          <div className="overflow-hidden rounded-[2rem] border border-border-subtle bg-surface shadow-card [content-visibility:auto] [contain-intrinsic-size:auto_1000px]">
             <CollapsibleSection
               id="actions"
               locale={locale}
               title={t(locale, 'actions_title')}
               description={t(locale, 'actions_desc')}
               summary={t(locale, 'actions_intro')}
-              count={actions.length}
+              count={sectionCounts.actions}
               open={uiState.expandedSections.actions}
               onToggle={() => toggleSection('actions')}
               icon={<CheckSquare className="h-5 w-5" />}
+              lazyMount={getSectionManifest('actions').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('actions').motionDelayMs}
             >
-              <ActionBoard locale={locale} rows={actions} />
+              {fullDataReady ? <ActionBoard locale={locale} rows={actions} /> : <SectionState locale={locale} status={sectionState} />}
             </CollapsibleSection>
 
             <CollapsibleSection
@@ -141,12 +258,14 @@ export function DashboardClient() {
               title={t(locale, 'psychology_title')}
               description={t(locale, 'psychology_desc')}
               summary={t(locale, 'psychology_intro')}
-              count={`${dashboardData.psychology.personas.length}/${dashboardData.psychology.friction.length}/${dashboardData.psychology.dopamine.length}`}
+              count={sectionCounts.psychology}
               open={uiState.expandedSections.psychology}
               onToggle={() => toggleSection('psychology')}
               icon={<Brain className="h-5 w-5" />}
+              lazyMount={getSectionManifest('psychology').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('psychology').motionDelayMs}
             >
-              <PsychologyInsights locale={locale} data={dashboardData.psychology} />
+              {fullDataReady ? <PsychologyInsights locale={locale} data={fullData.psychology} /> : <SectionState locale={locale} status={sectionState} />}
             </CollapsibleSection>
 
             <CollapsibleSection
@@ -155,12 +274,14 @@ export function DashboardClient() {
               title={t(locale, 'improvements_title')}
               description={t(locale, 'improvements_desc')}
               summary={t(locale, 'improvements_intro')}
-              count={improvements.length}
+              count={sectionCounts.improvements}
               open={uiState.expandedSections.improvements}
               onToggle={() => toggleSection('improvements')}
               icon={<Rocket className="h-5 w-5" />}
+              lazyMount={getSectionManifest('improvements').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('improvements').motionDelayMs}
             >
-              <ImprovementGroups locale={locale} rows={improvements} />
+              {fullDataReady ? <ImprovementGroups locale={locale} rows={improvements} /> : <SectionState locale={locale} status={sectionState} />}
             </CollapsibleSection>
 
             <CollapsibleSection
@@ -169,12 +290,14 @@ export function DashboardClient() {
               title={t(locale, 'insights_title')}
               description={t(locale, 'insights_desc')}
               summary={t(locale, 'insights_intro')}
-              count={insights.length}
+              count={sectionCounts.insights}
               open={uiState.expandedSections.insights}
               onToggle={() => toggleSection('insights')}
               icon={<Lightbulb className="h-5 w-5" />}
+              lazyMount={getSectionManifest('insights').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('insights').motionDelayMs}
             >
-              <InsightValidation locale={locale} rows={insights} />
+              {fullDataReady ? <InsightValidation locale={locale} rows={insights} /> : <SectionState locale={locale} status={sectionState} />}
             </CollapsibleSection>
 
             <CollapsibleSection
@@ -183,12 +306,14 @@ export function DashboardClient() {
               title={t(locale, 'competitors_title')}
               description={t(locale, 'competitors_desc')}
               summary={t(locale, 'competitors_intro')}
-              count={dashboardData.competitor_snapshot.length}
+              count={sectionCounts.competitors}
               open={uiState.expandedSections.competitors}
               onToggle={() => toggleSection('competitors')}
               icon={<Users className="h-5 w-5" />}
+              lazyMount={getSectionManifest('competitors').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('competitors').motionDelayMs}
             >
-              <CompetitorSection locale={locale} rows={dashboardData.competitor_snapshot} />
+              {fullDataReady ? <CompetitorSection locale={locale} rows={fullData.competitor_snapshot} /> : <SectionState locale={locale} status={sectionState} />}
             </CollapsibleSection>
 
             <CollapsibleSection
@@ -197,12 +322,14 @@ export function DashboardClient() {
               title={t(locale, 'roadmap_title')}
               description={t(locale, 'roadmap_desc')}
               summary={t(locale, 'roadmap_intro')}
-              count={dashboardData.roadmap.length}
+              count={sectionCounts.roadmap}
               open={uiState.expandedSections.roadmap}
               onToggle={() => toggleSection('roadmap')}
               icon={<Map className="h-5 w-5" />}
+              lazyMount={getSectionManifest('roadmap').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('roadmap').motionDelayMs}
             >
-              <RoadmapSection locale={locale} rows={dashboardData.roadmap} />
+              {fullDataReady ? <RoadmapSection locale={locale} rows={fullData.roadmap} /> : <SectionState locale={locale} status={sectionState} />}
             </CollapsibleSection>
 
             <CollapsibleSection
@@ -211,12 +338,18 @@ export function DashboardClient() {
               title={t(locale, 'sources_title')}
               description={t(locale, 'sources_desc')}
               summary={t(locale, 'sources_intro')}
-              count={dashboardData.source_snapshot.url_checks.length + dashboardData.source_snapshot.compiled_artifacts.length + dashboardData.source_snapshot.update_notes.length}
+              count={sectionCounts.sources}
               open={uiState.expandedSections.sources}
               onToggle={() => toggleSection('sources')}
               icon={<Database className="h-5 w-5" />}
+              lazyMount={getSectionManifest('sources').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('sources').motionDelayMs}
             >
-              <SourceBreakdown locale={locale} snapshot={dashboardData.source_snapshot} signals={dashboardData.feedback_signals} />
+              {fullDataReady ? (
+                <SourceBreakdown locale={locale} snapshot={fullData.source_snapshot} signals={fullData.feedback_signals} />
+              ) : (
+                <SectionState locale={locale} status={sectionState} />
+              )}
             </CollapsibleSection>
           </div>
         </div>
@@ -225,9 +358,20 @@ export function DashboardClient() {
   );
 }
 
+function countActiveFilters(state: DashboardUIState): number {
+  let count = 0;
+  if (state.theme !== 'all') count += 1;
+  if (state.source !== 'all') count += 1;
+  if (state.severity !== 'all') count += 1;
+  if (state.category !== 'all') count += 1;
+  if (state.status !== 'all') count += 1;
+  if (state.sort !== 'desc') count += 1;
+  return count;
+}
+
 function subscribeDashboardState(onStoreChange: () => void) {
   if (typeof window === 'undefined') {
-    return () => {};
+    return () => { };
   }
 
   const handler = (event: StorageEvent) => {

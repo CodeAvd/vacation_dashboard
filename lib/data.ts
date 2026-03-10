@@ -1,4 +1,4 @@
-import rawDashboardData from '@/GDD/dashboard-data.generated.json';
+import { DEFAULT_EXPANDED_SECTIONS, type DashboardExpandedSectionState } from '@/lib/dashboard-sections';
 
 export type Locale = 'ru' | 'en';
 export type Severity = 'critical' | 'major' | 'minor';
@@ -31,6 +31,13 @@ export interface ThemeScore {
   severity_score: number;
   recency_score: number;
   priority_score: number;
+}
+
+export interface TopRisk extends ThemeScore {
+  severity: Severity;
+  evidencePreview: string;
+  sourceUrl?: string;
+  totalSignals: number;
 }
 
 export interface BugCluster {
@@ -166,6 +173,23 @@ export interface DashboardData {
   source_snapshot: SourceSnapshot;
 }
 
+export interface DashboardBootstrap {
+  meta: DashboardMeta;
+  themes: string[];
+  sources: Source[];
+  initialTopRisks: TopRisk[];
+  initialBugClusters: BugCluster[];
+  sectionCounts: {
+    actions: number;
+    improvements: number;
+    insights: number;
+    psychology: string;
+    competitors: number;
+    roadmap: number;
+    sources: number;
+  };
+}
+
 export interface DashboardUIState {
   locale: Locale;
   theme: string;
@@ -174,7 +198,7 @@ export interface DashboardUIState {
   category: Category | 'all';
   status: ActionStatus | 'all';
   sort: SortOrder;
-  expandedSections: Record<string, boolean>;
+  expandedSections: DashboardExpandedSectionState;
 }
 
 export const SOURCE_KEY_MAP: Record<string, Source> = {
@@ -214,8 +238,6 @@ export const SEVERITY_BY_THEME: Record<string, Severity> = {
   'Delivery loop fantasy': 'minor',
 };
 
-export const dashboardData = rawDashboardData as unknown as DashboardData;
-
 export const DEFAULT_UI_STATE: DashboardUIState = {
   locale: 'ru',
   theme: 'all',
@@ -224,17 +246,5 @@ export const DEFAULT_UI_STATE: DashboardUIState = {
   category: 'all',
   status: 'all',
   sort: 'desc',
-  expandedSections: {
-    filters: true,
-    risks: true,
-    bugs: true,
-    evidence: true,
-    actions: false,
-    psychology: false,
-    improvements: false,
-    insights: false,
-    competitors: false,
-    roadmap: false,
-    sources: false,
-  },
+  expandedSections: DEFAULT_EXPANDED_SECTIONS,
 };

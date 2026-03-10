@@ -31,7 +31,7 @@ export function ImprovementGroups({ locale, rows }: ImprovementGroupsProps) {
               </div>
               <span className="badge-base badge-muted">{stageRows.length}</span>
             </div>
-            <div className="grid gap-4 xl:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {stageRows.map((row) => (
                 <article key={row.id} className="surface-card p-5">
                   <div className="flex flex-wrap items-start justify-between gap-3">

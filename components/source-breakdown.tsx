@@ -14,11 +14,11 @@ export function SourceBreakdown({ locale, snapshot, signals }: SourceBreakdownPr
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4 xl:grid-cols-[1.3fr_1fr]">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.3fr_1fr]">
         <section className="surface-card p-5">
           <div className="eyebrow">{t(locale, 'source_status')}</div>
           <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">{snapshot.steam_store_status.name}</h3>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
             <MetaBox label={t(locale, 'source_release')} value={snapshot.steam_store_status.release_date} />
             <MetaBox label={t(locale, 'source_reviews')} value={localizeReviewState(locale, snapshot.steam_store_status.review_state)} />
             <MetaBox label={t(locale, 'source_verified')} value={snapshot.verified_at} />
@@ -43,7 +43,7 @@ export function SourceBreakdown({ locale, snapshot, signals }: SourceBreakdownPr
                 <div key={item.source} style={{ width: `${item.percentage}%` }} className={item.source === 'Steam' ? 'bg-[#1b2838]' : item.source === 'Discord' ? 'bg-[#5865f2]' : item.source === 'YouTube' ? 'bg-[#ff0000]' : 'bg-[#8f7c68]'} />
               ))}
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {breakdown.map((item) => (
                 <div key={item.source} className="rounded-[1.1rem] border border-border-subtle bg-surface-raised p-3">
                   <div className="eyebrow">{sourceLabel(locale, item.source)}</div>
@@ -58,7 +58,7 @@ export function SourceBreakdown({ locale, snapshot, signals }: SourceBreakdownPr
         </section>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <section className="surface-card p-5">
           <div className="eyebrow">{locale === 'ru' ? 'Человеческая сводка' : 'Human summary'}</div>
           <div className="mt-4 space-y-3 text-sm leading-6 text-foreground-muted">

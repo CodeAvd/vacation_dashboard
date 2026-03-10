@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { t } from '@/lib/i18n';
 import type { Locale } from '@/lib/data';
@@ -14,6 +16,8 @@ interface CollapsibleSectionProps {
   children: React.ReactNode;
   open: boolean;
   onToggle: () => void;
+  lazyMount?: boolean;
+  motionDelayMs?: number;
 }
 
 export function CollapsibleSection({
@@ -27,6 +31,8 @@ export function CollapsibleSection({
   children,
   open,
   onToggle,
+  lazyMount = false,
+  motionDelayMs = 0,
 }: CollapsibleSectionProps) {
   return (
     <section id={id} data-section={id} data-collapsed={String(!open)} className="section-divider first:border-t-0">
@@ -44,9 +50,7 @@ export function CollapsibleSection({
           <div className="min-w-0 space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{title}</h2>
-              {count !== undefined ? (
-                <span className="badge-base badge-muted">{count}</span>
-              ) : null}
+              {count !== undefined ? <span className="badge-base badge-muted">{count}</span> : null}
             </div>
             <p className="text-sm leading-6 text-foreground-muted">{description}</p>
             <p className="text-sm leading-6 text-foreground-soft">{summary}</p>
@@ -59,12 +63,13 @@ export function CollapsibleSection({
       </button>
       <div
         id={`${id}-panel`}
+        style={open ? { transitionDelay: `${motionDelayMs}ms` } : undefined}
         className={cn(
           'grid transition-[grid-template-rows,opacity] duration-300 ease-out',
           open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
         )}
       >
-        <div className="overflow-hidden px-5 pb-6 sm:px-6">{children}</div>
+        <div className="overflow-hidden px-5 pb-6 sm:px-6">{open || !lazyMount ? children : null}</div>
       </div>
     </section>
   );

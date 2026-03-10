@@ -3,9 +3,7 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
-      - main
       - vacation-cafe-dashboard
-      - codex/react-dashboard-parity
   workflow_dispatch:
 
 permissions:

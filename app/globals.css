@@ -25,7 +25,7 @@
   --color-positive-bg: #edf7ee;
   --font-display: var(--font-display);
   --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
+  --font-mono: 'IBM Plex Sans', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   --shadow-card: 0 14px 40px -24px rgb(36 27 21 / 0.35), 0 8px 18px -14px rgb(36 27 21 / 0.14);
   --shadow-card-hover: 0 20px 54px -24px rgb(36 27 21 / 0.4), 0 10px 22px -14px rgb(36 27 21 / 0.18);
 }
@@ -83,6 +83,31 @@ main {
 
 .font-mono {
   font-family: var(--font-mono), monospace;
+}
+
+.decision-rail-scroller {
+  scrollbar-width: none;
+}
+
+.decision-rail-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.motion-fade-up {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fade-up 520ms cubic-bezier(0.2, 0.85, 0.2, 1) forwards;
+}
+
+.motion-delay-2 {
+  animation-delay: 120ms;
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .surface-card {
@@ -300,5 +325,19 @@ main {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-foreground-soft);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .surface-card-hover,
+  .motion-fade-up {
+    animation: none;
+    transition: none;
+    transform: none;
+    opacity: 1;
   }
 }

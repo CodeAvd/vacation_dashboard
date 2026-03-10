@@ -1,5 +1,4 @@
 import {
-  dashboardData,
   DEFAULT_UI_STATE,
   SEVERITY_BY_THEME,
   SOURCE_KEY_MAP,
@@ -14,14 +13,8 @@ import {
   type Locale,
   type Severity,
   type Source,
-  type ThemeScore,
+  type TopRisk,
 } from '@/lib/data';
-
-export interface RiskRow extends ThemeScore {
-  severity: Severity;
-  evidencePreview: string;
-  sourceUrl?: string;
-}
 
 export const SOURCE_OPTIONS: Array<Source | 'all'> = ['all', 'Steam', 'Discord', 'YouTube', 'Forum'];
 export const SEVERITY_OPTIONS: Array<Severity | 'all'> = ['all', 'critical', 'major', 'minor'];
@@ -45,7 +38,7 @@ export function normalizeSourceFromUrl(url: string | undefined | null): Source |
   return '';
 }
 
-export function getAllThemes(data: DashboardData = dashboardData): string[] {
+export function getAllThemes(data: DashboardData): string[] {
   const set = new Set<string>();
   data.theme_scores.forEach((row) => row.theme && set.add(row.theme));
   data.feedback_signals.forEach((row) => row.theme && set.add(row.theme));
@@ -54,7 +47,7 @@ export function getAllThemes(data: DashboardData = dashboardData): string[] {
   return [...set].sort((a, b) => a.localeCompare(b));
 }
 
-export function getAllSources(data: DashboardData = dashboardData): Source[] {
+export function getAllSources(data: DashboardData): Source[] {
   const set = new Set<Source>();
   data.feedback_signals.forEach((row) => set.add(normalizeSource(row.source)));
   set.delete('Unknown');
@@ -62,7 +55,7 @@ export function getAllSources(data: DashboardData = dashboardData): Source[] {
   return [...set].sort((a, b) => a.localeCompare(b)) as Source[];
 }
 
-export function getCandidateSources(item: Record<string, unknown>, data: DashboardData = dashboardData): Source[] {
+export function getCandidateSources(item: Record<string, unknown>, data: DashboardData): Source[] {
   const sources = new Set<Source>();
   const push = (value?: string | null) => {
     const normalized = normalizeSource(value);
@@ -108,7 +101,7 @@ export function scoreSort<T extends { priority_score?: number; score?: number }>
   });
 }
 
-export function matchesBaseFilters(item: Record<string, unknown>, state: DashboardUIState, data: DashboardData = dashboardData): boolean {
+export function matchesBaseFilters(item: Record<string, unknown>, state: DashboardUIState, data: DashboardData): boolean {
   const theme = String(item.theme || item.name || item.linked_theme || '');
   const sources = getCandidateSources(item, data);
   const severity = (item.severity as Severity | undefined) || getThemeSeverity(theme);
@@ -123,7 +116,7 @@ export function matchesBaseFilters(item: Record<string, unknown>, state: Dashboa
   return passTheme && passSource && passSeverity && passStatus && passCategory;
 }
 
-export function selectTopRisks(state: DashboardUIState, data: DashboardData = dashboardData): RiskRow[] {
+export function selectTopRisks(state: DashboardUIState, data: DashboardData): TopRisk[] {
   const rows = data.theme_scores
     .filter((row) => String(row.sentiment).toLowerCase() === 'negative')
     .map((row) => ({ ...row, severity: getThemeSeverity(row.theme) }))
@@ -144,11 +137,12 @@ export function selectTopRisks(state: DashboardUIState, data: DashboardData = da
         ...row,
         evidencePreview: riskSignals[0]?.quote || '',
         sourceUrl: riskSignals.find((signal) => signal.url)?.url,
+        totalSignals: riskSignals.length,
       };
     });
 }
 
-export function selectBugClusters(state: DashboardUIState, data: DashboardData = dashboardData): BugCluster[] {
+export function selectBugClusters(state: DashboardUIState, data: DashboardData): BugCluster[] {
   const rows = data.bug_clusters.filter((row) => {
     const sourceOk =
       state.source === 'all' ||
@@ -161,11 +155,11 @@ export function selectBugClusters(state: DashboardUIState, data: DashboardData =
   return scoreSort(rows, state.sort);
 }
 
-export function guessCategory(theme: string, data: DashboardData = dashboardData): Category {
+export function guessCategory(theme: string, data: DashboardData): Category {
   return (data.actions.find((row) => row.theme === theme)?.category || 'QoL') as Category;
 }
 
-export function selectEvidence(state: DashboardUIState, data: DashboardData = dashboardData): FeedbackSignal[] {
+export function selectEvidence(state: DashboardUIState, data: DashboardData): FeedbackSignal[] {
   const rows = data.feedback_signals.filter((row) => {
     const source = normalizeSource(row.source);
     const theme = row.theme || '';
@@ -182,13 +176,13 @@ export function selectEvidence(state: DashboardUIState, data: DashboardData = da
   return rows;
 }
 
-export function selectActions(state: DashboardUIState, data: DashboardData = dashboardData): ActionRow[] {
+export function selectActions(state: DashboardUIState, data: DashboardData): ActionRow[] {
   return [...data.actions]
     .filter((row) => matchesBaseFilters(row as unknown as Record<string, unknown>, state, data))
     .sort((a, b) => priorityRank(b.priority) - priorityRank(a.priority));
 }
 
-export function selectImprovements(state: DashboardUIState, data: DashboardData = dashboardData): ImprovementRow[] {
+export function selectImprovements(state: DashboardUIState, data: DashboardData): ImprovementRow[] {
   return data.improvements.filter((row) => {
     const themeOk = state.theme === 'all' || row.linked_theme === state.theme;
     const severityOk = state.severity === 'all' || getThemeSeverity(row.linked_theme) === state.severity;
@@ -198,7 +192,7 @@ export function selectImprovements(state: DashboardUIState, data: DashboardData 
   });
 }
 
-export function selectInsights(state: DashboardUIState, data: DashboardData = dashboardData): InsightRow[] {
+export function selectInsights(state: DashboardUIState, data: DashboardData): InsightRow[] {
   return [...data.insights_shipping, ...data.insights_hypothesis].filter((row) => matchesBaseFilters(row as unknown as Record<string, unknown>, state, data));
 }
 

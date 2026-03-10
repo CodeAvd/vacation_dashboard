@@ -10,7 +10,7 @@ interface PsychologyInsightsProps {
 export function PsychologyInsights({ locale, data }: PsychologyInsightsProps) {
   return (
     <div className="space-y-8">
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         {data.personas.length ? data.personas.map((persona) => (
           <article key={persona.name} className="surface-card p-5">
             <div className="flex items-center gap-3 text-foreground-soft">
@@ -68,7 +68,7 @@ export function PsychologyInsights({ locale, data }: PsychologyInsightsProps) {
         )}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {data.dopamine.length ? data.dopamine.map((row) => (
           <article key={row.name} className="surface-card p-5">
             <div className="flex items-center gap-3 text-foreground-soft">

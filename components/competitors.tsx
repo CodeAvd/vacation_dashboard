@@ -11,9 +11,9 @@ export function CompetitorSection({ locale, rows }: CompetitorSectionProps) {
   if (!rows.length) return <div className="surface-card p-5 text-sm leading-6 text-foreground-muted">{t(locale, 'no_competitors')}</div>;
 
   return (
-    <div className="grid gap-4 xl:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
       {rows.map((row) => (
-        <article key={row.game} className="surface-card p-5">
+        <article key={row.game} className="surface-card min-w-0 p-5">
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="eyebrow">{t(locale, 'competitor_th_role')}</div>
@@ -22,7 +22,7 @@ export function CompetitorSection({ locale, rows }: CompetitorSectionProps) {
             </div>
             <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-soft/60 text-foreground-muted"><Sparkles className="h-4 w-4" /></span>
           </div>
-          <div className="mt-5 grid gap-4 lg:grid-cols-2">
+          <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
             <div className="rounded-[1.2rem] border border-border-subtle bg-surface-raised p-4">
               <div className="eyebrow">{t(locale, 'competitor_th_strengths')}</div>
               <p className="mt-2 text-sm leading-6 text-foreground-muted">{competitorCopy(locale, row.game, 'strengths', row.strengths)}</p>

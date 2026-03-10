@@ -17,7 +17,7 @@ export function RoadmapSection({ locale, rows }: RoadmapSectionProps) {
   }, {});
 
   return (
-    <div className="grid gap-5 xl:grid-cols-3">
+    <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
       {Object.entries(groups).map(([window, items]) => (
         <section key={window} className="surface-card p-5">
           <div className="eyebrow">{locale === 'ru' ? 'Окно поставки' : 'Delivery window'}</div>
