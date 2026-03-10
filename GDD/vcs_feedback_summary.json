@@ -1,0 +1,313 @@
+{
+  "generated_at": "2026-03-04T08:31:35.460428Z",
+  "total_raw": 676,
+  "total_unique": 633,
+  "themes": {
+    "Atmosphere/Cozy": {
+      "count": 23,
+      "source_breakdown": {
+        "steam_forum": 17,
+        "discord_chat": 2,
+        "discord_bug_forum": 4
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/",
+          "quote": "Demo feedback; enjoyable and a good start but it is jank Honestly I liked immediately the vibe of the old town; it feels really homely and reminds me a lot of games like \"on your tail\" in terms of environment. Not sure if the devs are Itali"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "quote": "Enjoyable demo but have some suggestions My friends and I found this game and decided to give it a try. We've enjoyed it so far and based on almost an hour of gameplay:   The things we liked:  - We loved the ASMR sounds of the cooking, chop"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664461024288/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664461024288/",
+          "quote": "A little Feedback I have no idea why I enjoyed this little demo so much. I suppose I found it relaxing. I like that I'm not rushed by sulky customers and I like the aesthetic and the idea but here are just a few thoughts.  Allow me to just "
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196322932/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196322932/",
+          "quote": "Demo Feedback First off I'd like to say that this game is beautiful!  I loved the scenery.  It also ran perfectly, no bugs or glitches.  I also loved how there was plenty of playtime to get a good feel of the game and how it works.  Also, t"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196419710/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196419710/",
+          "quote": "VRAM problem for computers that reach the minimum requirements I played the first playtest and everything went well, but this demo didn't run on my laptop. I have the minimum requirements and I was on low graphics but it still went down to "
+        }
+      ]
+    },
+    "Audio/ASMR": {
+      "count": 1,
+      "source_breakdown": {
+        "steam_forum": 1
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "quote": "Enjoyable demo but have some suggestions My friends and I found this game and decided to give it a try. We've enjoyed it so far and based on almost an hour of gameplay:   The things we liked:  - We loved the ASMR sounds of the cooking, chop"
+        }
+      ]
+    },
+    "No-pressure flow": {
+      "count": 4,
+      "source_breakdown": {
+        "steam_forum": 3,
+        "discord_chat": 1
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "quote": "Enjoyable demo but have some suggestions My friends and I found this game and decided to give it a try. We've enjoyed it so far and based on almost an hour of gameplay:   The things we liked:  - We loved the ASMR sounds of the cooking, chop"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664461024288/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664461024288/",
+          "quote": "A little Feedback I have no idea why I enjoyed this little demo so much. I suppose I found it relaxing. I like that I'm not rushed by sulky customers and I like the aesthetic and the idea but here are just a few thoughts.  Allow me to just "
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+          "quote": "A Letter to the Development Team I was delighted to be invited to participate in this playtest. In my opinion, 《Vacation Cafe Simulator》 is already a fairly polished and enjoyable game. Unlike other simulator games, this one leans more towa"
+        },
+        {
+          "source": "discord_chat",
+          "id": "1477987158500311150",
+          "url": "",
+          "quote": "The best thing is there is no timer, yesterday me and my wife were playing it and i was cutting onion like someone was waiting for me, she said chill there is no rush"
+        }
+      ]
+    },
+    "Performance": {
+      "count": 33,
+      "source_breakdown": {
+        "steam_forum": 16,
+        "discord_chat": 12,
+        "discord_bug_forum": 5
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/",
+          "quote": "Demo feedback; enjoyable and a good start but it is jank Honestly I liked immediately the vibe of the old town; it feels really homely and reminds me a lot of games like \"on your tail\" in terms of environment. Not sure if the devs are Itali"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/",
+          "quote": "Hardware specs are off On the store site, it states that the minimum hardware is a GTX 560 and recommended a GTX 970. I have a GTX 1070, but even on lowest settings and FPS limit my GPU usage is at 96 %. Something is really off here..."
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460879116/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460879116/",
+          "quote": "Adding olive oil I found difficult and slow to add evo oil on 3 points on the food: You could just add a fill bar while holding down the mouse so the oil goes down, you did for the wine and for the dough, you should do here as well. Oil als"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196322932/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196322932/",
+          "quote": "Demo Feedback First off I'd like to say that this game is beautiful!  I loved the scenery.  It also ran perfectly, no bugs or glitches.  I also loved how there was plenty of playtime to get a good feel of the game and how it works.  Also, t"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196419710/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196419710/",
+          "quote": "VRAM problem for computers that reach the minimum requirements I played the first playtest and everything went well, but this demo didn't run on my laptop. I have the minimum requirements and I was on low graphics but it still went down to "
+        }
+      ]
+    },
+    "Save loss": {
+      "count": 37,
+      "source_breakdown": {
+        "steam_forum": 3,
+        "discord_chat": 32,
+        "discord_bug_forum": 2
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+          "quote": "Save/Load Hi all,  Played this for 2 hours in co-op but could not find any way of saving, and then when coming back to the game today and wanting to play in co-op again could not find a way of loading my existing cafe, instead it starting a"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460831148/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460831148/",
+          "quote": "FANTASTIC START TO A NEW GAME Just finished the demo and was surprised at how well it ran. I have read a lot of the post already on here before posting my own.  I do not have the best of computers but can play all games i have downloaded of"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460881535/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460881535/",
+          "quote": "More suggestions I liked the demo, the game it's unique in this type, also with wine yard, a own farm as well maybe, that each could be a DLC. I would like to point out some suggestions, some could be already pointed by others.  - 1st, Fix "
+        },
+        {
+          "source": "discord_chat",
+          "id": "1476282943440818307",
+          "url": "",
+          "quote": "Good evening, Is there a way to recover a co-op and solo save file? I restarted the game and my save file is gone, even though automatic saving is enabled."
+        },
+        {
+          "source": "discord_chat",
+          "id": "1476302741939687444",
+          "url": "",
+          "quote": "bro the new update deleted my multiplayer save with my friend :cccc"
+        }
+      ]
+    },
+    "Co-op stability": {
+      "count": 36,
+      "source_breakdown": {
+        "steam_forum": 8,
+        "discord_chat": 26,
+        "discord_bug_forum": 2
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196467789/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196467789/",
+          "quote": "I cant wait release of the game fallen in love in this game since firs time opened demo. Luve it. Cant wait till release.  aloso noticed. that in co-op version everithing works OK. But in solo game i got bug with crashing game and it becase"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/",
+          "quote": "Save/Load Hi all,  Played this for 2 hours in co-op but could not find any way of saving, and then when coming back to the game today and wanting to play in co-op again could not find a way of loading my existing cafe, instead it starting a"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/591768845513977654/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/591768845513977654/",
+          "quote": "This will be splitscreen? I really hope so! Been looking for a relaxing local co-op game to play with my wife after endlessly playing Stardew."
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/",
+          "quote": "Please put multiplayer into the play test <3 Me and my husband tested your game last night and we both put our heads together to leave feedback when we closed the game. There are lots of minor bugs and many things that do not feel good, but"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/601917139265584707/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/601917139265584707/",
+          "quote": "Peut-on sauvegarder ? J'ai joué une petite heure en multi. J'ai été bloquée dans la pierre. J'ai quitté. Mon ami hostait la game, pour me réinviter il a quitté car il n'y a pas de possibilité de le faire in game (??) sauf via steam. Mais no"
+        }
+      ]
+    },
+    "Controls/UI friction": {
+      "count": 9,
+      "source_breakdown": {
+        "steam_forum": 6,
+        "discord_bug_forum": 3
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460921786/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460921786/",
+          "quote": "Unable to Remove Sign Text Once Placed When creating a sign for the building I can remove the background, I can remove the image but I can't remove the name."
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/",
+          "quote": "Enjoyable demo but have some suggestions My friends and I found this game and decided to give it a try. We've enjoyed it so far and based on almost an hour of gameplay:   The things we liked:  - We loved the ASMR sounds of the cooking, chop"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437998196361657/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437998196361657/",
+          "quote": "axis inversion th axis inversion option invert Y ans X axis, is it possible to have the option for Y axis only ?"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+          "quote": "A Letter to the Development Team I was delighted to be invited to participate in this playtest. In my opinion, 《Vacation Cafe Simulator》 is already a fairly polished and enjoyable game. Unlike other simulator games, this one leans more towa"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437664460848007/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437664460848007/",
+          "quote": "look inversion can you make separate x and y inversion because right now \"look inversion\" inverts both"
+        }
+      ]
+    },
+    "AI-art perception": {
+      "count": 7,
+      "source_breakdown": {
+        "steam_forum": 3,
+        "discord_chat": 1,
+        "discord_bug_forum": 3
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/",
+          "quote": "AI IMAGE EVERYWHERE I like the concept of the game but I am really sad about the fact that every picture/drawing even maybe some design in the game are possibly made by Artificial intelligence. Also there is no mention of it in the steam pa"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437371805383387/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437371805383387/",
+          "quote": "Thought it was cute! But then... I really liked the concept and idea of this game and from a small video I saw I was interested, I opened up the game and was immediately suspicious about the art, but I was hoping it was just a style. Then o"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/767437371805555716/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/767437371805555716/",
+          "quote": "Ai EVERYWHERE???? Ai is used in basically every piece of \"artwork\" of food and photos showing people.  When is the Ai planned on being removed from the portions of the game that players directly interact with? And why isn't it posted anywhe"
+        },
+        {
+          "source": "discord_chat",
+          "id": "1478193365748154429",
+          "url": "",
+          "quote": "can you explain this? do you not have a team to pitch concepts? i’m confused bc i came in late when most of whatever was discussed was deleted, but i also don’t really want to support games that are using gen AI in certain ways nowadays so "
+        },
+        {
+          "source": "discord_bug_forum",
+          "id": "forum_14",
+          "url": "",
+          "quote": "TC  — 23.02.2026, 21:00 I'm loving the game, the gameplay, scenario... But i don't like seeing that many AI art everywhere.  In my case, every time I see AI in video games, no matter how good the game is, it makes me lose the desire to play"
+        }
+      ]
+    },
+    "Localization": {
+      "count": 2,
+      "source_breakdown": {
+        "steam_forum": 2
+      },
+      "samples": [
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/591781420376322172/",
+          "quote": "A Letter to the Development Team I was delighted to be invited to participate in this playtest. In my opinion, 《Vacation Cafe Simulator》 is already a fairly polished and enjoyable game. Unlike other simulator games, this one leans more towa"
+        },
+        {
+          "source": "steam_forum",
+          "id": "https://steamcommunity.com/app/3196440/discussions/0/596268676749986329/",
+          "url": "https://steamcommunity.com/app/3196440/discussions/0/596268676749986329/",
+          "quote": "Add Ukrainian Localization"
+        }
+      ]
+    }
+  }
+}

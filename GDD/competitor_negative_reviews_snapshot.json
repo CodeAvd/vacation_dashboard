@@ -1,0 +1,138 @@
+{
+  "Espresso Tycoon": {
+    "negative_reviews_fetched": 3,
+    "top_words": [
+      "lite",
+      "skjerm",
+      "under",
+      "spill",
+      "uten",
+      "mulighet",
+      "igang",
+      "igjen",
+      "tillegg",
+      "det",
+      "spennende",
+      "parece",
+      "nada",
+      "video",
+      "demonstra"
+    ],
+    "sample_negative_reviews": [
+      "本来玩经营游戏喜欢刷全成就   但这游戏的全成就简直有病  在一个半小时就打通没事干的关卡里要待着100小时还要不停点挑战和发优惠券   都不看看自己的数据设计合不合理   你这游戏能玩这么久吗都没东西可以玩了",
+      "Slår av skjerm under spill uten mulighet for å få igang igjen. I tillegg er det lite spennende og lite å lære.",
+      "não ´parece em nada o video de demonstração"
+    ]
+  },
+  "Travellers Rest": {
+    "negative_reviews_fetched": 29,
+    "top_words": [
+      "non",
+      "more",
+      "che",
+      "gioco",
+      "early",
+      "access",
+      "fun",
+      "molto",
+      "play",
+      "bir",
+      "yok",
+      "even",
+      "gameplay",
+      "much",
+      "too",
+      "many",
+      "like",
+      "sono",
+      "bug",
+      "out",
+      "years",
+      "lot",
+      "being",
+      "its",
+      "ancora"
+    ],
+    "sample_negative_reviews": [
+      "Очень хочу обратить внимание новых игроков!!!!  Значит так, что хочу сказать: игра очень понравилась.  ЕСЛИ отстраниться от её развития, и воспринимать просто как крошечную игру.  Разнообразные приколюшки для готовки\\пивоварки, их очень много, какая-то там фер",
+      "I got this game in early access years ago. The fact that it is still early access six years later says a lot.  The initial game was fun and engaging...then they added more to it. And more. And more. And more. And more. And even more than that.  They bogged dow",
+      "牛逼的美术和设定，史一样的玩法和剧情，时不时小更新一下让咱知道作者还活着，大更新遥遥无期 ",
+      "진짜 버그가 많음 멀티는 진짜 비추입니다... 호스트는 괜찮은 거 같은데 다른 플레이어는 이동불가, 상자 또는 작업대 상호 작용 불가, 방 밖으로 안 나가지는 거 등등 좀 열 받는 잔버그들이 많아요. 심지어 방 밖으로 안나가지는 버그는 게임을 껐다가 켜도 그대로입니다.(알고 싶지 않았어요..) 싱글플레이는 어떤지 모르겠네요.",
+      "抄星露谷又抄不明白，创新内容也是不忍直视，把玩家当NPC整。"
+    ]
+  },
+  "Coffee Caravan": {
+    "negative_reviews_fetched": 5,
+    "top_words": [
+      "there",
+      "but",
+      "have",
+      "space",
+      "over",
+      "different",
+      "also",
+      "not",
+      "much",
+      "fun",
+      "single",
+      "customer",
+      "entire",
+      "nothing",
+      "beyond",
+      "simply",
+      "hour",
+      "time",
+      "too",
+      "light",
+      "rogue",
+      "like",
+      "biggest",
+      "problem",
+      "replayability"
+    ],
+    "sample_negative_reviews": [
+      "As a light Rogue-like game the biggest problem is that there is no replayability. There are only three different levels (shops), and and upgrades are also very limited. Not much space to develop different combos/endings, and I don't understand why Roguelike if",
+      "画风很可爱轻松，但玩法有点单一无聊，游戏内容不多，48的定价对于这个体量来说太贵了，性价比不高",
+      "Fun and charming but not recommended for mouse/keyboard - it can be challenging to get the diagonals consistently and navigate the space since space management is a big part of the game. Also a bit tedious that a single lost customer loses you the entire run, ",
+      "Great start for a game, but lacks challenge, and very much has given me a feeling of \"That's it?\"  I have seen the entire game after 2 hours. There is nothing new beyond that point,  just the same thing over and over.   The difficulty simply doesn't ramp here ",
+      "Tiene potencial, pero se vuelve repetivo despues de un rato"
+    ]
+  },
+  "Chef RPG": {
+    "negative_reviews_fetched": 13,
+    "top_words": [
+      "not",
+      "but",
+      "like",
+      "it's",
+      "can",
+      "just",
+      "make",
+      "more",
+      "all",
+      "them",
+      "get",
+      "one",
+      "because",
+      "even",
+      "when",
+      "would",
+      "chef",
+      "there",
+      "time",
+      "i'm",
+      "right",
+      "stick",
+      "some",
+      "which",
+      "being"
+    ],
+    "sample_negative_reviews": [
+      "THIS REVIEW IS WRITTEN AS OF EARLY ACCESS VERSION 0.6 [hr][/hr] Chef RPG is a mix of Traveler's Rest and Stardew Valley (yes, I know every cozy life sim game with farming, romance, combat, etc. gets compared to it, but that isn't a bad thing in my eyes because",
+      "这个游戏ea我已经买了一年半了，还没有正式版，甚至还没有中文",
+      "I want to love this game because it's beautiful, the soundtrack is great, the systems are all great and the art is outstanding but as it currently stands I cannot recommend it.  The control scheme when using a controller is absolutely horrendous, which also ma",
+      "    I have a lot of thoughts on this game, but the TLDR version is that this game is very underwhelming as a Chef RPG specifically.     The gameplay loop as of right now is very satisfying regarding the restaurant. I for one love the minigames, and unlocked au",
+      "It's a good game and I believe that with time, this game will be great.  But I do not and cannot recommend this game right now.  The whole game is SUPER tedious."
+    ]
+  }
+}

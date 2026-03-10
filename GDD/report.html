@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCS | Полноформатный Анализ & Data Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette: Dark Mode Premium */
+            --bg: #07090e;
+            --surface: rgba(19, 24, 37, 0.6);
+            --surface-hover: rgba(19, 24, 37, 0.9);
+            --card: rgba(26, 32, 53, 0.45);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(108, 138, 255, 0.4);
+
+            /* Typography Config */
+            --font-body: 'Inter', sans-serif;
+            --font-head: 'Outfit', sans-serif;
+            --font-data: 'JetBrains Mono', monospace;
+
+            /* Accents */
+            --accent: #6c8aff;
+            --accent-glow: rgba(108, 138, 255, 0.4);
+            --accent2: #a78bfa;
+            --accent3: #34d399;
+            /* Success/Cosmetic */
+
+            /* Semantic Colors */
+            --critical: #ef4444;
+            --critical-bg: rgba(239, 68, 68, 0.15);
+            --major: #f97316;
+            --major-bg: rgba(249, 115, 22, 0.15);
+            --minor: #eab308;
+            --minor-bg: rgba(234, 179, 8, 0.15);
+
+            /* Text Colors */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 10% 40%, rgba(108, 138, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 90% 60%, rgba(167, 139, 250, 0.04) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-y: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-head);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-meta {
+            font-family: var(--font-data);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.75rem;
+            background: var(--surface);
+            padding: 0.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            width: fit-content;
+            margin: 0 auto 2.5rem auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab-btn.active {
+            background: var(--card);
+            color: var(--accent);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        /* --- BASE COMPONENTS --- */
+        .glass-panel {
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: var(--border-highlight);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-family: var(--font-data);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.critical {
+            background: var(--critical-bg);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge.major {
+            background: var(--major-bg);
+            color: #fdba74;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .badge.minor {
+            background: var(--minor-bg);
+            color: #fde047;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .badge.cosmetic {
+            background: rgba(52, 211, 153, 0.1);
+            color: #6ee7b7;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .badge.tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .badge.high-impact {
+            background: rgba(108, 138, 255, 0.15);
+            color: #93c5fd;
+            border: 1px solid rgba(108, 138, 255, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* --- STATS & CARDS --- */
+        .stat-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: var(--font-data);
+            font-size: 2rem;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        /* --- TABLES --- */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-data);
+        }
+
+        td {
+            padding: 1rem;
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            vertical-align: top;
+        }
+
+        tr td:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        tr td:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        tr:hover td {
+            background: var(--surface-hover);
+        }
+
+        .data-table td {
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            color: var(--accent);
+        }
+
+        /* --- BUG TRACKER --- */
+        .tracker-controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: var(--font-body);
+            transition: 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--card);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        .bug-title {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.25rem;
+            font-size: 1.05rem;
+        }
+
+        .bug-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .bug-quote {
+            border-left: 2px solid var(--border-highlight);
+            padding-left: 0.75rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.5rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* --- QUOTE CARDS --- */
+        .quote-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quote-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            position: relative;
+        }
+
+        .quote-card::before {
+            content: '"';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.75rem;
+            font-family: Georgia, serif;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.05);
+            line-height: 1;
+        }
+
+        .quote-text {
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .quote-source {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-data);
+        }
+
+        /* --- IMPROVEMENTS --- */
+        .initiative-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .initiative-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0.5;
+        }
+
+        .initiative-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .initiative-title {
+            color: #fff;
+            font-size: 1.15rem;
+        }
+
+        .kpi-block {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            margin-top: auto;
+        }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-value {
+            font-family: var(--font-data);
+            color: var(--accent3);
+            font-size: 0.9rem;
+        }
+
+        /* --- ROADMAP --- */
+        .roadmap-timeline {
+            position: relative;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .roadmap-item {
+            position: relative;
+        }
+
+        .roadmap-dot {
+            position: absolute;
+            left: -2.35rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 3px solid var(--accent);
+            z-index: 2;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .roadmap-item.urgent .roadmap-dot {
+            border-color: var(--critical);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+        }
+
+        .roadmap-item.mid .roadmap-dot {
+            border-color: var(--major);
+        }
+
+        .roadmap-date {
+            font-family: var(--font-data);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .roadmap-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 1.25rem;
+            border-radius: 8px;
+        }
+
+        /* Animation class */
+        .fade-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .text-accent {
+            color: var(--accent);
+        }
+
+        /* Core Loop Visual */
+        .core-loop {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .loop-step {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+        }
+
+        .loop-step h4 {
+            color: var(--accent2);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .loop-step p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .loop-arrow {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        /* Competitor Card */
+        .comp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .comp-card h3 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .comp-status {
+            font-family: var(--font-data);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .comp-section {
+            margin-bottom: 1rem;
+        }
+
+        .comp-section h4 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .comp-section p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .comp-opp {
+            background: rgba(108, 138, 255, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>Vacation Cafe Simulator</h1>
+                <h2
+                    style="border: none; margin: 0; color: var(--text-secondary); font-size: 1.1rem; font-weight: 500; font-family: var(--font-body); margin-top: 0.25rem;">
+                    Глубокий Анализ и Пакет Улучшений (Горизонт: 0–3 месяца)</h2>
+            </div>
+            <div class="header-meta">
+                <div>Версия отчета: 3.0 (Comprehensive)</div>
+                <div>Сборка данных: 4 марта 2026</div>
+                <div>База: Steam, Discord, Forums (160+ сигналов)</div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-target="tab-overview">📊 Обзор Проекта</button>
+            <button class="tab-btn" data-target="tab-feedback">💬 Фидбек & Баги</button>
+            <button class="tab-btn" data-target="tab-competitors">⚔️ Конкурентный Анализ</button>
+            <button class="tab-btn" data-target="tab-improvements">🚀 Пакет Улучшений (7)</button>
+            <button class="tab-btn" data-target="tab-roadmap">🗺️ Roadmap & KPI</button>
+        </nav>
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="tab-overview" class="tab-content active fade-in">
+            <div class="grid-3" style="margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <span class="stat-label">Жанровая классификация</span>
+                    <span class="stat-value"
+                        style="font-size: 1.5rem; font-family: var(--font-head); color: var(--accent2);">Cozy /
+                        Life-Sim</span>
+                    <span class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem;">Вторичные: Cafe
+                        Management, Co-op Service Sim</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Объем данных фидбека</span>
+                    <span class="stat-value" style="color: var(--accent);">160+</span>
+                    <span class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem;">Уникальных сигналов
+                        (дедуплицировано, 4 языка)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Главный позитивный якорь</span>
+                    <span class="stat-value"
+                        style="font-size: 1.5rem; font-family: var(--font-head); color: var(--accent3);">Vacation
+                        Vibe</span>
+                    <span class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem;">Атмосфера отпуска —
+                        сильнейший USP проекта</span>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <h2>Идентификационная карта игры</h2>
+                <table class="data-table">
+                    <tbody>
+                        <tr>
+                            <td style="width: 200px; color: var(--text-muted);">Платформа</td>
+                            <td>PC (Steam), App ID: 3196440</td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--text-muted);">Статус</td>
+                            <td>Демо прошло (Next Fest 23.02–02.03.2026) → Ранний доступ запланирован на 2026</td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--text-muted);">Режимы</td>
+                            <td>Single-player, Co-op (2-4 игрока)</td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--text-muted);">Сеттинг & Визуал</td>
+                            <td>Итальянский курортный городок. 3D, FPS-камера, тёплая цветовая палитра.</td>
+                        </tr>
+                        <tr>
+                            <td style="color: var(--text-muted);">Аудиторные теги</td>
+                            <td>Casual, Cooking, Simulation, Relaxing, Co-op, Early Access</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="glass-panel">
+                <h2>Core Gameplay Loop (5 фаз)</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Соответствует тегу "no stress, no
+                    timers". Заявленное обещание роста в кафе пока ощущается незавершённым.</p>
+                <div class="core-loop">
+                    <div class="loop-step">
+                        <h4>1. Закупка</h4>
+                        <p>Поход в городские магазины, закупка ингредиентов (помидоры, тесто...)</p>
+                    </div>
+                    <div class="loop-arrow">→</div>
+                    <div class="loop-step">
+                        <h4>2. Заготовка</h4>
+                        <p>Нарезка, замес (mise en place). Ручная работа, потенциальная точка выгорания.</p>
+                    </div>
+                    <div class="loop-arrow">→</div>
+                    <div class="loop-step">
+                        <h4>3. Сервис</h4>
+                        <p>Прием заказов, готовка через мини-игры, подача. Peaceful mode.</p>
+                    </div>
+                    <div class="loop-arrow">→</div>
+                    <div class="loop-step">
+                        <h4>4. Апгрейды</h4>
+                        <p>Трата выручки на рецепты, оборудование и расширение.</p>
+                    </div>
+                    <div class="loop-arrow">→</div>
+                    <div class="loop-step" style="border-color: var(--critical);">
+                        <h4 style="color: var(--critical);">5. Сохранение (Сбой)</h4>
+                        <p>Цикл ломается из-за багов ко-оп сохранения и вылетов игры.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: FEEDBACK & BUGS -->
+        <div id="tab-feedback" class="tab-content fade-in">
+
+            <div class="glass-panel">
+                <h2>📊 Таксономия тем и приоритизация (PriorityScore)</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Формула: PriorityScore
+                    = 0.5 × Frequency + 0.3 × Severity + 0.2 × Recency (Шкала 1-5)</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Тема / Проблема</th>
+                            <th>Кластер</th>
+                            <th>Freq.</th>
+                            <th>Sev.</th>
+                            <th>Freq.</th>
+                            <th>Score</th>
+                            <th>Статус / Риск</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color: #fff; font-weight: 500;">Save/progress loss</td>
+                            <td>Co-op stability</td>
+                            <td>5</td>
+                            <td>5</td>
+                            <td>5</td>
+                            <td><span class="badge" style="background: rgba(239,68,68,0.2); color: #fca5a5;">5.00</span>
+                            </td>
+                            <td>Критический блокер EA.</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight: 500;">Performance / FPS</td>
+                            <td>Technical</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td><span class="badge"
+                                    style="background: rgba(249,115,22,0.2); color: #fdba74;">4.70</span></td>
+                            <td>Угроза потери ~20% продаж (min-spec).</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight: 500;">AI-art controversy</td>
+                            <td>Brand / Trust</td>
+                            <td>4</td>
+                            <td>4</td>
+                            <td>4</td>
+                            <td><span class="badge" style="background: rgba(234,179,8,0.2); color: #fde047;">4.00</span>
+                            </td>
+                            <td>PR-риск ("won't buy till AI gone").</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight: 500;">Controls/Camera friction</td>
+                            <td>QoL</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td><span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">3.70</span>
+                            </td>
+                            <td>Steam Deck support, motion blur.</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight: 500;">Prep automation</td>
+                            <td>Gameplay</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td><span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">3.40</span>
+                            </td>
+                            <td>Точка монотонности ~10ч.</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight: 500;">No after-hours content</td>
+                            <td>Retention</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td><span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">3.00</span>
+                            </td>
+                            <td>Возможность мощного роста LTV.</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight: 500;">Difficulty modes</td>
+                            <td>Gameplay</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td><span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">2.70</span>
+                            </td>
+                            <td>Конфликт: часть просит таймеры, часть нет.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid-2">
+                <div class="glass-panel" style="margin-bottom: 0;">
+                    <h2 style="color: var(--accent3);">💚 Топ-3 Сильные Стороны</h2>
+                    <div class="quote-list" style="margin-top: 1.5rem;">
+                        <div class="quote-card">
+                            <h4 style="color: #fff; margin-bottom: 0.5rem;">1. Vacation Vibe</h4>
+                            <div class="quote-text">«Атмосфера отпуска нереальная. Потерялся в своем маленьком мире на
+                                несколько часов, даже не заметив этого».</div>
+                            <div class="quote-source"><span>Goddess of Death (Steam)</span><span
+                                    class="badge tag">Конкурентный USP</span></div>
+                        </div>
+                        <div class="quote-card">
+                            <h4 style="color: #fff; margin-bottom: 0.5rem;">2. Кооперативный Режим</h4>
+                            <div class="quote-text">«Лучшая игра, в которую мы играли с другом! Мы так злы, что демо
+                                закончилось. Хочу отдать деньги и играть с женой дальше».</div>
+                            <div class="quote-source"><span>tamisha / efr3egtr (TikTok/Steam)</span><span
+                                    class="badge tag">Виральность</span></div>
+                        </div>
+                        <div class="quote-card">
+                            <h4 style="color: #fff; margin-bottom: 0.5rem;">3. Итальянская Аутентичность</h4>
+                            <div class="quote-text">«Я много лет работал в ресторанах. Приятное настроение, музыка и
+                                идеи везде... игра безумная, у нее невероятное будущее».</div>
+                            <div class="quote-source"><span>pros gorc / antonio.rguezz (Forum)</span><span
+                                    class="badge tag">Credibility</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="margin-bottom: 0;">
+                    <h2 style="color: var(--critical);">🔴 Интерактивный Баг-Трекер</h2>
+                    <div class="tracker-controls" id="bug-filters" style="margin-top: 1.5rem;">
+                        <button class="filter-btn active" data-filter="all">Все (8)</button>
+                        <button class="filter-btn" data-filter="critical">Критические (3)</button>
+                        <button class="filter-btn" data-filter="major">Мажорные (2)</button>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+
+                        <div class="bug-row critical p-card"
+                            style="background: var(--surface); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--critical);">
+                            <div class="bug-title">Потеря прогресса (Co-op & Solo) <span class="badge critical"
+                                    style="float: right;">Score 5.0</span></div>
+                            <div class="bug-desc">Игроки теряют 6+ часов прогресса при перезапуске игры. Подтверждено на
+                                4 языках. Сохраняется только прогресс хоста.</div>
+                            <div class="bug-quote">"My friends and I played for 6 hrs, progress wasn't saved. Twice
+                                already." — Steam</div>
+                        </div>
+
+                        <div class="bug-row critical p-card"
+                            style="background: var(--surface); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--critical);">
+                            <div class="bug-title">Утечки памяти / FPS (Crash) <span class="badge critical"
+                                    style="float: right;">Score 4.7</span></div>
+                            <div class="bug-desc">14fps на min-specs. Потребление VRAM зашкаливает. Solo-игра падает с
+                                ошибкой нехватки памяти даже на 32GB RAM системах.</div>
+                            <div class="bug-quote">"Solo game crashes due to memory. 32 GB RAM not enough??" — Steam
+                            </div>
+                        </div>
+
+                        <div class="bug-row major p-card"
+                            style="background: var(--surface); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--major);">
+                            <div class="bug-title">AI-Арт Репутационный Риск <span class="badge major"
+                                    style="float: right;">Score 4.0</span></div>
+                            <div class="bug-desc">Жалобы на искаженные элементы, буквы на вывесках, висящие бутылки.
+                                Cores-аудитория отказывается покупать игру из-за генераций.</div>
+                            <div class="bug-quote">"Won't touch the game till the AI is announced as gone." — Forum
+                            </div>
+                        </div>
+
+                        <div class="bug-row major p-card"
+                            style="background: var(--surface); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--major);">
+                            <div class="bug-title">Camera & Steam Deck <span class="badge major"
+                                    style="float: right;">Score 3.7</span></div>
+                            <div class="bug-desc">Motion sickness из-за камеры, отсутствие инверсии по Y, пропадающий
+                                курсор на Steam Deck.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: COMPETITORS -->
+        <div id="tab-competitors" class="tab-content fade-in">
+            <div class="glass-panel" style="padding: 0; background: transparent; border: none; box-shadow: none;">
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem; max-width: 900px;">
+                    Анализ узкой ниши <b>Cozy Cafe</b>. Ни один конкурент не покрывает сразу три потребности: <i>Co-op,
+                        Курортный Vibe и Именные NPC</i>. VCS может ударить именно в эти слепые зоны.</p>
+
+                <div class="grid-2">
+                    <!-- Competitor 1 -->
+                    <div class="comp-card">
+                        <h3>☕ Espresso Tycoon <span class="comp-status">Релиз (2023) • Very Positive (85%)</span></h3>
+                        <div class="comp-section">
+                            <h4>Core</h4>
+                            <p>Business sim с крутым 3D-редактором кофе и полным декором кафе.</p>
+                        </div>
+                        <div class="comp-section">
+                            <h4>Слабые стороны</h4>
+                            <p>Анонимные безликие клиенты, отсутствие нарратива, быстрое выгорание, изоляция.</p>
+                        </div>
+                        <div class="comp-opp"><b>Окно для VCS:</b> Named NPC и курортный лор — то, чего Espresso Tycoon
+                            никогда не даст.</div>
+                    </div>
+
+                    <!-- Competitor 2 -->
+                    <div class="comp-card">
+                        <h3>🍺 Traveler's Rest <span class="comp-status">Early Access • Very Positive (89%)</span></h3>
+                        <div class="comp-section">
+                            <h4>Core</h4>
+                            <p>Tavern sim + farm sim. Глубокий крафт еды и напитков.</p>
+                        </div>
+                        <div class="comp-section">
+                            <h4>Слабые стороны</h4>
+                            <p>Рутина быстро нарастает, "день сурка", изоляция внутри таверны, нет масштабных событий.
+                            </p>
+                        </div>
+                        <div class="comp-opp"><b>Окно для VCS:</b> Открытый город, ощущение "курорта" и социальные
+                            механики вне кафе.</div>
+                    </div>
+
+                    <!-- Competitor 3 -->
+                    <div class="comp-card">
+                        <h3>🚐 Coffee Caravan <span class="comp-status">Релиз • Very Positive (92%)</span></h3>
+                        <div class="comp-section">
+                            <h4>Core</h4>
+                            <p>Roguelite управление мобильным кафе на дороге.</p>
+                        </div>
+                        <div class="comp-section">
+                            <h4>Слабые стороны</h4>
+                            <p>Мало контента (~10 часов), нет постоянства мира (базы), слишком легкая экономика.</p>
+                        </div>
+                        <div class="comp-opp"><b>Окно для VCS:</b> Permanency. В VCS игрок строит СВОЕ постоянное кафе с
+                            прогрессией дизайна.</div>
+                    </div>
+
+                    <!-- Competitor 4 -->
+                    <div class="comp-card">
+                        <h3>🍲 Chef RPG <span class="comp-status">Early Access (2024) • Very Positive (87%)</span></h3>
+                        <div class="comp-section">
+                            <h4>Core</h4>
+                            <p>Глубокая RPG: открытый мир, 240+ рецептов, 20+ глубоких NPC романов.</p>
+                        </div>
+                        <div class="comp-section">
+                            <h4>Слабые стороны</h4>
+                            <p>НЕТ CO-OP. Высокий порог вхождения, сложный UI, баги раннего доступа.</p>
+                        </div>
+                        <div class="comp-opp"><b>Окно для VCS:</b> Наличие Co-Op — это огромный козырь VCS против Chef
+                            RPG для пар и стримеров.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: IMPROVEMENTS -->
+        <div id="tab-improvements" class="tab-content fade-in">
+            <div class="glass-panel" style="padding: 0; background: transparent; border: none; box-shadow: none;">
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; max-width: 900px;">Продуктовые инициативы
+                    разделены по матрице Impact × Effort. Основано исключительно на реальных жалобах и пробелах рынка.
+                </p>
+
+                <h2 style="font-size: 1.2rem; color: #fff; margin-bottom: 1rem; padding-bottom: 0; border: none;">⚡
+                    QUICK WINS (0–4 недели)</h2>
+                <div class="grid-3" style="margin-bottom: 3rem;">
+                    <div class="initiative-card">
+                        <div class="initiative-header">
+                            <h3 class="initiative-title">I-1. "Save the Saves"</h3><span
+                                class="badge high-impact">Impact: HIGH</span>
+                        </div>
+                        <p class="bug-desc">Абсолютный блокер. Внедрение автосохранения каждые 5 мин в фоне, ручного
+                            сейва в ко-оп и защиты от вайпов сейвов при патчах.</p>
+                        <div class="kpi-block">
+                            <div class="kpi-label">Target KPI</div>
+                            <div class="kpi-value">Снижение жалоб на потери с 12% до 0%. Длина сессии > 4ч.</div>
+                        </div>
+                    </div>
+                    <div class="initiative-card">
+                        <div class="initiative-header">
+                            <h3 class="initiative-title">I-2. Performance Patch</h3><span
+                                class="badge high-impact">Impact: HIGH</span>
+                        </div>
+                        <p class="bug-desc">LOD оптимизация при ходьбе, фикс утечек памяти в Solo, раздельные ползунки
+                            Texture/Shadows, опция отключения Motion Blur.</p>
+                        <div class="kpi-block">
+                            <div class="kpi-label">Target KPI</div>
+                            <div class="kpi-value">+40% пользователей на min-spec. Рост wishlists на Steam Deck.</div>
+                        </div>
+                    </div>
+                    <div class="initiative-card">
+                        <div class="initiative-header">
+                            <h3 class="initiative-title">I-3. AI-Art Audit</h3><span class="badge"
+                                style="background: rgba(249,115,22,0.1); color: #fdba74; border: 1px solid rgba(249,115,22,0.3);">Impact:
+                                MED</span>
+                        </div>
+                        <p class="bug-desc">Замена «сломанных» генераций (UI-иконки, вывески города) на хенд-мейд
+                            ассеты. Выпуск честного patch notes про удаление AI.</p>
+                        <div class="kpi-block">
+                            <div class="kpi-label">Target KPI</div>
+                            <div class="kpi-value">Устранение review-bombs из-за AI-фактора перед EA.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 1.2rem; color: #fff; margin-bottom: 1rem; padding-bottom: 0; border: none;">⏳
+                    MID-TERM (4–8 недель)</h2>
+                <div class="grid-2" style="margin-bottom: 3rem;">
+                    <div class="initiative-card">
+                        <div class="initiative-header">
+                            <h3 class="initiative-title">I-4. "Lite NPC" Система</h3><span
+                                class="badge high-impact">Impact: HIGH</span>
+                        </div>
+                        <p class="bug-desc">Конкурентный ответ Espresso Tycoon. Ввод 5 "Постоянных гостей" с именами,
+                            аватарами, вкусами и прогрессией дружбы (3 уровня), без сложных квестов.</p>
+                        <div class="kpi-block">
+                            <div class="kpi-label">Target KPI</div>
+                            <div class="kpi-value">Рост D14 Retention. Снижение drop-off после 5 сессии.</div>
+                        </div>
+                    </div>
+                    <div class="initiative-card">
+                        <div class="initiative-header">
+                            <h3 class="initiative-title">I-5. Режимы Сложности</h3><span class="badge"
+                                style="background: rgba(249,115,22,0.1); color: #fdba74; border: 1px solid rgba(249,115,22,0.3);">Impact:
+                                MED</span>
+                        </div>
+                        <p class="bug-desc">Peaceful (как сейчас) / Normal (таймеры) / Hard (финансы, сроки годности).
+                            Решает жесткий раскол аудитории по запросу "слишком легко / добавьте стресс".</p>
+                        <div class="kpi-block">
+                            <div class="kpi-label">Target KPI</div>
+                            <div class="kpi-value">Покрытие hardcore-аудитории тайкунов без поломки cozy-базы.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 1.2rem; color: #fff; margin-bottom: 1rem; padding-bottom: 0; border: none;">🔥 BIG
+                    BETS (8–12 недель)</h2>
+                <div class="grid-2">
+                    <div class="initiative-card">
+                        <div class="initiative-header">
+                            <h3 class="initiative-title">I-6. "Городские Вечера" (After-Hours)</h3><span
+                                class="badge high-impact">Impact: HIGH</span>
+                        </div>
+                        <p class="bug-desc">После закрытия кафе игрок не идет спать, а получает 30 мин на исследования:
+                            прогулки, рынок, встреча с NPC вне работы, базовая квартира. Серьезно повышает Sense of
+                            Place.</p>
+                        <div class="kpi-block">
+                            <div class="kpi-label">Target KPI</div>
+                            <div class="kpi-value">+35% playtime. Новый сильный маркетинговый хук для Steam.</div>
+                        </div>
+                    </div>
+                    <div class="initiative-card">
+                        <div class="initiative-header">
+                            <h3 class="initiative-title">I-7. Prep Automation (Late Game)</h3><span class="badge"
+                                style="background: rgba(249,115,22,0.1); color: #fdba74; border: 1px solid rgba(249,115,22,0.3);">Impact:
+                                MED</span>
+                        </div>
+                        <p class="bug-desc">На уровнях 10+ рутина начинает бесить. Ввод кухонных гаджетов и NPC-стажеров
+                            для автоматизации базовой нарезки.</p>
+                        <div class="kpi-block">
+                            <div class="kpi-label">Target KPI</div>
+                            <div class="kpi-value">Удержание игроков в Late Game (20+ часов геймплея).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: ROADMAP -->
+        <div id="tab-roadmap" class="tab-content fade-in">
+            <div class="glass-panel">
+                <h2>План Внедрения (12-недельный спринт)</h2>
+                <div class="roadmap-timeline">
+
+                    <div class="roadmap-item urgent">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-date">Weeks 1-4 | Стабилизация базиса</div>
+                        <div class="roadmap-content">
+                            <h3 style="margin-bottom: 0.5rem;">Критические патчи и доверие</h3>
+                            <p class="bug-desc">
+                                <b>I-1.</b> Save System Fix (Co-op & Solo) <br>
+                                <b>I-2.</b> Performance Patch (LOD, VRAM leak fix) <br>
+                                <b>I-3.</b> AI-Art Audit & Replace (UI & Signs)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-item mid">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-date">Weeks 4-8 | Глубина и Ретеншен</div>
+                        <div class="roadmap-content">
+                            <h3 style="margin-bottom: 0.5rem;">QoL и Расширение аудитории</h3>
+                            <p class="bug-desc">
+                                <b>I-4.</b> Lite NPC System (5 именных гостей) <br>
+                                <b>I-5.</b> Выбор сложности (Peaceful / Normal / Hard)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-date">Weeks 8-12 | Уникальные ценности (USP)</div>
+                        <div class="roadmap-content">
+                            <h3 style="margin-bottom: 0.5rem;">Контент для Early Access запуска</h3>
+                            <p class="bug-desc">
+                                <b>I-6.</b> After-Hours City Content + Квартира <br>
+                                <b>I-7.</b> Базовая автоматизация заготовки (апгрейды)
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Ожидаемые изменения ключевых метрик:</h3>
+                <table class="data-table" style="background: var(--surface); border-radius: 8px;">
+                    <thead>
+                        <tr>
+                            <th style="color: #fff;">Метрика</th>
+                            <th style="color: var(--text-muted);">Baseline (Демо)</th>
+                            <th style="color: var(--accent3);">Цель (3 мес. EA)</th>
+                            <th style="color: var(--text-secondary);">Драйвер</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Жалобы на save/progress</td>
+                            <td style="color: var(--critical);">12% от постов</td>
+                            <td style="color: var(--accent3);">&lt; 1%</td>
+                            <td>I-1</td>
+                        </tr>
+                        <tr>
+                            <td>Игроки на min-spec</td>
+                            <td>~0% (краши)</td>
+                            <td style="color: var(--accent3);">~40% рынка</td>
+                            <td>I-2</td>
+                        </tr>
+                        <tr>
+                            <td>Ср. длина сессии</td>
+                            <td>2.5ч</td>
+                            <td style="color: var(--accent3);">4ч+</td>
+                            <td>I-1, I-4</td>
+                        </tr>
+                        <tr>
+                            <td>Упоминания AI-art в негативе</td>
+                            <td style="color: var(--major);">~6%</td>
+                            <td style="color: var(--accent3);">&lt; 1%</td>
+                            <td>I-3</td>
+                        </tr>
+                        <tr>
+                            <td>Review Score на старте EA</td>
+                            <td>n/a</td>
+                            <td style="color: var(--accent3);">Very Positive (≥85%)</td>
+                            <td>Весь sprint</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const btns = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.target).classList.add('active');
+            });
+        });
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const bugRows = document.querySelectorAll('.bug-row');
+
+        filterBtns.forEach(fbtn => {
+            fbtn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                fbtn.classList.add('active');
+
+                const filterType = fbtn.dataset.filter;
+
+                bugRows.forEach(row => {
+                    if (filterType === 'all') {
+                        row.style.display = 'block';
+                    } else {
+                        if (row.classList.contains(filterType)) {
+                            row.style.display = 'block';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

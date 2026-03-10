@@ -1,0 +1,3402 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="VCS Bug-First Dashboard: приоритет багов и фидбека, решения и roadmap 0-3 месяца.">
+  <title>VCS - Bug-First Executive Dashboard</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f1eb;
+      --bg-soft: #f0eae1;
+      --surface: #fffdf8;
+      --surface-alt: #f7f2ea;
+      --line: #d3c8b9;
+      --line-strong: #b7a794;
+      --text: #2a2018;
+      --text-muted: #716454;
+      --text-soft: #8f7f6c;
+      --accent: #7a5c3e;
+      --accent-2: #285f59;
+      --critical: #c2422e;
+      --critical-bg: #ffe4de;
+      --major: #bd6a1b;
+      --major-bg: #fdebd8;
+      --minor: #3b7e74;
+      --minor-bg: #dff2ef;
+      --shipping: #1f7a5f;
+      --shipping-bg: #ddf6eb;
+      --hypothesis: #7251a4;
+      --hypothesis-bg: #eee5fb;
+      --radius-lg: 16px;
+      --radius: 12px;
+      --max-w: 1400px;
+      --shadow: 0 8px 18px rgba(60, 35, 10, 0.06);
+      --focus: #285f59;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 10% -10%, #fff7ee 0%, var(--bg) 55%, #efe7da 100%);
+      color: var(--text);
+      font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 10px;
+      top: -60px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--accent-2);
+      color: #fff;
+      text-decoration: none;
+      z-index: 10;
+    }
+    .skip-link:focus { top: 10px; }
+
+    .app {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 20px 14px 64px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(140deg, #fffdf8 0%, #f7efe2 48%, #f0ece6 100%);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .locale-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 4px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .locale-btn {
+      border: 0;
+      border-radius: 999px;
+      min-height: 28px;
+      padding: 0 12px;
+      cursor: pointer;
+      color: var(--text);
+      background: transparent;
+      font: 700 0.7rem "JetBrains Mono", monospace;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .locale-btn[aria-pressed="true"] {
+      color: #fff;
+      background: var(--text);
+    }
+
+    .hero-sub {
+      margin: 12px 0 0;
+      color: var(--text-muted);
+      max-width: 1020px;
+      font-size: 0.96rem;
+    }
+
+    .meta-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .meta-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 10px 12px;
+      min-height: 72px;
+    }
+
+    .meta-card small {
+      display: block;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font: 600 0.68rem "JetBrains Mono", monospace;
+    }
+
+    .meta-card b {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.98rem;
+      line-height: 1.3;
+    }
+
+    .anchor-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .anchor-row {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .anchor-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      padding: 7px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .anchor-nav a:hover {
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    .section {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .section:hover {
+      border-color: var(--line-strong);
+      box-shadow: 0 12px 24px rgba(60, 35, 10, 0.09);
+    }
+
+    .section[data-collapsed="true"] .section-body {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      overflow: hidden;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .expand-label {
+      display: inline;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fefcf8 0%, #f7f1e8 100%);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: "Sora", sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 6px 0 0;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      max-width: 960px;
+    }
+
+    .toggle-btn {
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 6px 11px;
+      min-height: 32px;
+      cursor: pointer;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #fff9f0;
+      transform: translateY(-1px);
+    }
+
+    .section-body {
+      padding: 14px 16px;
+      max-height: 5000px;
+      opacity: 1;
+      visibility: visible;
+      transition: max-height 0.28s ease, opacity 0.22s ease, padding-top 0.2s ease, padding-bottom 0.2s ease;
+    }
+
+    .critical-zone {
+      border-left: 4px solid var(--critical);
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      align-items: end;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field-sort {
+      grid-column: span 2;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font: 600 0.67rem "JetBrains Mono", monospace;
+    }
+
+    select,
+    .btn {
+      width: 100%;
+      min-height: 38px;
+      border-radius: 10px;
+      border: 1px solid var(--line-strong);
+      padding: 0 10px;
+      background: #fff;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn:hover,
+    select:hover {
+      border-color: var(--accent);
+    }
+
+    .filters-summary {
+      margin: 10px 0 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .risk-grid,
+    .psych-grid,
+    .insight-grid,
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 10px;
+    }
+
+    .risk-card,
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-alt);
+      padding: 12px;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, background-color 0.18s ease;
+    }
+
+    .risk-card:hover,
+    .card:hover {
+      border-color: var(--line-strong);
+      box-shadow: 0 8px 16px rgba(60, 35, 10, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .risk-top,
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .risk-title,
+    .card-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .metrics {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      padding: 7px;
+    }
+
+    .metric small {
+      display: block;
+      color: var(--text-soft);
+      font: 500 0.66rem "JetBrains Mono", monospace;
+      text-transform: uppercase;
+    }
+
+    .metric b {
+      display: block;
+      margin-top: 3px;
+      font: 700 0.85rem "JetBrains Mono", monospace;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font: 700 0.69rem "JetBrains Mono", monospace;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .severity-critical { color: var(--critical); background: var(--critical-bg); border-color: #efb1a7; }
+    .severity-major { color: var(--major); background: var(--major-bg); border-color: #ebc29a; }
+    .severity-minor { color: var(--minor); background: var(--minor-bg); border-color: #9ccfc7; }
+    .status-shipping { color: var(--shipping); background: var(--shipping-bg); border-color: #9fd8c3; }
+    .status-hypothesis { color: var(--hypothesis); background: var(--hypothesis-bg); border-color: #cab6eb; }
+    .priority-p0 { color: var(--critical); background: var(--critical-bg); border-color: #efb1a7; }
+    .priority-p1 { color: var(--major); background: var(--major-bg); border-color: #ebc29a; }
+    .priority-p2 { color: var(--minor); background: var(--minor-bg); border-color: #9ccfc7; }
+    .chip-muted { color: var(--text-muted); background: #f0e9df; border-color: var(--line); }
+
+    .count-line {
+      margin: 0 0 10px;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: auto;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 860px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #ebdfd0;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.85rem;
+    }
+
+    th {
+      background: #f6efe4;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font: 700 0.67rem "JetBrains Mono", monospace;
+    }
+
+    .mono { font-family: "JetBrains Mono", monospace; }
+
+    .evidence-meta,
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 8px;
+    }
+
+    .evidence-quote,
+    .insight-text {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .section-intro {
+      margin: 0 0 10px;
+      color: var(--text-muted);
+      font-size: 0.87rem;
+      line-height: 1.48;
+      max-width: 110ch;
+    }
+
+    .risk-narrative {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 8px 10px;
+    }
+
+    .risk-narrative p {
+      margin: 4px 0;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.42;
+    }
+
+    .table-cell-detail {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.38;
+    }
+
+    .evidence-details {
+      margin: 8px 0 0;
+      border-top: 1px dashed #ddd0be;
+      padding-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.83rem;
+      line-height: 1.42;
+    }
+
+    .source-toggle {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .source-chip {
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font: 600 0.75rem "JetBrains Mono", monospace;
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .source-chip[aria-pressed="true"] {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #fff5e8;
+    }
+
+    .source-chip:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    .timeline {
+      display: grid;
+      gap: 8px;
+    }
+
+    .timeline-step {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      background: var(--surface-alt);
+      padding: 10px;
+    }
+
+    .timeline-step.critical { border-left-color: var(--critical); }
+    .timeline-step.major { border-left-color: var(--major); }
+    .timeline-step.minor { border-left-color: var(--minor); }
+
+    .timeline-window {
+      color: var(--text-soft);
+      font: 600 0.72rem "JetBrains Mono", monospace;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .empty {
+      color: var(--text-soft);
+      border: 1px dashed var(--line-strong);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    a {
+      color: var(--accent-2);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82em;
+      background: #f2e9de;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 960px) {
+      .section-head {
+        flex-direction: column;
+      }
+      .toggle-btn {
+        align-self: flex-start;
+      }
+      .hero-top {
+        flex-direction: column;
+      }
+      .locale-switch {
+        align-self: flex-start;
+      }
+      .field-sort {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .app { padding: 12px 10px 40px; }
+      .meta-grid { grid-template-columns: 1fr 1fr; }
+      table.mobile-stack,
+      table.mobile-stack thead,
+      table.mobile-stack tbody,
+      table.mobile-stack tr,
+      table.mobile-stack th,
+      table.mobile-stack td {
+        display: block;
+        min-width: 0;
+      }
+      table.mobile-stack thead {
+        display: none;
+      }
+      table.mobile-stack tr {
+        border-bottom: 1px solid #ebdfd0;
+      }
+      table.mobile-stack td {
+        border: 0;
+        padding: 8px 10px;
+      }
+      table.mobile-stack td::before {
+        content: attr(data-label) ": ";
+        font: 700 0.68rem "JetBrains Mono", monospace;
+        color: var(--text-soft);
+      }
+      .meta-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" id="skipLink" href="#main">Перейти к контенту</a>
+  <div class="app">
+    <header class="hero">
+      <div class="hero-top">
+        <h1 id="heroTitle">VCS - Bug-First Executive Dashboard</h1>
+        <div class="locale-switch" id="localeSwitch" role="group" aria-label="Language switch">
+          <button class="locale-btn" id="localeRuBtn" type="button" aria-pressed="true">RU</button>
+          <button class="locale-btn" id="localeEnBtn" type="button" aria-pressed="false">EN</button>
+        </div>
+      </div>
+      <p class="hero-sub" id="heroSub">
+        Dashboard для принятия продуктовых решений: сначала критичные баги и обратная связь игроков,
+        затем - инициативы, инсайты, психология поведения и roadmap. Дата актуальности:<strong> 4 марта 2026</strong>.
+      </p>
+      <div class="meta-grid">
+        <article class="meta-card"><small id="metaDateLabel">Data actuality</small><b id="metaDate">-</b></article>
+        <article class="meta-card"><small id="metaRawLabel">Signals raw</small><b id="metaRaw">-</b></article>
+        <article class="meta-card"><small id="metaUniqueLabel">Signals unique</small><b id="metaUnique">-</b></article>
+        <article class="meta-card"><small id="metaMethodLabel">Scoring method</small><b id="metaMethod">-</b></article>
+      </div>
+      <div class="anchor-row">
+        <nav class="anchor-nav" id="anchorNav" aria-label="Навигация по разделам">
+          <a href="#risks" id="navLinkRisks">Top Risks</a>
+          <a href="#bugs" id="navLinkBugs">Bug Triage</a>
+          <a href="#evidence" id="navLinkEvidence">Evidence</a>
+          <a href="#actions" id="navLinkActions">Action Board</a>
+          <a href="#psychology" id="navLinkPsychology">Psychology</a>
+          <a href="#roadmap" id="navLinkRoadmap">Roadmap</a>
+          <a href="#sources" id="navLinkSources">Sources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="section" id="filters" data-section="filters" data-collapsed="false">
+        <div class="section-head">
+          <div>
+            <h2 id="filtersTitle">Global Filters</h2>
+            <p id="filtersDesc">Фильтры влияют на риски, triage, evidence, actions, improvements и insights. <code>Reset</code> возвращает <code>sort=desc</code>.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="filters" aria-expanded="true"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <div class="filters-grid">
+            <div class="field"><label id="themeFilterLabel" for="themeFilter">Theme</label><select id="themeFilter"></select></div>
+            <div class="field"><label id="sourceFilterLabel" for="sourceFilter">Source</label><select id="sourceFilter"></select></div>
+            <div class="field"><label id="severityFilterLabel" for="severityFilter">Severity</label>
+              <select id="severityFilter">
+                <option value="all">All</option>
+                <option value="critical">Critical</option>
+                <option value="major">Major</option>
+                <option value="minor">Minor</option>
+              </select>
+            </div>
+            <div class="field"><label id="categoryFilterLabel" for="categoryFilter">Category</label>
+              <select id="categoryFilter">
+                <option value="all">All</option>
+                <option value="QoL">QoL</option>
+                <option value="Gameplay">Gameplay</option>
+                <option value="Retention">Retention</option>
+                <option value="USP">USP</option>
+              </select>
+            </div>
+            <div class="field"><label id="statusFilterLabel" for="statusFilter">Status</label>
+              <select id="statusFilter">
+                <option value="all">All</option>
+                <option value="shipping">Shipping</option>
+                <option value="hypothesis">Hypothesis</option>
+              </select>
+            </div>
+            <div class="field field-sort"><label id="sortFilterLabel" for="sortFilter">Sort score</label>
+              <select id="sortFilter">
+                <option value="desc">Desc</option>
+                <option value="asc">Asc</option>
+              </select>
+            </div>
+            <div class="field"><label id="resetFiltersLabel" for="resetFilters">Reset</label><button class="btn" id="resetFilters" type="button">Reset filters</button></div>
+          </div>
+          <p class="filters-summary" id="filtersSummary"></p>
+        </div>
+      </section>
+
+      <section class="section critical-zone" id="risks" data-section="risks" data-collapsed="false">
+        <div class="section-head">
+          <div>
+            <h2 id="risksTitle">Top Feedback Risks</h2>
+            <p id="risksDesc">Above the fold: 3 главных риска по <code>PriorityScore</code> для немедленных решений.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="risks" aria-expanded="true"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="riskIntro"></p>
+          <p class="filters-summary" id="riskRetentionLegend"></p>
+          <p class="count-line" id="riskCount"></p>
+          <div class="risk-grid" id="riskGrid"></div>
+        </div>
+      </section>
+
+      <section class="section critical-zone" id="bugs" data-section="bugs" data-collapsed="false">
+        <div class="section-head">
+          <div>
+            <h2 id="bugsTitle">Bug Triage Board</h2>
+            <p id="bugsDesc">Кластеры багов и операционный приоритет (<code>P0/P1/P2</code>): source-backed, severity-aware.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="bugs" aria-expanded="true"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="bugIntro"></p>
+          <p class="count-line" id="bugCount"></p>
+          <div class="table-wrap">
+            <table class="mobile-stack" aria-label="Bug triage">
+              <thead>
+                <tr>
+                  <th id="bugThCluster">Cluster</th>
+                  <th id="bugThSeverity">Severity</th>
+                  <th id="bugThPriority">Priority</th>
+                  <th id="bugThFrequency">Frequency</th>
+                  <th id="bugThScore">Score</th>
+                  <th id="bugThHints">Repro hints</th>
+                  <th id="bugThSources">Sources</th>
+                </tr>
+              </thead>
+              <tbody id="bugRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section critical-zone" id="evidence" data-section="evidence" data-collapsed="false">
+        <div class="section-head">
+          <div>
+            <h2 id="evidenceTitle">Evidence Drawer</h2>
+            <p id="evidenceDesc">Нормализованные сигналы из <code>Steam / Discord / Forum</code>, включая локальный парсинг <code>chatlogs-*.html</code> и <code>107-*.mhtml</code>.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="evidence" aria-expanded="true"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="evidenceIntro"></p>
+          <div class="source-toggle" id="sourceToggle" role="group" aria-label="Быстрый выбор источника">
+            <button class="source-chip" id="sourceChipAll" type="button" data-source="all" aria-pressed="true">All</button>
+            <button class="source-chip" id="sourceChipSteam" type="button" data-source="Steam" aria-pressed="false">Steam</button>
+            <button class="source-chip" id="sourceChipDiscord" type="button" data-source="Discord" aria-pressed="false">Discord</button>
+            <button class="source-chip" id="sourceChipForum" type="button" data-source="Forum" aria-pressed="false">Forum</button>
+          </div>
+          <p class="count-line" id="evidenceCount"></p>
+          <div class="evidence-grid" id="evidenceGrid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="actions" data-section="actions" data-collapsed="true">
+        <div class="section-head">
+          <div>
+            <h2 id="actionsTitle">Action Board</h2>
+            <p id="actionsDesc">Перенесено из предыдущих dashboard: owner + ETA + KPI + source traceability.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="actions" aria-expanded="false"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="actionsIntro"></p>
+          <p class="count-line" id="actionCount"></p>
+          <div class="table-wrap">
+            <table class="mobile-stack" aria-label="Action board">
+              <thead>
+                <tr>
+                  <th id="actionThId">ID</th>
+                  <th id="actionThCategory">Category</th>
+                  <th id="actionThStatus">Status</th>
+                  <th id="actionThProblem">Problem</th>
+                  <th id="actionThSolution">Solution</th>
+                  <th id="actionThImpact">Impact/Effort</th>
+                  <th id="actionThPriority">Priority</th>
+                  <th id="actionThKpi">KPI</th>
+                  <th id="actionThOwner">Owner</th>
+                  <th id="actionThEta">ETA</th>
+                </tr>
+              </thead>
+              <tbody id="actionRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="psychology" data-section="psychology" data-collapsed="true">
+        <div class="section-head">
+          <div>
+            <h2 id="psychologyTitle">Psychology / Friction / Dopamine</h2>
+            <p id="psychologyDesc">Структуры из master-dashboard: late-game personas, friction points и мотивационные якоря.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="psychology" aria-expanded="false"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="psychologyIntro"></p>
+          <h3 id="personasHeading">Late-game Personas</h3>
+          <div class="psych-grid" id="personasGrid"></div>
+
+          <h3 id="frictionHeading">Core Loop Friction</h3>
+          <div class="table-wrap">
+            <table class="mobile-stack" aria-label="Friction table">
+              <thead>
+                <tr><th id="frictionThTrigger">Trigger</th><th id="frictionThIssue">Issue</th><th id="frictionThSolution">Solution</th><th id="frictionThImpact">Impact</th></tr>
+              </thead>
+              <tbody id="frictionRows"></tbody>
+            </table>
+          </div>
+
+          <h3 id="dopamineHeading">Dopamine Anchors</h3>
+          <div class="psych-grid" id="dopamineGrid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="improvements" data-section="improvements" data-collapsed="true">
+        <div class="section-head">
+          <div>
+            <h2 id="improvementsTitle">Shipping Improvements</h2>
+            <p id="improvementsDesc">Initiative groups: Quick Wins / Mid-term / Big Bet.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="improvements" aria-expanded="false"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="improvementsIntro"></p>
+          <div id="improvementGroups"></div>
+        </div>
+      </section>
+
+      <section class="section" id="insights" data-section="insights" data-collapsed="true">
+        <div class="section-head">
+          <div>
+            <h2 id="insightsTitle">Insight Validation Board</h2>
+            <p id="insightsDesc">Shipping и hypothesis инсайты со ссылками на источники и KPI.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="insights" aria-expanded="false"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="insightsIntro"></p>
+          <p class="count-line" id="insightCount"></p>
+          <div class="insight-grid" id="insightGrid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="competitors" data-section="competitors" data-collapsed="true">
+        <div class="section-head">
+          <div>
+            <h2 id="competitorsTitle">Competitor Snapshot</h2>
+            <p id="competitorsDesc">Собран на основе локальных snapshots и review summaries.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="competitors" aria-expanded="false"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="competitorsIntro"></p>
+          <div class="table-wrap">
+            <table class="mobile-stack" aria-label="Competitor snapshot">
+              <thead>
+                <tr><th id="competitorThGame">Game</th><th id="competitorThRole">Role</th><th id="competitorThStrengths">Strengths</th><th id="competitorThWeaknesses">Weaknesses</th><th id="competitorThOpportunity">Opportunity</th></tr>
+              </thead>
+              <tbody id="competitorRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="roadmap" data-section="roadmap" data-collapsed="true">
+        <div class="section-head">
+          <div>
+            <h2 id="roadmapTitle">Roadmap 0-3 months</h2>
+            <p id="roadmapDesc">Dependency-aware порядок внедрения: сначала reliability, затем growth.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="roadmap" aria-expanded="false"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="roadmapIntro"></p>
+          <div class="timeline" id="timelineRows"></div>
+        </div>
+      </section>
+
+      <section class="section" id="sources" data-section="sources" data-collapsed="true">
+        <div class="section-head">
+          <div>
+            <h2 id="sourcesTitle">Source Snapshot</h2>
+            <p id="sourcesDesc">Техническая сводка по источникам, версии данных и ссылкам.</p>
+          </div>
+          <button class="toggle-btn" type="button" data-toggle="sources" aria-expanded="false"><span class="expand-label"></span></button>
+        </div>
+        <div class="section-body">
+          <p class="section-intro" id="sourcesIntro"></p>
+          <div class="meta-grid">
+            <article class="meta-card"><small id="steamStatusLabel">Steam status</small><b id="steamStatus">-</b></article>
+            <article class="meta-card"><small id="platformsLabel">Platforms</small><b id="platforms">-</b></article>
+            <article class="meta-card"><small id="verifiedAtLabel">Verified at</small><b id="verifiedAt">-</b></article>
+            <article class="meta-card"><small id="httpChecksLabel">HTTP checks</small><b id="httpSummary">-</b></article>
+          </div>
+          <ul id="sourceLinks" style="margin:12px 0 0;padding-left:0;list-style:none;display:grid;gap:6px"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // ---------- Data contract ----------
+    // DashboardDataV3:
+    // meta, theme_scores, bug_clusters, feedback_signals, actions, improvements,
+    // insights_shipping, insights_hypothesis, psychology, competitor_snapshot,
+    // roadmap, source_snapshot
+
+    const SOURCE_KEY_MAP = {
+      steam_forum: 'Steam',
+      discord_chat: 'Discord',
+      discord_bug_forum: 'Forum',
+      Steam: 'Steam',
+      Discord: 'Discord',
+      Forum: 'Forum'
+    };
+
+    const SEVERITY_BY_THEME = {
+      'Save loss': 'critical',
+      'Co-op stability': 'critical',
+      'Performance': 'major',
+      'Controls/UI friction': 'major',
+      'AI-art perception': 'major',
+      'Localization': 'minor',
+      'Atmosphere/Cozy': 'minor',
+      'No-pressure flow': 'minor',
+      'Audio/ASMR': 'minor',
+      'Inventory friction': 'major',
+      'Dishwashing burnout': 'major',
+      'Progression anchor': 'minor',
+      'Layout strategy': 'minor',
+      'Memory load': 'minor',
+      'Steam Deck cursor/input': 'major',
+      'Co-op task sync': 'major',
+      'Recipe authenticity': 'minor',
+      'Day-cycle challenge': 'minor'
+    };
+
+    const mhtmlFileList = [
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com.mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (2).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (3).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (4).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (5).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (6).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (7).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (8).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (9).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (10).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (11).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (12).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (13).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (14).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (15).mhtml',
+      '../107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (16).mhtml'
+    ];
+
+    const fallbackData = {
+      meta: {
+        actuality_date: '2026-03-04',
+        signals_raw: 676,
+        signals_unique: 633,
+        method: 'PriorityScore = 0.5×Frequency + 0.3×Severity + 0.2×Recency'
+      },
+      theme_scores: [
+        { theme: 'Save loss', sentiment: 'negative', frequency: 37, frequency_score: 5.0, severity_score: 5.0, recency_score: 4.8, priority_score: 4.96 },
+        { theme: 'Co-op stability', sentiment: 'negative', frequency: 36, frequency_score: 4.89, severity_score: 4.0, recency_score: 4.46, priority_score: 4.54 },
+        { theme: 'Performance', sentiment: 'negative', frequency: 33, frequency_score: 4.57, severity_score: 4.5, recency_score: 4.03, priority_score: 4.44 },
+        { theme: 'Controls/UI friction', sentiment: 'negative', frequency: 9, frequency_score: 1.97, severity_score: 3.5, recency_score: 3.5, priority_score: 2.74 },
+        { theme: 'AI-art perception', sentiment: 'negative', frequency: 7, frequency_score: 1.76, severity_score: 3.5, recency_score: 3.71, priority_score: 2.67 },
+        { theme: 'Localization', sentiment: 'negative', frequency: 2, frequency_score: 1.22, severity_score: 2.5, recency_score: 3.5, priority_score: 2.06 },
+        { theme: 'Atmosphere/Cozy', sentiment: 'positive', frequency: 23, frequency_score: 3.49, severity_score: 2.0, recency_score: 3.63, priority_score: 3.07 },
+        { theme: 'No-pressure flow', sentiment: 'positive', frequency: 4, frequency_score: 1.43, severity_score: 2.5, recency_score: 3.88, priority_score: 2.24 },
+        { theme: 'Audio/ASMR', sentiment: 'positive', frequency: 1, frequency_score: 1.11, severity_score: 2.0, recency_score: 3.5, priority_score: 1.85 }
+      ],
+      feedback_signals: [
+        { source: 'Steam', id: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/', url: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/', quote: 'Played 2 hours in co-op and progress looked lost when returning.', theme: 'Save loss', sentiment: 'negative', severity: 'critical' },
+        { source: 'Steam', id: 'https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/', url: 'https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/', quote: 'Please put multiplayer into playtest, many sync issues.', theme: 'Co-op stability', sentiment: 'negative', severity: 'critical' },
+        { source: 'Steam', id: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/', url: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/', quote: 'GTX 1070 at lowest settings still near 96% GPU usage.', theme: 'Performance', sentiment: 'negative', severity: 'major' },
+        { source: 'Discord', id: '1476282943440818307', url: '', quote: 'Is there a way to recover co-op and solo save file? mine is gone.', theme: 'Save loss', sentiment: 'negative', severity: 'critical' },
+        { source: 'Forum', id: 'mhtml#save', url: '', quote: 'Saved multiplayer progress is gone after update.', theme: 'Save loss', sentiment: 'negative', severity: 'critical' },
+        { source: 'Steam', id: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/', url: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/', quote: 'Constant clicking fatigue, need hold-to-chop.', theme: 'Controls/UI friction', sentiment: 'negative', severity: 'major' },
+        { source: 'Steam', id: 'https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/', url: 'https://steamcommunity.com/app/3196440/discussions/0/601916423125757202/', quote: 'Concern about AI image authenticity.', theme: 'AI-art perception', sentiment: 'negative', severity: 'major' }
+      ],
+      actions: [
+        { id: 'A1', category: 'QoL', status: 'shipping', theme: 'Save loss', severity: 'critical', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/', solution: 'Save Guardrail System: autosave + manual slot + recovery snapshot.', impact: 'High', effort: 'M', priority: 'P0', kpi: '-60% save-loss complaints; >=99.5% successful reloads', owner: 'Backend', eta: 'Week 1-2' },
+        { id: 'A2', category: 'QoL', status: 'shipping', theme: 'Co-op stability', severity: 'critical', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/', solution: 'Reconnect flow + fallback resync + network diagnostics.', impact: 'High', effort: 'L', priority: 'P0', kpi: '-50% co-op bug reports; +15% co-op sessions >30 min', owner: 'Netcode', eta: 'Week 3-6' },
+        { id: 'A3', category: 'Gameplay', status: 'shipping', theme: 'Performance', severity: 'major', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/', solution: 'Dynamic quality profile + split graphics controls.', impact: 'High', effort: 'M', priority: 'P0', kpi: '-40% perf complaints; +20% median FPS', owner: 'Engine', eta: 'Week 4-7' },
+        { id: 'A4', category: 'QoL', status: 'shipping', theme: 'Controls/UI friction', severity: 'major', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/', solution: 'Hold-to-chop + input comfort + sign-text fix.', impact: 'High', effort: 'S', priority: 'P1', kpi: '-30% click-fatigue complaints', owner: 'UX', eta: 'Week 2-3' },
+        { id: 'A5', category: 'QoL', status: 'shipping', theme: 'Inventory friction', severity: 'major', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460799201/', solution: 'Inventory relief and return-to-storage QoL.', impact: 'High', effort: 'M', priority: 'P1', kpi: '-25% inventory friction complaints', owner: 'Gameplay', eta: 'Week 2-4' },
+        { id: 'A6', category: 'Retention', status: 'shipping', theme: 'Dishwashing burnout', severity: 'major', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437998196285495/', solution: 'Dishwashing automation unlock at Level 4.', impact: 'High', effort: 'M', priority: 'P1', kpi: '+8% D7 retention in 8h+ segment', owner: 'Systems', eta: 'Week 4-6' },
+        { id: 'A7', category: 'Gameplay', status: 'shipping', theme: 'Progression anchor', severity: 'minor', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437998196293522/', solution: 'Pizza Oven milestone at Level 7.', impact: 'High', effort: 'L', priority: 'P2', kpi: '+15% D14 retention at level 7', owner: 'Content', eta: 'Week 8-12' },
+        { id: 'A8', category: 'QoL', status: 'hypothesis', theme: 'Memory load', severity: 'minor', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/', solution: 'Barista notebook for pinned preferences.', impact: 'Medium', effort: 'S', priority: 'P2', kpi: '-15% frustration mentions (A/B)', owner: 'UX', eta: 'Backlog' },
+        { id: 'A9', category: 'Gameplay', status: 'hypothesis', theme: 'Layout strategy', severity: 'minor', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/', solution: 'VIP zoning with smart zone detection.', impact: 'High', effort: 'L', priority: 'P2', kpi: '+session length and layout depth', owner: 'Design', eta: 'Backlog' }
+      ],
+      improvements: [
+        { id: 'I1', stage: 'Quick Wins', category: 'QoL', linked_theme: 'Save loss', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/', solution: 'Save Guardrail System: autosave, manual slot, recovery snapshot.', impact: 'High', effort: 'M', priority: 'P0', kpi: '-60% жалоб на потерю прогресса.' },
+        { id: 'I4', stage: 'Quick Wins', category: 'QoL', linked_theme: 'Controls/UI friction', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460921786/', solution: 'Input Comfort Bundle: hold-to-action, inventory reorder, sign-text fix.', impact: 'Medium', effort: 'S', priority: 'P1', kpi: '-35% UI/control жалоб.' },
+        { id: 'I2', stage: 'Mid-term', category: 'QoL', linked_theme: 'Co-op stability', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/591778884098515475/', solution: 'Reconnect flow, fallback resync, diagnostics UI.', impact: 'High', effort: 'L', priority: 'P0', kpi: '-50% co-op bug reports.' },
+        { id: 'I3', stage: 'Mid-term', category: 'Gameplay', linked_theme: 'Performance', problem_link: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/', solution: 'Performance triage + dynamic quality controls.', impact: 'High', effort: 'M', priority: 'P0', kpi: '-40% perf complaints.' },
+        { id: 'I6', stage: 'Mid-term', category: 'Retention', linked_theme: 'Atmosphere/Cozy', problem_link: 'https://steamcommunity.com/app/3196440/discussions/', solution: 'Weekly resort loop: mini-events + goals board.', impact: 'High', effort: 'M', priority: 'P1', kpi: '+10pp D7 retention.' },
+        { id: 'I7', stage: 'Big Bet', category: 'USP', linked_theme: 'Atmosphere/Cozy', problem_link: 'https://store.steampowered.com/app/1796790/Chef_RPG/', solution: 'Named tourists and postcard stories.', impact: 'High', effort: 'L', priority: 'P2', kpi: '+20% UGC mentions.' }
+      ],
+      insights_shipping: [
+        { id: 'IC1', title: 'Hold-to-chop / Long-press input', status: 'shipping', category: 'QoL', solution: 'Reduce repetitive clicking by hold action with progress.', impact: 'High', effort: 'S', priority: 'P1', kpi: '-30% click fatigue complaints', evidence_strength: 'Strong', source_refs: ['https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/'] },
+        { id: 'IC2', title: 'Inventory wall fix', status: 'shipping', category: 'QoL', solution: 'Expand inventory or allow prep in place.', impact: 'High', effort: 'M', priority: 'P1', kpi: '-25% inventory friction complaints', evidence_strength: 'Strong', source_refs: ['https://steamcommunity.com/app/3196440/discussions/0/767437664460799201/'] },
+        { id: 'IC3', title: 'Dishwashing automation', status: 'shipping', category: 'QoL', solution: 'Unlock dishwashing helper role at level 4.', impact: 'High', effort: 'M', priority: 'P1', kpi: '+D7 retention in 8h+ segment', evidence_strength: 'Strong', source_refs: ['https://steamcommunity.com/app/3196440/discussions/0/767437998196285495/'] }
+      ],
+      insights_hypothesis: [
+        { id: 'IC5', title: 'Barista notebook', status: 'hypothesis', category: 'QoL', solution: 'Pinned recipes and guest preferences.', impact: 'Medium', effort: 'S', priority: 'P2', kpi: 'A/B: -15% frustration mentions', evidence_strength: 'Low', source_refs: ['https://steamcommunity.com/app/3196440/discussions/0/767437664460841138/'] },
+        { id: 'IC6', title: 'VIP zoning', status: 'hypothesis', category: 'Gameplay', solution: 'Smart zone detection and guest type assignment.', impact: 'High', effort: 'L', priority: 'P2', kpi: '+session length', evidence_strength: 'Medium', source_refs: ['https://steamcommunity.com/app/3196440/discussions/0/767437664460880215/'] }
+      ],
+      psychology: {
+        personas: [
+          { name: 'Медитативный Дзен', role: 'The Zen Potterer', desc: 'Заходит на короткие сессии ради ритуала и расслабления.', action: 'Усилять ASMR и сезонные спокойные активности.' },
+          { name: 'Архитектор-Перфекционист', role: 'The Perfectionist', desc: 'Строит сложные layout-схемы и упирается в UX-ограничения.', action: 'Grid snapping, зоны и гибкие инструменты декора.' },
+          { name: 'Магнат-Коллекционер', role: 'The Wealth Grinder', desc: 'Быстро достигает потолка и требует масштабной меты.', action: 'Prestige-система и долгий progression tail.' }
+        ],
+        friction: [
+          { trigger: '3-й стол / mid-run prep', issue: 'Inventory wall и forced backtracking.', solution: 'Storage QoL + prep in place.', impact: 'High' },
+          { trigger: 'Нарезка ингредиентов', issue: 'Clicking fatigue разрушает relaxed flow.', solution: 'Hold-to-chop с сохранением звукового фидбэка.', impact: 'Critical' },
+          { trigger: 'Мытье посуды', issue: 'Рутина выжигает после нескольких часов.', solution: 'Ранний automation unlock.', impact: 'High' },
+          { trigger: 'Заказы с тегами', issue: 'Memory pressure вместо chill-loop.', solution: 'Barista notebook / order pinning.', impact: 'Medium' }
+        ],
+        dopamine: [
+          { name: 'Pizza Oven Level 7', desc: 'Сильный milestone и эмоциональный пик прогрессии.' },
+          { name: 'Открытие внешних зон', desc: 'Новый слой целей вне базовой кухни.' },
+          { name: 'Memorable guests', desc: 'UGC и шэринг через уникальные туристические истории.' }
+        ]
+      },
+      competitor_snapshot: [
+        { game: 'Espresso Tycoon', market_role: 'Классический coffee tycoon', strengths: 'Понятная менеджмент-петля, strong coffee fantasy.', weaknesses: 'Stiff feel, perf complaints, AI-art дискуссии.', opportunity: 'VCS может выиграть за счет reliability + cozy pacing.' },
+        { game: 'Travellers Rest', market_role: 'Глубокий cozy tavern sim', strengths: 'Большая контентная глубина и retention tail.', weaknesses: 'Pacing/grind complaints, долгий EA цикл.', opportunity: 'VCS: быстрее к удовольствию без тяжелого grind.' },
+        { game: 'Coffee Caravan', market_role: 'Roguelite mobile cafe loop', strengths: 'Pick-up-and-play цикл.', weaknesses: 'Replayability limits.', opportunity: 'VCS: глубже мета при сохранении доступности.' },
+        { game: 'Chef RPG', market_role: 'Life-sim + restaurant', strengths: 'Сильная связка мир/персонажи/кулинария.', weaknesses: 'Controller/UI friction.', opportunity: 'VCS может дифференцироваться по co-op UX.' }
+      ],
+      roadmap: [
+        { window: 'Week 1-2', initiative: 'A1 Save Guardrail System', dependency: 'Блокер reliability #1', urgency: 'critical' },
+        { window: 'Week 2-3', initiative: 'A4 Hold-to-chop + input comfort', dependency: 'Quick QoL drop for friction', urgency: 'major' },
+        { window: 'Week 2-4', initiative: 'A5 Inventory wall fix', dependency: 'Prep flow unblocking', urgency: 'major' },
+        { window: 'Week 3-6', initiative: 'A2 Co-op stability pack', dependency: 'После базовой save-stability', urgency: 'critical' },
+        { window: 'Week 4-7', initiative: 'A3 Performance triage', dependency: 'После первой телеметрии патча', urgency: 'major' },
+        { window: 'Week 8-12', initiative: 'A7 Pizza milestone', dependency: 'После закрытия P0 reliability', urgency: 'minor' }
+      ],
+      source_snapshot: {
+        steam_store_status: {
+          name: 'Vacation Cafe Simulator',
+          release_date: '2026',
+          review_state: 'No user reviews',
+          platforms: { windows: true, mac: false, linux: false }
+        },
+        verified_at: '2026-03-04',
+        url_checks: [
+          { url: 'https://store.steampowered.com/app/3196440/Vacation_Cafe_Simulator/', status: 200 },
+          { url: 'https://steamcommunity.com/app/3196440/discussions/', status: 200 },
+          { url: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460876098/', status: 200 },
+          { url: 'https://steamcommunity.com/app/3196440/discussions/0/767437664460883678/', status: 200 },
+          { url: 'https://store.steampowered.com/app/1543280/Espresso_Tycoon/', status: 200 },
+          { url: 'https://store.steampowered.com/app/1139980/Travellers_Rest/', status: 200 },
+          { url: 'https://store.steampowered.com/app/2649080/Coffee_Caravan/', status: 200 },
+          { url: 'https://store.steampowered.com/app/1796790/Chef_RPG/', status: 200 }
+        ]
+      }
+    };
+
+    const MARCH5_UPDATE = {
+      meta: {
+        actuality_date: '2026-03-05'
+      },
+      feedback_signals: [
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-deck-cursor',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Steam Deck report: pizza cursor disappears in menu and mid-recipe; issue persists with docked keyboard + mouse.',
+          theme: 'Steam Deck cursor/input',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-mop-hold',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Left click mop interaction feels one-second long and does not hold consistently while cleaning stains.',
+          theme: 'Controls/UI friction',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-level7-coop-checklist',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'In co-op level 7, when another player buys furniture, checklist task remains unresolved for host.',
+          theme: 'Co-op task sync',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-wall-clock',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Wall clock appears static and does not track in-game time.',
+          theme: 'Controls/UI friction',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-end-of-day',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Players ask for end-of-day cutoff with daily ledger (gains/losses) to improve pacing and progression clarity.',
+          theme: 'Day-cycle challenge',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-economy-challenge',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Economy feels too fail-safe; players want order mistakes to affect tips and reviews.',
+          theme: 'Day-cycle challenge',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-coop-scaling',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Patio customer volume appears not to scale with party size in co-op sessions.',
+          theme: 'Co-op task sync',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-pizza-dough-auth',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Recipe authenticity feedback: milk in pizza dough breaks immersion for core cooking audience.',
+          theme: 'Recipe authenticity',
+          sentiment: 'negative',
+          severity: 'minor'
+        },
+        {
+          source: 'Steam',
+          id: 'steam-2026-03-05-lag-report',
+          url: 'https://steamcommunity.com/app/3196440/discussions/',
+          quote: 'Players still report occasional lag despite overall positive cozy impression.',
+          theme: 'Performance',
+          sentiment: 'negative',
+          severity: 'major'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-05-progress-carryover',
+          url: '',
+          quote: 'FAQ signal: demo progress will not carry over to full release, needs explicit onboarding communication.',
+          theme: 'Save loss',
+          sentiment: 'negative',
+          severity: 'critical'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-05-coop-cap',
+          url: '',
+          quote: 'Co-op expectation signal: current launch target is host +3 (4 total), community asks about future expansion.',
+          theme: 'Co-op stability',
+          sentiment: 'neutral',
+          severity: 'minor'
+        },
+        {
+          source: 'Discord',
+          id: 'discord-2026-03-05-therapeutic-cozy',
+          url: '',
+          quote: 'Positive sentiment: players describe demo as therapeutic, satisfying, and are asking to keep demo available longer.',
+          theme: 'Atmosphere/Cozy',
+          sentiment: 'positive',
+          severity: 'minor'
+        }
+      ],
+      bug_clusters: [
+        {
+          name: 'Steam Deck cursor/input',
+          severity: 'major',
+          frequency: 5,
+          priority: 'P1',
+          score: 3.92,
+          priority_score: 3.92,
+          repro_notes: 'Cursor disappears in menu and mid-recipe on Steam Deck; cleaning hold interaction inconsistent.',
+          source_count: 1,
+          source_breakdown: { Steam: 5 }
+        },
+        {
+          name: 'Co-op task sync',
+          severity: 'major',
+          frequency: 4,
+          priority: 'P1',
+          score: 3.64,
+          priority_score: 3.64,
+          repro_notes: 'Level 7 shared objectives do not sync if non-host buys furniture; checklist remains blocked.',
+          source_count: 2,
+          source_breakdown: { Steam: 3, Discord: 1 }
+        },
+        {
+          name: 'Recipe authenticity',
+          severity: 'minor',
+          frequency: 3,
+          priority: 'P2',
+          score: 2.28,
+          priority_score: 2.28,
+          repro_notes: 'Players flag non-authentic ingredients (e.g., milk in pizza dough) as immersion-breakers.',
+          source_count: 1,
+          source_breakdown: { Steam: 3 }
+        }
+      ],
+      actions: [
+        {
+          id: 'A10',
+          category: 'QoL',
+          status: 'shipping',
+          theme: 'Steam Deck cursor/input',
+          severity: 'major',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Steam Deck input reliability pass: cursor persistence, UI focus guardrails, hold-to-clean behavior parity.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-40% Steam Deck input complaints; +successful first-session completion',
+          owner: 'Input/UX',
+          eta: 'Week 1-3'
+        },
+        {
+          id: 'A11',
+          category: 'Gameplay',
+          status: 'shipping',
+          theme: 'Co-op task sync',
+          severity: 'major',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Co-op objective state sync patch for shared purchases and checklist clearing logic.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-35% co-op progression blockers',
+          owner: 'Netcode',
+          eta: 'Week 2-4'
+        },
+        {
+          id: 'A12',
+          category: 'Retention',
+          status: 'hypothesis',
+          theme: 'Day-cycle challenge',
+          severity: 'minor',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'End-of-day cycle + daily ledger prototype (income, expenses, service quality).',
+          impact: 'Medium',
+          effort: 'M',
+          priority: 'P2',
+          kpi: '+session return intent in survey cohorts',
+          owner: 'Systems',
+          eta: 'Backlog'
+        },
+        {
+          id: 'A13',
+          category: 'Gameplay',
+          status: 'hypothesis',
+          theme: 'Recipe authenticity',
+          severity: 'minor',
+          problem_link: 'https://steamcommunity.com/app/3196440/discussions/',
+          solution: 'Recipe authenticity pass for core Italian dishes + visual consistency in recipe book.',
+          impact: 'Medium',
+          effort: 'S',
+          priority: 'P2',
+          kpi: '+authenticity sentiment in community feedback',
+          owner: 'Design',
+          eta: 'Backlog'
+        }
+      ],
+      insights_shipping: [
+        {
+          id: 'IC7',
+          title: 'Steam Deck input reliability',
+          status: 'shipping',
+          category: 'QoL',
+          solution: 'Fix disappearing cursor + persistent hold interactions for cleaning and recipe flow.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-Deck-specific blockers during first 20 minutes',
+          evidence_strength: 'Strong',
+          source_refs: ['https://steamcommunity.com/app/3196440/discussions/']
+        },
+        {
+          id: 'IC8',
+          title: 'Co-op objective synchronization',
+          status: 'shipping',
+          category: 'Gameplay',
+          solution: 'Repair shared to-do progression when teammate actions should clear host checklist.',
+          impact: 'High',
+          effort: 'M',
+          priority: 'P1',
+          kpi: '-co-op progression bug mentions',
+          evidence_strength: 'Strong',
+          source_refs: ['https://steamcommunity.com/app/3196440/discussions/']
+        }
+      ],
+      insights_hypothesis: [
+        {
+          id: 'IC9',
+          title: 'End-of-day cadence + ledger',
+          status: 'hypothesis',
+          category: 'Retention',
+          solution: 'Introduce daily closure ritual and summary screen to strengthen loop clarity and stakes.',
+          impact: 'Medium',
+          effort: 'M',
+          priority: 'P2',
+          kpi: '+retention intent in post-session survey',
+          evidence_strength: 'Medium',
+          source_refs: ['https://steamcommunity.com/app/3196440/discussions/']
+        },
+        {
+          id: 'IC10',
+          title: 'Recipe authenticity pass',
+          status: 'hypothesis',
+          category: 'Gameplay',
+          solution: 'Align iconic recipes with expected culinary logic and reduce immersion-breaking ingredients.',
+          impact: 'Medium',
+          effort: 'S',
+          priority: 'P2',
+          kpi: '+authenticity mentions, -recipe criticism',
+          evidence_strength: 'Medium',
+          source_refs: ['https://steamcommunity.com/app/3196440/discussions/']
+        }
+      ]
+    };
+
+    const I18N = {
+      ru: {
+        skip_link: 'Перейти к содержанию',
+        hero_title: 'VCS - Операционный дашборд по багам и фидбеку',
+        hero_sub: 'Операционный дашборд для продуктовых решений: в приоритете критичные баги и сигналы игроков, затем инициативы, инсайты, поведенческая аналитика и дорожная карта. Дата актуальности:',
+        meta_date: 'Актуальность данных',
+        meta_raw: 'Сырые сигналы',
+        meta_unique: 'Уникальные сигналы',
+        meta_method: 'Метод скоринга',
+        anchor_nav_aria: 'Навигация по разделам',
+        nav_risks: 'Топ-риски',
+        nav_bugs: 'Баг-триаж',
+        nav_evidence: 'Сигналы',
+        nav_actions: 'План действий',
+        nav_psychology: 'Психология',
+        nav_roadmap: 'Дорожная карта',
+        nav_sources: 'Источники',
+        filters_title: 'Глобальные фильтры',
+        filters_desc: 'Фильтры синхронно влияют на риски, баг-триаж, сигналы, план действий, улучшения и инсайты. Кнопка <code>Сброс</code> всегда возвращает <code>sort=desc</code>.',
+        label_theme: 'Тема',
+        label_source: 'Источник',
+        label_severity: 'Серьезность',
+        label_category: 'Категория',
+        label_status: 'Статус',
+        label_sort: 'Сортировка по баллу',
+        label_reset: 'Сброс',
+        label_problem: 'Проблема',
+        label_solution: 'Решение',
+        label_owner: 'Владелец',
+        label_link: 'Ссылка',
+        label_impact_effort: 'Эффект/Сложность',
+        label_eta: 'Срок',
+        reset_btn: 'Сбросить фильтры',
+        all_themes: 'Все темы',
+        all_sources: 'Все источники',
+        all: 'Все',
+        severity_critical: 'Критично',
+        severity_major: 'Серьезно',
+        severity_minor: 'Минорно',
+        status_all: 'Все',
+        status_shipping: 'В поставке',
+        status_hypothesis: 'Гипотеза',
+        sort_desc: 'По убыванию',
+        sort_asc: 'По возрастанию',
+        source_chip_all: 'Все',
+        source_chip_steam: 'Steam',
+        source_chip_discord: 'Discord',
+        source_chip_forum: 'Форум',
+        source_toggle_aria: 'Быстрый выбор источника',
+        risks_title: 'Топ рисков по обратной связи',
+        risks_desc: 'В верхней части экрана: 3 ключевых риска по <code>PriorityScore</code> для немедленных продуктовых решений.',
+        risks_intro: 'Каждая карточка отвечает на четыре вопроса: что болит, почему это важно, какой бизнес-эффект и какое следующее действие нужно запускать в ближайшем спринте.',
+        retention_legend: 'Метрика удержания: D1 = игрок вернулся через 1 день, D7 = через 7 дней, D14 = через 14 дней.',
+        bugs_title: 'Доска баг-триажа',
+        bugs_desc: 'Кластеры багов и операционный приоритет (<code>P0/P1/P2</code>): подтверждено источниками и учитывает серьезность.',
+        bugs_intro: 'В таблице триажа по каждому кластеру есть симптом, вероятная причина и ожидаемый трек исправления. Это сокращает время согласования между продакт-менеджером, QA и разработкой.',
+        bug_th_cluster: 'Кластер',
+        bug_th_severity: 'Серьезность',
+        bug_th_priority: 'Приоритет',
+        bug_th_frequency: 'Частота',
+        bug_th_score: 'Балл',
+        bug_th_hints: 'Шаги воспроизведения',
+        bug_th_sources: 'Источники',
+        evidence_title: 'Панель сигналов',
+        evidence_desc: 'Нормализованные сигналы из <code>Steam / Discord / Форум</code>, включая локальный парсинг <code>chatlogs-*.html</code> и <code>107-*.mhtml</code>.',
+        evidence_intro: 'Карточки сигналов показывают короткий фрагмент и раскрываемый блок деталей: контекст, серьезность, тема и источник. Это ускоряет проверку гипотез без переключений между инструментами.',
+        actions_title: 'План действий',
+        actions_desc: 'Перенесено из предыдущих дашбордов: владелец, срок, KPI и трассировка источников.',
+        actions_intro: 'План действий связывает проблемы с конкретными решениями и KPI. Формат рассчитан на еженедельный обзор релизов: что запускаем сейчас, кто владелец и какой эффект ожидаем.',
+        psychology_title: 'Психология / Трение / Дофамин',
+        psychology_desc: 'Слой психологии продукта: персоны поздней игры, точки трения и мотивационные якоря.',
+        psychology_intro: 'Раздел отвечает на вопрос, почему игрок возвращается или уходит. Персоны, точки трения и дофаминовые якоря удерживают фокус на дизайне удержания, а не на случайных функциях.',
+        personas_heading: 'Персоны поздней игры',
+        friction_heading: 'Трение основного цикла',
+        dopamine_heading: 'Дофаминовые якоря',
+        friction_th_trigger: 'Триггер',
+        friction_th_issue: 'Проблема',
+        friction_th_solution: 'Решение',
+        friction_th_impact: 'Влияние',
+        improvements_title: 'Пул улучшений',
+        improvements_desc: 'Группы инициатив: быстрые победы, среднесрочные и стратегические.',
+        improvements_intro: 'Секция агрегирует изменения по этапам поставки и показывает, какие задачи дают быстрый эффект, а какие требуют инвестиционного цикла.',
+        insights_title: 'Панель валидации инсайтов',
+        insights_desc: 'Инсайты в статусах «в поставке» и «гипотеза» со ссылками на источники и KPI.',
+        insights_intro: 'Здесь проверяются продуктовые гипотезы: насколько они подтверждены сигналами игроков, какой у них риск и какие KPI они реально двигают.',
+        competitors_title: 'Снимок конкурентов',
+        competitors_desc: 'Собрано на основе локальных снимков, разборов отзывов и сравнительных рыночных материалов.',
+        competitors_intro: 'Сравнение с конкурентами помогает валидировать позиционирование и понять, где VCS должен дифференцироваться через надежность, качество пользовательского опыта и силу уютного игрового цикла.',
+        competitor_th_game: 'Игра',
+        competitor_th_role: 'Роль',
+        competitor_th_strengths: 'Сильные стороны',
+        competitor_th_weaknesses: 'Слабые стороны',
+        competitor_th_opportunity: 'Возможность',
+        roadmap_title: 'Дорожная карта 0-3 месяца',
+        roadmap_desc: 'Порядок внедрения с учетом зависимостей: сначала стабильность ядра, затем рост.',
+        roadmap_intro: 'Дорожная карта отражает критический порядок поставки: сначала исправляем системные блокеры, затем масштабируем инициативы роста без потери качества.',
+        sources_title: 'Основание по источникам',
+        sources_desc: 'Кратко: какие источники данных были учтены в анализе и на какой дате зафиксирована выборка.',
+        sources_intro: 'В анализ включены обсуждения Steam, сигналы из Discord (каналы багов и обратной связи), локальный парсинг чатов, а также сравнительные данные по рынку и YouTube-обзорам.',
+        source_status: 'База по Steam',
+        source_platforms: 'База по Discord',
+        source_verified: 'Проверено',
+        source_http: 'Дополнительные источники',
+        visible_top_risks: 'Рисков в выдаче',
+        visible_bug_clusters: 'Баг-кластеров в выдаче',
+        signals_in_view: 'Сигналов в выдаче',
+        visible_actions: 'Действий в выдаче',
+        visible_insights: 'Инсайтов в выдаче',
+        no_risks: 'Нет рисков для выбранных фильтров.',
+        no_bug_clusters: 'Нет баг-кластеров для выбранных фильтров.',
+        no_evidence: 'Нет сигналов для выбранных фильтров.',
+        no_actions: 'Нет задач для выбранных фильтров.',
+        no_personas: 'Нет данных по персонам.',
+        no_friction: 'Нет данных по трению.',
+        no_dopamine: 'Нет дофаминовых якорей.',
+        no_improvements: 'Нет элементов для выбранных фильтров.',
+        no_insights: 'Нет инсайтов для выбранных фильтров.',
+        no_competitors: 'Нет данных по конкурентам.',
+        no_roadmap: 'Нет данных по дорожной карте.',
+        score_label: 'балл',
+        risk_context_label: 'Контекст',
+        risk_risk_label: 'Почему это риск',
+        risk_impact_label: 'Бизнес-эффект',
+        risk_action_label: 'Рекомендуемое действие',
+        metric_frequency: 'Частота',
+        metric_severity: 'Серьезность',
+        metric_recency: 'Свежесть',
+        source_link: 'Источник ↗',
+        open_source_link: 'Открыть источник ↗',
+        unknown_theme: 'Неизвестная тема',
+        action_label: 'Действие',
+        kpi_label: 'KPI',
+        evidence_strength_suffix: 'уровень подтвержденности',
+        filters_state_prefix: 'UIStateV3',
+        expand: 'Развернуть',
+        collapse: 'Свернуть',
+        bug_detail_symptom: 'Симптом',
+        bug_detail_cause: 'Вероятная причина',
+        bug_detail_track: 'Трек исправления',
+        evidence_preview: 'Оригинальная цитата',
+        evidence_details: 'Детали',
+        friction_expected_result: 'Ожидаемый результат: меньше операционного трения в основном игровом цикле.',
+        roadmap_delivery_note: 'Примечание: закрыть зависимость перед следующей волной задач.',
+        source_release: 'дата релиза',
+        source_reviews: 'оценка отзывов'
+      },
+      en: {
+        skip_link: 'Skip to content',
+        hero_title: 'VCS - Bug-First Executive Dashboard',
+        hero_sub: 'Operational dashboard for product decisions: critical bugs and player feedback first, then initiatives, insights, behavioral signals, and roadmap execution. Data actuality:',
+        meta_date: 'Data actuality',
+        meta_raw: 'Signals raw',
+        meta_unique: 'Signals unique',
+        meta_method: 'Scoring method',
+        anchor_nav_aria: 'Section navigation',
+        nav_risks: 'Top Risks',
+        nav_bugs: 'Bug Triage',
+        nav_evidence: 'Evidence',
+        nav_actions: 'Action Board',
+        nav_psychology: 'Psychology',
+        nav_roadmap: 'Roadmap',
+        nav_sources: 'Sources',
+        filters_title: 'Global Filters',
+        filters_desc: 'Filters affect risks, triage, evidence, actions, improvements, and insights together. <code>Reset</code> always restores <code>sort=desc</code>.',
+        label_theme: 'Theme',
+        label_source: 'Source',
+        label_severity: 'Severity',
+        label_category: 'Category',
+        label_status: 'Status',
+        label_sort: 'Sort score',
+        label_reset: 'Reset',
+        label_problem: 'Problem',
+        label_solution: 'Solution',
+        label_owner: 'Owner',
+        label_link: 'Link',
+        label_impact_effort: 'Impact/Effort',
+        label_eta: 'ETA',
+        reset_btn: 'Reset filters',
+        all_themes: 'All themes',
+        all_sources: 'All sources',
+        all: 'All',
+        severity_critical: 'Critical',
+        severity_major: 'Major',
+        severity_minor: 'Minor',
+        status_all: 'All',
+        status_shipping: 'Shipping',
+        status_hypothesis: 'Hypothesis',
+        sort_desc: 'Desc',
+        sort_asc: 'Asc',
+        source_chip_all: 'All',
+        source_chip_steam: 'Steam',
+        source_chip_discord: 'Discord',
+        source_chip_forum: 'Forum',
+        source_toggle_aria: 'Quick source switch',
+        risks_title: 'Top Feedback Risks',
+        risks_desc: 'Above the fold: top 3 risks by <code>PriorityScore</code> for immediate decisions.',
+        risks_intro: 'Each risk card below answers four decision questions: what hurts, why it matters, business impact, and the next recommended action for the next sprint.',
+        retention_legend: 'Retention legend: D1 = returned after 1 day, D7 = after 7 days, D14 = after 14 days.',
+        bugs_title: 'Bug Triage Board',
+        bugs_desc: 'Bug clusters and operating priority (<code>P0/P1/P2</code>): source-backed and severity-aware.',
+        bugs_intro: 'Every bug row now includes symptom snapshot, probable cause, and expected fix track to reduce alignment time between PM, QA, and engineering.',
+        bug_th_cluster: 'Cluster',
+        bug_th_severity: 'Severity',
+        bug_th_priority: 'Priority',
+        bug_th_frequency: 'Frequency',
+        bug_th_score: 'Score',
+        bug_th_hints: 'Repro hints',
+        bug_th_sources: 'Sources',
+        evidence_title: 'Evidence Drawer',
+        evidence_desc: 'Normalized signals from <code>Steam / Discord / Forum</code>, including local parsing of <code>chatlogs-*.html</code> and <code>107-*.mhtml</code>.',
+        evidence_intro: 'Evidence cards provide a short preview plus expandable details: context, severity, mapped theme, and source traceability.',
+        actions_title: 'Action Board',
+        actions_desc: 'Migrated from previous dashboards: owner + ETA + KPI + source traceability.',
+        actions_intro: 'Action Board maps each problem to a concrete solution and KPI. The layout is optimized for weekly delivery review and execution ownership.',
+        psychology_title: 'Psychology / Friction / Dopamine',
+        psychology_desc: 'Structures from master-dashboard: late-game personas, friction points, and motivational anchors.',
+        psychology_intro: 'This section explains why players return or churn. Personas, friction points, and dopamine anchors keep retention design intentional.',
+        personas_heading: 'Late-game Personas',
+        friction_heading: 'Core Loop Friction',
+        dopamine_heading: 'Dopamine Anchors',
+        friction_th_trigger: 'Trigger',
+        friction_th_issue: 'Issue',
+        friction_th_solution: 'Solution',
+        friction_th_impact: 'Impact',
+        improvements_title: 'Shipping Improvements',
+        improvements_desc: 'Initiative groups: Quick Wins / Mid-term / Big Bet.',
+        improvements_intro: 'Improvements are grouped by delivery horizon so teams can balance immediate impact and strategic investment.',
+        insights_title: 'Insight Validation Board',
+        insights_desc: 'Shipping and hypothesis insights with source links and KPI framing.',
+        insights_intro: 'This board validates which product hypotheses are evidence-backed and what measurable outcome each initiative should move.',
+        competitors_title: 'Competitor Snapshot',
+        competitors_desc: 'Built from local snapshots and review summaries.',
+        competitors_intro: 'Competitor view validates positioning and highlights where VCS should differentiate through reliability, UX, and cozy-loop quality.',
+        competitor_th_game: 'Game',
+        competitor_th_role: 'Role',
+        competitor_th_strengths: 'Strengths',
+        competitor_th_weaknesses: 'Weaknesses',
+        competitor_th_opportunity: 'Opportunity',
+        roadmap_title: 'Roadmap 0-3 months',
+        roadmap_desc: 'Dependency-aware rollout order: reliability first, growth second.',
+        roadmap_intro: 'Roadmap reflects the critical delivery sequence: stabilize core reliability first, then scale growth initiatives without quality debt.',
+        sources_title: 'Source Snapshot',
+        sources_desc: 'Technical source summary, data versioning, and link health.',
+        sources_intro: 'This block is for data auditability: which sources were verified, when they were refreshed, and which URLs returned healthy responses.',
+        source_status: 'Steam status',
+        source_platforms: 'Platforms',
+        source_verified: 'Verified at',
+        source_http: 'HTTP checks',
+        visible_top_risks: 'Visible top risks',
+        visible_bug_clusters: 'Visible bug clusters',
+        signals_in_view: 'Signals in view',
+        visible_actions: 'Visible actions',
+        visible_insights: 'Visible insights',
+        no_risks: 'No risks for active filters.',
+        no_bug_clusters: 'No bug clusters for active filters.',
+        no_evidence: 'No evidence for active filters.',
+        no_actions: 'No action items for active filters.',
+        no_personas: 'No persona data.',
+        no_friction: 'No friction data.',
+        no_dopamine: 'No dopamine anchors.',
+        no_improvements: 'No items for active filters.',
+        no_insights: 'No insights for active filters.',
+        no_competitors: 'No competitor data.',
+        no_roadmap: 'No roadmap data.',
+        score_label: 'score',
+        risk_context_label: 'Context',
+        risk_risk_label: 'Risk',
+        risk_impact_label: 'Impact',
+        risk_action_label: 'Action',
+        metric_frequency: 'Frequency',
+        metric_severity: 'Severity',
+        metric_recency: 'Recency',
+        source_link: 'Source ↗',
+        open_source_link: 'Open source ↗',
+        unknown_theme: 'Unknown theme',
+        action_label: 'Action',
+        kpi_label: 'KPI',
+        evidence_strength_suffix: 'evidence',
+        filters_state_prefix: 'UIStateV3',
+        expand: 'Expand',
+        collapse: 'Collapse',
+        bug_detail_symptom: 'Symptom',
+        bug_detail_cause: 'Probable cause',
+        bug_detail_track: 'Fix-track',
+        evidence_preview: 'Preview',
+        evidence_details: 'Details',
+        friction_expected_result: 'Expected result: lower operational friction in the core loop.',
+        roadmap_delivery_note: 'Delivery note: close this dependency before the next task wave.',
+        source_release: 'release',
+        source_reviews: 'reviews'
+      }
+    };
+
+    const NarrativeMapV1 = {
+      'Save loss': {
+        summary_ru: 'Пользователи теряют или не могут восстановить прогресс после обновлений и повторных запусков.',
+        summary_en: 'Users lose progress or fail to restore sessions after updates and relaunches.',
+        risk_ru: 'Если проблему не закрыть быстро, усиливается недоверие к стабильности и растет риск раннего оттока.',
+        risk_en: 'If not fixed quickly, trust in reliability drops and early churn risk increases.',
+        action_ru: 'Приоритет: система защиты сохранений, снимок восстановления и прозрачная коммуникация статуса сохранений.',
+        action_en: 'Priority action: Save Guardrail System, recovery snapshots, and explicit save-status communication.',
+        impact_ru: 'Влияет на D1 (возврат через 1 день) и D7 (возврат через 7 дней), а также на возврат игроков в кооператив и давление по возвратам средств.',
+        impact_en: 'Affects D1/D7, co-op return rate, and refund pressure.'
+      },
+      'Co-op stability': {
+        summary_ru: 'Сбои в синхронизации и переподключении ломают основную социальную петлю.',
+        summary_en: 'Sync and reconnect failures break the core social loop.',
+        risk_ru: 'Нестабильный кооператив снижает длительность сессии и уменьшает вероятность повторных совместных сессий.',
+        risk_en: 'Unstable co-op reduces session length and repeat squad sessions.',
+        action_ru: 'Запускать единым пакетом: поток переподключения, диагностический интерфейс и резервную ресинхронизацию.',
+        action_en: 'Ship reconnect flow, diagnostics UI, and fallback resync as one reliability package.',
+        impact_ru: 'Даёт прямой вклад в D7 (возврат через 7 дней) и органический рост через рекомендации в кооперативе.',
+        impact_en: 'Directly impacts D7 and organic co-op word-of-mouth growth.'
+      },
+      'Performance': {
+        summary_ru: 'Высокая нагрузка на GPU/CPU даже на низких настройках ухудшает базовый UX.',
+        summary_en: 'High GPU/CPU load even on low settings degrades baseline UX.',
+        risk_ru: 'Проблемы производительности уменьшают длительность сессии и повышают негатив в ранних отзывах.',
+        risk_en: 'Performance pain reduces session duration and increases negative early reviews.',
+        action_ru: 'Приоритетный техтриаж, динамические профили качества и прозрачные графические пресеты.',
+        action_en: 'Priority triage + dynamic quality profiles + transparent graphics presets.',
+        impact_ru: 'Влияет на тональность отзывов и снижает технический отток.',
+        impact_en: 'Affects review sentiment and technical churn reduction.'
+      },
+      'Controls/UI friction': {
+        summary_ru: 'Лишние клики и неочевидные паттерны взаимодействия создают усталость в основном игровом цикле.',
+        summary_en: 'Excess clicks and unclear interaction patterns create friction in the core loop.',
+        risk_ru: 'Трение в интерфейсе ускоряет выгорание при длинных сессиях и снижает удовлетворенность.',
+        risk_en: 'UX friction accelerates burnout in long sessions and cuts satisfaction.',
+        action_ru: 'Удержание действия, пакет комфорта управления и точечные правки интерфейса.',
+        action_en: 'Hold-to-action, input comfort bundle, and targeted UI fix patches.',
+        impact_ru: 'Снижает отток после первых сессий и повышает долю завершения заказов.',
+        impact_en: 'Lowers early-session churn and improves completion rate.'
+      },
+      __default: {
+        summary_ru: 'Сигналы указывают на точку улучшения в игровом опыте, требующую приоритизации.',
+        summary_en: 'Signals indicate a prioritized gameplay improvement opportunity.',
+        risk_ru: 'Без решения растет скрытая стоимость поддержки и продуктового долга.',
+        risk_en: 'Without action, hidden support and product debt costs increase.',
+        action_ru: 'Сформировать проверяемую гипотезу и закрепить владельца + KPI.',
+        action_en: 'Define a testable hypothesis and assign owner + KPI.',
+        impact_ru: 'Повышает предсказуемость поставки и качество петли удержания.',
+        impact_en: 'Improves delivery predictability and retention loop quality.'
+      }
+    };
+
+    const THEME_LABELS = {
+      ru: {
+        'AI-art perception': 'Восприятие AI-арта',
+        'Atmosphere/Cozy': 'Атмосфера/Уют',
+        'Audio/ASMR': 'Аудио/ASMR',
+        'Co-op stability': 'Стабильность кооператива',
+        'Co-op task sync': 'Синхронизация задач в кооперативе',
+        'Controls/UI friction': 'Трение в управлении/UI',
+        'Day-cycle challenge': 'Цикл дня и уровень челленджа',
+        'Dishwashing burnout': 'Выгорание от мойки посуды',
+        'Inventory friction': 'Трение инвентаря',
+        'Layout strategy': 'Стратегия расстановки',
+        'Localization': 'Локализация',
+        'Memory load': 'Когнитивная нагрузка',
+        'No-pressure flow': 'Спокойный темп без давления',
+        'Performance': 'Производительность',
+        'Progression anchor': 'Якорь прогрессии',
+        'Recipe authenticity': 'Аутентичность рецептов',
+        'Steam Deck cursor/input': 'Steam Deck: курсор и ввод',
+        'Save loss': 'Потеря сохранений'
+      },
+      en: {}
+    };
+
+    const SOURCE_LABELS = {
+      ru: { Steam: 'Steam', Discord: 'Discord', Forum: 'Форум', Unknown: 'Неизвестно' },
+      en: { Steam: 'Steam', Discord: 'Discord', Forum: 'Forum', Unknown: 'Unknown' }
+    };
+
+    const CATEGORY_LABELS = {
+      ru: { QoL: 'Качество жизни', Gameplay: 'Геймплей', Retention: 'Удержание', USP: 'USP' },
+      en: { QoL: 'QoL', Gameplay: 'Gameplay', Retention: 'Retention', USP: 'USP' }
+    };
+
+    const IMPACT_LABELS = {
+      ru: { Critical: 'Критичный', High: 'Высокий', Medium: 'Средний', Low: 'Низкий' },
+      en: { Critical: 'Critical', High: 'High', Medium: 'Medium', Low: 'Low' }
+    };
+
+    const EFFORT_LABELS = {
+      ru: { XS: 'XS', S: 'S', M: 'M', L: 'L', XL: 'XL' },
+      en: { XS: 'XS', S: 'S', M: 'M', L: 'L', XL: 'XL' }
+    };
+
+    const EVIDENCE_STRENGTH_LABELS = {
+      ru: { Strong: 'Сильная', Medium: 'Средняя', Weak: 'Слабая', Unknown: 'Неизвестная' },
+      en: { Strong: 'Strong', Medium: 'Medium', Weak: 'Weak', Unknown: 'Unknown' }
+    };
+
+    const OWNER_LABELS = {
+      ru: {
+        Backend: 'Бэкенд',
+        Netcode: 'Неткод',
+        Engine: 'Движок',
+        UX: 'UX',
+        Gameplay: 'Геймплей',
+        Systems: 'Системы',
+        Content: 'Контент',
+        Design: 'Дизайн',
+        'Input/UX': 'Ввод/UX'
+      },
+      en: {}
+    };
+
+    const DATA_COPY_RU = {
+      actions: {
+        A1: {
+          solution: 'Система защиты сохранений: автосейв + ручной слот + снимок восстановления.',
+          kpi: '-60% жалоб на потерю прогресса; >=99.5% успешных загрузок.'
+        },
+        A2: {
+          solution: 'Поток переподключения + резервная ресинхронизация + сетевые диагностики.',
+          kpi: '-50% баг-репортов по кооперативу; +15% кооперативных сессий длиннее 30 минут.'
+        },
+        A3: {
+          solution: 'Динамический профиль качества + раздельные графические настройки.',
+          kpi: '-40% жалоб на производительность; +20% медианного FPS.'
+        },
+        A4: {
+          solution: 'Удержание для нарезки + пакет комфорта управления + исправление текста на вывесках.',
+          kpi: '-30% жалоб на усталость от частых кликов.'
+        },
+        A5: {
+          solution: 'Разгрузка инвентаря и быстрый возврат предметов в хранилище.',
+          kpi: '-25% жалоб на трение инвентаря.'
+        },
+        A6: {
+          solution: 'Автоматизация мойки посуды с ранней разблокировкой на уровне 4.',
+          kpi: '+8% D7 удержания в сегменте 8h+.'
+        },
+        A7: {
+          solution: 'Этап «Печь для пиццы» на уровне 7 как сильный якорь прогрессии.',
+          kpi: '+15% D14 удержания к уровню 7.'
+        },
+        A8: {
+          solution: 'Блокнот бариста для закрепленных предпочтений гостей и рецептов.',
+          kpi: '-15% упоминаний фрустрации (A/B).'
+        },
+        A9: {
+          solution: 'VIP-зонирование с умным определением зон и типов гостей.',
+          kpi: '+длина сессии и глубина экспериментов с планировкой.'
+        },
+        A10: {
+          solution: 'Пакет надежности ввода на Steam Deck: стабильный курсор, защита фокуса интерфейса и паритет удержания при уборке.',
+          kpi: '-40% жалоб на Steam Deck ввод; +успешное завершение первой сессии.'
+        },
+        A11: {
+          solution: 'Патч синхронизации задач в кооперативе: покупки союзника корректно закрывают общий чеклист.',
+          kpi: '-35% блокеров прогрессии в кооперативе.'
+        },
+        A12: {
+          solution: 'Прототип цикла конца дня + ежедневный отчет (доход, расходы, качество сервиса).',
+          kpi: '+намерение вернуться по итогам опросов после сессии.'
+        },
+        A13: {
+          solution: 'Пасс аутентичности рецептов для ключевых итальянских блюд + визуальная консистентность рецептурной книги.',
+          kpi: '+упоминания аутентичности; -критика рецептов.'
+        }
+      },
+      improvements: {
+        I1: {
+          solution: 'Система защиты сохранений: автосейв, ручной слот и снимок восстановления.',
+          kpi: '-60% жалоб на потерю прогресса.'
+        },
+        I2: {
+          solution: 'Поток переподключения, резервная ресинхронизация и диагностический интерфейс.',
+          kpi: '-50% баг-репортов по кооперативу.'
+        },
+        I3: {
+          solution: 'Технический триаж производительности + динамические графические профили.',
+          kpi: '-40% жалоб на производительность.'
+        },
+        I4: {
+          solution: 'Пакет комфорта управления: удержание действия, переупорядочивание инвентаря, исправление текста на вывесках.',
+          kpi: '-35% жалоб на интерфейс и управление.'
+        },
+        I6: {
+          solution: 'Еженедельный курортный цикл: мини-события + доска целей.',
+          kpi: '+10 п.п. D7 удержания.'
+        },
+        I7: {
+          solution: 'Именные туристы и «открыточные» истории для усиления пользовательских упоминаний.',
+          kpi: '+20% пользовательских упоминаний и шеринга.'
+        }
+      },
+      insights: {
+        IC1: {
+          title: 'Удержание действия при нарезке',
+          solution: 'Снизить повторяющиеся клики через удержание действия с прогресс-баром.',
+          kpi: '-30% жалоб на усталость от частых кликов.'
+        },
+        IC2: {
+          title: 'Исправление «стены» инвентаря',
+          solution: 'Расширить инвентарь или разрешить часть подготовительных операций на месте.',
+          kpi: '-25% жалоб на трение инвентаря.'
+        },
+        IC3: {
+          title: 'Автоматизация мойки посуды',
+          solution: 'Открывать роль помощника по мойке посуды с уровня 4.',
+          kpi: '+D7 удержание в сегменте 8h+.'
+        },
+        IC5: {
+          title: 'Блокнот бариста',
+          solution: 'Закрепляемые рецепты и предпочтения гостей.',
+          kpi: 'A/B: -15% упоминаний фрустрации.'
+        },
+        IC6: {
+          title: 'VIP-зоны',
+          solution: 'Умное определение зон и назначение типов гостей.',
+          kpi: '+длина сессии.'
+        },
+        IC7: {
+          title: 'Надежность ввода на Steam Deck',
+          solution: 'Исправить исчезающий курсор и сделать взаимодействия с удержанием стабильными в уборке и кулинарном потоке.',
+          kpi: '-блокеры Steam Deck в первые 20 минут.'
+        },
+        IC8: {
+          title: 'Синхронизация задач в кооперативе',
+          solution: 'Исправить общий прогресс задач, чтобы действия напарника корректно закрывали список задач хоста.',
+          kpi: '-упоминания багов прогрессии в кооперативе.'
+        },
+        IC9: {
+          title: 'Ритм конца дня + дневной отчет',
+          solution: 'Добавить ритуал завершения дня и итоговый экран для усиления ясности цикла и ставок.',
+          kpi: '+намерение вернуться в постсессионных опросах.'
+        },
+        IC10: {
+          title: 'Пасс аутентичности рецептов',
+          solution: 'Привести ключевые рецепты к ожидаемой кулинарной логике и убрать ингредиенты, выбивающие из погружения.',
+          kpi: '+упоминания аутентичности, -критика рецептов.'
+        }
+      }
+    };
+
+    const COMPETITOR_COPY_RU = {
+      'Espresso Tycoon': {
+        market_role: 'Классический менеджмент-симулятор кофейни',
+        strengths: 'Понятный управленческий цикл, сильная фантазия роли владельца кофейни, прозрачная экономическая рамка и четкие цели прогрессии.',
+        weaknesses: 'Местами жесткое ощущение рутины в менеджмент-петле, регулярные жалобы на производительность и дискуссии о визуальной аутентичности.',
+        opportunity: 'VCS может выиграть за счет более теплого темпа, стабильного кооператива, меньшего трения в управлении и более живого сервиса.'
+      },
+      'Travellers Rest': {
+        market_role: 'Глубокий уютный симулятор таверны',
+        strengths: 'Большая контентная глубина, длинный хвост удержания, богатая система развития и ощущение «долгой жизни» проекта.',
+        weaknesses: 'Жалобы на темп и гринд, а также на растянутый цикл изменений в раннем доступе.',
+        opportunity: 'VCS может дать более быстрый путь к удовольствию без тяжелого гринда в первые часы.'
+      },
+      'Coffee Caravan': {
+        market_role: 'Роглайт-цикл мобильной кофейни',
+        strengths: 'Быстрый цикл «запустил и играешь», понятный порог входа и короткие игровые сессии.',
+        weaknesses: 'Ограниченная реиграбельность на длинной дистанции и меньше глубины в мета-слое.',
+        opportunity: 'VCS может предложить более глубокую мету при сохранении доступности основного игрового цикла.'
+      },
+      'Chef RPG': {
+        market_role: 'Симулятор жизни + ресторанная игра',
+        strengths: 'Сильная связка мира, персонажей и кулинарии; высокий эмоциональный контекст и хорошая «историйная» вовлеченность.',
+        weaknesses: 'Трение в управлении и интерфейсе, локальные проблемы удобства, из-за которых часть игроков быстрее устает.',
+        opportunity: 'VCS может дифференцироваться через удобный кооператив, надежность и более плавное введение игрока в цикл.'
+      }
+    };
+
+    const PERSONA_COPY_RU = {
+      'Медитативный Дзен': {
+        role: 'Дзен-игрок',
+        desc: 'Заходит на короткие сессии ради ритуала, расслабления и «тихого» прогресса.',
+        action: 'Усилять атмосферное аудио, сезонные спокойные активности и цели без избыточного давления.'
+      },
+      'Архитектор-Перфекционист': {
+        role: 'Архитектор-перфекционист',
+        desc: 'Строит сложные схемы планировки и быстро упирается в UX-ограничения редактора.',
+        action: 'Добавить привязку к сетке, зональность и более гибкие инструменты декора.'
+      },
+      'Магнат-Коллекционер': {
+        role: 'Экономический оптимизатор',
+        desc: 'Быстро достигает локального потолка и требует масштабной меты с долгой целью.',
+        action: 'Развивать систему престижа и длинный хвост прогрессии.'
+      }
+    };
+
+    const FRICTION_COPY_RU = {
+      '3-й стол / mid-run prep': {
+        trigger: '3-й стол / подготовка на ходу',
+        issue: '«Стена инвентаря» и вынужденные возвраты в хранилище ломают темп.',
+        solution: 'Улучшения хранилища + подготовка на месте без лишних возвратов по карте.'
+      },
+      'Нарезка ингредиентов': {
+        issue: 'Усталость от частых кликов разрушает расслабленный ритм основного цикла.',
+        solution: 'Удержание действия при нарезке с сохранением приятного аудио-отклика.'
+      },
+      'Мытье посуды': {
+        solution: 'Ранняя разблокировка автоматизации мойки посуды.'
+      },
+      'Заказы с тегами': {
+        issue: 'Лишняя нагрузка на память вместо спокойного игрового цикла.',
+        solution: 'Блокнот бариста и закрепление заказов для снижения когнитивной нагрузки.'
+      }
+    };
+
+    const DOPAMINE_COPY_RU = {
+      'Pizza Oven Level 7': {
+        name: 'Печь для пиццы (уровень 7)',
+        desc: 'Сильный этап и эмоциональный пик прогрессии в середине игры.'
+      },
+      'Открытие внешних зон': {
+        desc: 'Новый слой целей вне базовой кухни усиливает ощущение роста и открытия мира.'
+      },
+      'Memorable guests': {
+        name: 'Запоминающиеся гости',
+        desc: 'Пользовательские упоминания и желание делиться опытом растут за счет уникальных туристических историй и персональных моментов.'
+      }
+    };
+
+    function getInitialLocale() {
+      try {
+        const raw = localStorage.getItem('vcs_locale');
+        return raw === 'en' ? 'en' : 'ru';
+      } catch {
+        return 'ru';
+      }
+    }
+
+    const UIStateV3 = {
+      locale: getInitialLocale(),
+      theme: 'all',
+      source: 'all',
+      severity: 'all',
+      category: 'all',
+      status: 'all',
+      sort: 'desc',
+      expandedSections: {
+        filters: true,
+        risks: true,
+        bugs: true,
+        evidence: true,
+        actions: false,
+        psychology: false,
+        improvements: false,
+        insights: false,
+        competitors: false,
+        roadmap: false,
+        sources: false
+      }
+    };
+
+    let DashboardDataV3 = fallbackData;
+    let filtersBound = false;
+
+    const esc = (v) => String(v ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+    const trunc = (v, n = 180) => {
+      const text = String(v ?? '');
+      return text.length > n ? text.slice(0, n - 1) + '…' : text;
+    };
+
+    function t(key) {
+      const dict = I18N[UIStateV3.locale] || I18N.ru;
+      return dict[key] ?? I18N.ru[key] ?? key;
+    }
+
+    function mapLabel(dict, value) {
+      const localeDict = dict[UIStateV3.locale] || {};
+      const normalized = String(value ?? '');
+      return localeDict[normalized] || normalized;
+    }
+
+    function themeLabel(theme) {
+      return mapLabel(THEME_LABELS, theme);
+    }
+
+    function sourceLabel(source) {
+      return mapLabel(SOURCE_LABELS, source || 'Unknown');
+    }
+
+    function categoryLabel(category) {
+      return mapLabel(CATEGORY_LABELS, category);
+    }
+
+    function impactLabel(impact) {
+      return mapLabel(IMPACT_LABELS, impact);
+    }
+
+    function effortLabel(effort) {
+      return mapLabel(EFFORT_LABELS, effort);
+    }
+
+    function evidenceStrengthLabel(strength) {
+      return mapLabel(EVIDENCE_STRENGTH_LABELS, strength || 'Unknown');
+    }
+
+    function ownerLabel(owner) {
+      return mapLabel(OWNER_LABELS, owner);
+    }
+
+    function etaLabel(eta) {
+      const value = String(eta || '');
+      if (UIStateV3.locale !== 'ru') return value;
+      if (!value) return value;
+      if (/^Week\s+/i.test(value)) return value.replace(/^Week\s+/i, 'Неделя ');
+      if (/^Backlog$/i.test(value)) return 'Бэклог';
+      return value;
+    }
+
+    function localizedField(scope, row, field) {
+      if (UIStateV3.locale !== 'ru') return row?.[field] || '';
+      const id = row?.id;
+      if (!id) return row?.[field] || '';
+      return DATA_COPY_RU[scope]?.[id]?.[field] || row?.[field] || '';
+    }
+
+    function localizedCompetitor(row) {
+      if (UIStateV3.locale !== 'ru') return row;
+      const copy = COMPETITOR_COPY_RU[row?.game] || {};
+      return { ...row, ...copy };
+    }
+
+    function localizedPersona(row) {
+      if (UIStateV3.locale !== 'ru') return row;
+      const copy = PERSONA_COPY_RU[row?.name] || {};
+      return {
+        ...row,
+        role: copy.role || row.role,
+        desc: copy.desc || row.desc,
+        action: copy.action || row.action
+      };
+    }
+
+    function localizedFriction(row) {
+      if (UIStateV3.locale !== 'ru') return row;
+      const copy = FRICTION_COPY_RU[row?.trigger] || {};
+      return {
+        ...row,
+        trigger: copy.trigger || row.trigger,
+        issue: copy.issue || row.issue,
+        solution: copy.solution || row.solution
+      };
+    }
+
+    function localizedDopamine(row) {
+      if (UIStateV3.locale !== 'ru') return row;
+      const copy = DOPAMINE_COPY_RU[row?.name] || {};
+      return {
+        ...row,
+        name: copy.name || row.name,
+        desc: copy.desc || row.desc
+      };
+    }
+
+    function sourceRefLabel(href, index) {
+      try {
+        const url = new URL(href);
+        const host = String(url.hostname || '');
+        if (host.includes('steamcommunity.com')) return UIStateV3.locale === 'ru' ? 'Обсуждение Steam' : 'Steam discussion';
+        if (host.includes('store.steampowered.com')) return UIStateV3.locale === 'ru' ? 'Страница в Steam' : 'Steam store page';
+        if (host.includes('discord.com')) return 'Discord';
+        if (host.includes('youtube.com') || host.includes('youtu.be')) return UIStateV3.locale === 'ru' ? 'Обзор на YouTube' : 'YouTube review';
+        return UIStateV3.locale === 'ru' ? `Источник ${index + 1}` : `Source ${index + 1}`;
+      } catch {
+        return UIStateV3.locale === 'ru' ? `Источник ${index + 1}` : `Source ${index + 1}`;
+      }
+    }
+
+    function renderSourceRefs(refs) {
+      return (refs || []).slice(0, 2)
+        .map((href, idx) => `<a target="_blank" rel="noopener noreferrer" href="${esc(href)}">${esc(sourceRefLabel(href, idx))}</a>`)
+        .join(' · ');
+    }
+
+    function tn(theme, field) {
+      const row = NarrativeMapV1[theme] || NarrativeMapV1.__default;
+      const key = `${field}_${UIStateV3.locale}`;
+      return row[key] || row[`${field}_ru`] || '';
+    }
+
+    function setText(id, value) {
+      const node = document.getElementById(id);
+      if (node) node.textContent = value;
+    }
+
+    function setHtml(id, value) {
+      const node = document.getElementById(id);
+      if (node) node.innerHTML = value;
+    }
+
+    function renderHeroSub() {
+      const meta = DashboardDataV3.meta || fallbackData.meta;
+      const date = meta.actuality_date || '-';
+      setHtml('heroSub', `${t('hero_sub')} <strong>${esc(date)}</strong>.`);
+    }
+
+    function updateToggleButtonLabels() {
+      document.querySelectorAll('[data-toggle]').forEach((btn) => {
+        const target = btn.getAttribute('data-toggle');
+        const section = document.querySelector(`[data-section="${target}"]`);
+        if (!section) return;
+        const expanded = section.getAttribute('data-collapsed') !== 'true';
+        const label = btn.querySelector('.expand-label');
+        if (label) label.textContent = expanded ? t('collapse') : t('expand');
+      });
+    }
+
+    function applyLocale() {
+      document.documentElement.lang = UIStateV3.locale;
+      document.title = t('hero_title');
+      setText('skipLink', t('skip_link'));
+      setText('heroTitle', t('hero_title'));
+      renderHeroSub();
+
+      setText('metaDateLabel', t('meta_date'));
+      setText('metaRawLabel', t('meta_raw'));
+      setText('metaUniqueLabel', t('meta_unique'));
+      setText('metaMethodLabel', t('meta_method'));
+
+      const anchorNav = document.getElementById('anchorNav');
+      if (anchorNav) anchorNav.setAttribute('aria-label', t('anchor_nav_aria'));
+      setText('navLinkRisks', t('nav_risks'));
+      setText('navLinkBugs', t('nav_bugs'));
+      setText('navLinkEvidence', t('nav_evidence'));
+      setText('navLinkActions', t('nav_actions'));
+      setText('navLinkPsychology', t('nav_psychology'));
+      setText('navLinkRoadmap', t('nav_roadmap'));
+      setText('navLinkSources', t('nav_sources'));
+
+      setText('filtersTitle', t('filters_title'));
+      setHtml('filtersDesc', t('filters_desc'));
+      setText('themeFilterLabel', t('label_theme'));
+      setText('sourceFilterLabel', t('label_source'));
+      setText('severityFilterLabel', t('label_severity'));
+      setText('categoryFilterLabel', t('label_category'));
+      setText('statusFilterLabel', t('label_status'));
+      setText('sortFilterLabel', t('label_sort'));
+      setText('resetFiltersLabel', t('label_reset'));
+      setText('resetFilters', t('reset_btn'));
+
+      setText('risksTitle', t('risks_title'));
+      setHtml('risksDesc', t('risks_desc'));
+      setText('riskIntro', t('risks_intro'));
+      setText('riskRetentionLegend', t('retention_legend'));
+
+      setText('bugsTitle', t('bugs_title'));
+      setHtml('bugsDesc', t('bugs_desc'));
+      setText('bugIntro', t('bugs_intro'));
+      setText('bugThCluster', t('bug_th_cluster'));
+      setText('bugThSeverity', t('bug_th_severity'));
+      setText('bugThPriority', t('bug_th_priority'));
+      setText('bugThFrequency', t('bug_th_frequency'));
+      setText('bugThScore', t('bug_th_score'));
+      setText('bugThHints', t('bug_th_hints'));
+      setText('bugThSources', t('bug_th_sources'));
+
+      setText('evidenceTitle', t('evidence_title'));
+      setHtml('evidenceDesc', t('evidence_desc'));
+      setText('evidenceIntro', t('evidence_intro'));
+      const sourceToggle = document.getElementById('sourceToggle');
+      if (sourceToggle) sourceToggle.setAttribute('aria-label', t('source_toggle_aria'));
+      setText('sourceChipAll', t('source_chip_all'));
+      setText('sourceChipSteam', t('source_chip_steam'));
+      setText('sourceChipDiscord', t('source_chip_discord'));
+      setText('sourceChipForum', t('source_chip_forum'));
+
+      setText('actionsTitle', t('actions_title'));
+      setText('actionsDesc', t('actions_desc'));
+      setText('actionsIntro', t('actions_intro'));
+      setText('actionThId', 'ID');
+      setText('actionThCategory', t('label_category'));
+      setText('actionThStatus', t('label_status'));
+      setText('actionThProblem', t('label_problem'));
+      setText('actionThSolution', t('label_solution'));
+      setText('actionThImpact', t('label_impact_effort'));
+      setText('actionThPriority', t('bug_th_priority'));
+      setText('actionThKpi', t('kpi_label'));
+      setText('actionThOwner', t('label_owner'));
+      setText('actionThEta', t('label_eta'));
+
+      setText('psychologyTitle', t('psychology_title'));
+      setText('psychologyDesc', t('psychology_desc'));
+      setText('psychologyIntro', t('psychology_intro'));
+      setText('personasHeading', t('personas_heading'));
+      setText('frictionHeading', t('friction_heading'));
+      setText('dopamineHeading', t('dopamine_heading'));
+      setText('frictionThTrigger', t('friction_th_trigger'));
+      setText('frictionThIssue', t('friction_th_issue'));
+      setText('frictionThSolution', t('friction_th_solution'));
+      setText('frictionThImpact', t('friction_th_impact'));
+
+      setText('improvementsTitle', t('improvements_title'));
+      setText('improvementsDesc', t('improvements_desc'));
+      setText('improvementsIntro', t('improvements_intro'));
+
+      setText('insightsTitle', t('insights_title'));
+      setText('insightsDesc', t('insights_desc'));
+      setText('insightsIntro', t('insights_intro'));
+
+      setText('competitorsTitle', t('competitors_title'));
+      setText('competitorsDesc', t('competitors_desc'));
+      setText('competitorsIntro', t('competitors_intro'));
+      setText('competitorThGame', t('competitor_th_game'));
+      setText('competitorThRole', t('competitor_th_role'));
+      setText('competitorThStrengths', t('competitor_th_strengths'));
+      setText('competitorThWeaknesses', t('competitor_th_weaknesses'));
+      setText('competitorThOpportunity', t('competitor_th_opportunity'));
+
+      setText('roadmapTitle', t('roadmap_title'));
+      setText('roadmapDesc', t('roadmap_desc'));
+      setText('roadmapIntro', t('roadmap_intro'));
+
+      setText('sourcesTitle', t('sources_title'));
+      setText('sourcesDesc', t('sources_desc'));
+      setText('sourcesIntro', t('sources_intro'));
+      setText('steamStatusLabel', t('source_status'));
+      setText('platformsLabel', t('source_platforms'));
+      setText('verifiedAtLabel', t('source_verified'));
+      setText('httpChecksLabel', t('source_http'));
+
+      document.getElementById('localeRuBtn')?.setAttribute('aria-pressed', UIStateV3.locale === 'ru' ? 'true' : 'false');
+      document.getElementById('localeEnBtn')?.setAttribute('aria-pressed', UIStateV3.locale === 'en' ? 'true' : 'false');
+
+      updateToggleButtonLabels();
+    }
+
+    function setLocale(locale) {
+      UIStateV3.locale = locale === 'en' ? 'en' : 'ru';
+      try { localStorage.setItem('vcs_locale', UIStateV3.locale); } catch {}
+      applyLocale();
+      initFilters();
+      renderAll();
+    }
+
+    function initLocaleSwitch() {
+      document.getElementById('localeRuBtn')?.addEventListener('click', () => setLocale('ru'));
+      document.getElementById('localeEnBtn')?.addEventListener('click', () => setLocale('en'));
+    }
+
+    function normalizeSource(value) {
+      return SOURCE_KEY_MAP[value] || value || 'Unknown';
+    }
+
+    function severityClass(sev) {
+      const normalized = String(sev || '').toLowerCase();
+      if (normalized === 'critical') return 'severity-critical';
+      if (normalized === 'major') return 'severity-major';
+      return 'severity-minor';
+    }
+
+    function severityLabel(sev) {
+      const normalized = String(sev || '').toLowerCase();
+      if (normalized === 'critical') return t('severity_critical');
+      if (normalized === 'major') return t('severity_major');
+      return t('severity_minor');
+    }
+
+    function priorityClass(priority) {
+      const p = String(priority || '').toUpperCase();
+      if (p === 'P0') return 'priority-p0';
+      if (p === 'P1') return 'priority-p1';
+      return 'priority-p2';
+    }
+
+    function sortByScore(rows) {
+      return rows.slice().sort((a, b) => {
+        const av = Number(a.priority_score ?? a.score ?? 0);
+        const bv = Number(b.priority_score ?? b.score ?? 0);
+        return UIStateV3.sort === 'asc' ? av - bv : bv - av;
+      });
+    }
+
+    function buildSourceBreakdownFromSignals(theme, signals) {
+      const breakdown = {};
+      (signals || []).forEach((sig) => {
+        if (!sig || sig.theme !== theme) return;
+        const src = normalizeSource(sig.source);
+        breakdown[src] = Number(breakdown[src] || 0) + 1;
+      });
+      return breakdown;
+    }
+
+    function getEffectiveBugClusters() {
+      if (Array.isArray(DashboardDataV3.bug_clusters) && DashboardDataV3.bug_clusters.length) {
+        return DashboardDataV3.bug_clusters;
+      }
+
+      const themeScores = (DashboardDataV3.theme_scores || fallbackData.theme_scores || [])
+        .filter((it) => String(it.sentiment || 'negative').toLowerCase() === 'negative');
+      const signals = DashboardDataV3.feedback_signals || fallbackData.feedback_signals || [];
+
+      return themeScores.map((it) => {
+        const score = Number(it.priority_score ?? it.score ?? 0);
+        const priority = score >= 4.4 ? 'P0' : (score >= 2.6 ? 'P1' : 'P2');
+        const breakdown = buildSourceBreakdownFromSignals(it.theme, signals);
+        const sourceCount = Object.values(breakdown).filter((n) => Number(n) > 0).length || 1;
+        const firstSignal = signals.find((sig) => sig && sig.theme === it.theme);
+        return {
+          name: it.theme,
+          severity: SEVERITY_BY_THEME[it.theme] || 'minor',
+          frequency: Number(it.frequency || 0),
+          priority,
+          score,
+          priority_score: score,
+          repro_notes: firstSignal?.quote || (UIStateV3.locale === 'ru'
+            ? 'Нужна дополнительная валидация repro steps.'
+            : 'Additional repro validation is required.'),
+          source_count: sourceCount,
+          source_breakdown: breakdown
+        };
+      });
+    }
+
+    function inferThemeAndSeverity(text) {
+      const lower = String(text || '').toLowerCase();
+      if (/(save|saved|saving|progress|load|slot|recover|deleted|gone|lost)/i.test(lower)) return { theme: 'Save loss', severity: 'critical' };
+      if (/(co-op|coop|multiplayer|host|lobby|join|rejoin|disconnect|sync|desync)/i.test(lower)) return { theme: 'Co-op stability', severity: 'critical' };
+      if (/(fps|stutter|freeze|lag|gpu|vram|optimization|performance|drops)/i.test(lower)) return { theme: 'Performance', severity: 'major' };
+      if (/(click|hold|input|control|inventory|ui|interface|camera|stuck)/i.test(lower)) return { theme: 'Controls/UI friction', severity: 'major' };
+      if (/(localization|translation|language)/i.test(lower)) return { theme: 'Localization', severity: 'minor' };
+      return { theme: 'Controls/UI friction', severity: 'minor' };
+    }
+
+    function decodeQuotedPrintable(input) {
+      return String(input || '')
+        .replace(/=\r?\n/g, '')
+        .replace(/=([A-Fa-f0-9]{2})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+    }
+
+    function cleanText(raw) {
+      return String(raw || '')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'")
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function isLikelyNoiseText(value) {
+      const text = cleanText(value);
+      if (!text || text.length < 20) return true;
+
+      const longEncodedToken = /[A-Za-z0-9+/=]{30,}/.test(text);
+      const encodedChunks = (text.match(/[A-Za-z0-9+/=]{24,}/g) || []).length;
+      const words = text.match(/[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё'’-]{1,}/g) || [];
+      const hasSentenceLikeSpacing = /\s/.test(text) && words.length >= 4;
+      const looksLikeMarkupResidue = /(aria-hidden|class=|style=|viewbox|fill=|stroke=|rspack=|discord\.com\/assets|<path|<svg|data-rh|theme-darker|has-webkit-scrollbar|font-size-16|mana-toggle-inputs|mask id=|transform=|<meta|<met|http-equiv|charset=)/i.test(text);
+      const symbolDensity = (text.match(/[<>{}=_"`]/g) || []).length / text.length;
+
+      return longEncodedToken || encodedChunks >= 2 || looksLikeMarkupResidue || symbolDensity > 0.08 || !hasSentenceLikeSpacing;
+    }
+
+    function parseChatlogHtmlToSignals(htmlText) {
+      const signals = [];
+      const startToken = 'const messages = ';
+      const endToken = '];';
+      const start = htmlText.indexOf(startToken);
+      if (start < 0) return signals;
+      const from = start + startToken.length;
+      const end = htmlText.indexOf(endToken, from);
+      if (end < 0) return signals;
+
+      try {
+        const messages = JSON.parse(htmlText.slice(from, end + 1));
+        messages.forEach((msg) => {
+          const content = cleanText(msg.content || '');
+          if (!content) return;
+          if (isLikelyNoiseText(content)) return;
+          if (!/(bug|issue|problem|save|progress|crash|freeze|lag|fps|multiplayer|co-op|coop|sync|host|join|cannot|can't|deleted|lost|stuck|error)/i.test(content)) return;
+          const inferred = inferThemeAndSeverity(content);
+          signals.push({
+            source: 'Discord',
+            id: String(msg.id || ''),
+            url: '',
+            quote: content,
+            theme: inferred.theme,
+            severity: inferred.severity,
+            sentiment: 'negative'
+          });
+        });
+      } catch (_error) {
+        return signals;
+      }
+
+      return signals;
+    }
+
+    function parseMhtmlToSignals(mhtmlText, fileId) {
+      const signals = [];
+      const decoded = decodeQuotedPrintable(mhtmlText);
+
+      const publicationRegex = /aria-label="[^\"]*(?:Публикация|publication)[^\"«]*[«\"]([^\"»]{8,160})[»\"][^\"]*"/gi;
+      let match;
+      while ((match = publicationRegex.exec(decoded)) !== null) {
+        const quote = cleanText(match[1]);
+        if (!quote) continue;
+        if (isLikelyNoiseText(quote)) continue;
+        const inferred = inferThemeAndSeverity(quote);
+        signals.push({
+          source: 'Forum',
+          id: `${fileId}#publication-${publicationRegex.lastIndex}`,
+          url: '',
+          quote,
+          theme: inferred.theme,
+          severity: inferred.severity,
+          sentiment: 'negative'
+        });
+      }
+
+      const keywordRegex = /(save|progress|co-op|coop|multiplayer|disconnect|rejoin|crash|freeze|fps|lag|gpu|vram|inventory|input|controls|ui|stuck|deleted|lost)/gi;
+      let count = 0;
+      while ((match = keywordRegex.exec(decoded)) !== null && count < 25) {
+        const idx = match.index;
+        const snippet = cleanText(decoded.slice(Math.max(0, idx - 140), idx + 230));
+        const alpha = (snippet.match(/[A-Za-zА-Яа-я]/g) || []).length;
+        if (snippet.length < 26 || alpha < 18) continue;
+        if (isLikelyNoiseText(snippet)) continue;
+
+        const inferred = inferThemeAndSeverity(snippet);
+        signals.push({
+          source: 'Forum',
+          id: `${fileId}#kw-${idx}`,
+          url: '',
+          quote: snippet,
+          theme: inferred.theme,
+          severity: inferred.severity,
+          sentiment: 'negative'
+        });
+        count += 1;
+      }
+
+      return signals;
+    }
+
+    function dedupeSignals(inputSignals) {
+      const seen = new Set();
+      const out = [];
+      inputSignals.forEach((sig) => {
+        const source = normalizeSource(sig.source);
+        const quote = cleanText(sig.quote);
+        if (!quote || quote.length < 18) return;
+        if (isLikelyNoiseText(quote)) return;
+        const key = `${source}|${quote.toLowerCase()}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        out.push({
+          source,
+          id: sig.id || '',
+          url: sig.url || '',
+          quote,
+          theme: sig.theme || inferThemeAndSeverity(quote).theme,
+          severity: sig.severity || inferThemeAndSeverity(quote).severity,
+          sentiment: sig.sentiment || 'negative'
+        });
+      });
+      return out;
+    }
+
+    function mergeRowsById(baseRows, extraRows) {
+      const merged = [];
+      const seen = new Set();
+      [...(baseRows || []), ...(extraRows || [])].forEach((row, idx) => {
+        if (!row || typeof row !== 'object') return;
+        const key = row.id || `${row.window || ''}|${row.initiative || ''}|${idx}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        merged.push(row);
+      });
+      return merged;
+    }
+
+    function mergeRoadmap(baseRows, extraRows) {
+      const merged = [];
+      const seen = new Set();
+      [...(baseRows || []), ...(extraRows || [])].forEach((row) => {
+        if (!row || typeof row !== 'object') return;
+        const key = `${row.window || ''}|${row.initiative || ''}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        merged.push(row);
+      });
+      return merged;
+    }
+
+    function mergeBugClusters(baseRows, extraRows) {
+      const byName = new Map();
+      (baseRows || []).forEach((row) => {
+        const key = String(row?.name || '').toLowerCase();
+        if (!key) return;
+        byName.set(key, {
+          ...row,
+          source_breakdown: { ...(row.source_breakdown || {}) }
+        });
+      });
+
+      (extraRows || []).forEach((row) => {
+        const key = String(row?.name || '').toLowerCase();
+        if (!key) return;
+        const existing = byName.get(key);
+        if (!existing) {
+          byName.set(key, {
+            ...row,
+            source_breakdown: { ...(row.source_breakdown || {}) }
+          });
+          return;
+        }
+
+        const breakdown = { ...(existing.source_breakdown || {}) };
+        Object.entries(row.source_breakdown || {}).forEach(([src, count]) => {
+          breakdown[src] = Number(breakdown[src] || 0) + Number(count || 0);
+        });
+
+        existing.frequency = Number(existing.frequency || 0) + Number(row.frequency || 0);
+        existing.priority_score = Math.max(Number(existing.priority_score || 0), Number(row.priority_score || 0));
+        existing.score = Math.max(Number(existing.score || 0), Number(row.score || 0));
+        existing.source_breakdown = breakdown;
+        existing.source_count = Object.values(breakdown).filter((n) => Number(n) > 0).length;
+      });
+
+      return Array.from(byName.values());
+    }
+
+    function applyMarch5Update(baseData) {
+      const data = {
+        ...baseData,
+        meta: { ...(baseData.meta || {}) },
+        feedback_signals: [...(baseData.feedback_signals || [])],
+        actions: [...(baseData.actions || [])],
+        insights_shipping: [...(baseData.insights_shipping || [])],
+        insights_hypothesis: [...(baseData.insights_hypothesis || [])],
+        bug_clusters: [...(baseData.bug_clusters || [])],
+        roadmap: [...(baseData.roadmap || [])],
+        source_snapshot: { ...(baseData.source_snapshot || {}) }
+      };
+
+      data.meta.actuality_date = MARCH5_UPDATE.meta.actuality_date;
+      const beforeSignalsCount = data.feedback_signals.length;
+      data.feedback_signals = dedupeSignals([
+        ...(MARCH5_UPDATE.feedback_signals || []),
+        ...data.feedback_signals
+      ]);
+      const afterSignalsCount = data.feedback_signals.length;
+      const addedSignals = Math.max(0, afterSignalsCount - beforeSignalsCount);
+      data.actions = mergeRowsById(data.actions, MARCH5_UPDATE.actions);
+      data.insights_shipping = mergeRowsById(data.insights_shipping, MARCH5_UPDATE.insights_shipping);
+      data.insights_hypothesis = mergeRowsById(data.insights_hypothesis, MARCH5_UPDATE.insights_hypothesis);
+      data.bug_clusters = mergeBugClusters(data.bug_clusters, MARCH5_UPDATE.bug_clusters);
+      data.roadmap = mergeRoadmap(data.roadmap, MARCH5_UPDATE.roadmap);
+      data.source_snapshot = {
+        ...data.source_snapshot,
+        verified_at: '2026-03-05'
+      };
+
+      const signalCount = data.feedback_signals.length;
+      const baseUnique = Number(data.meta.signals_unique || 0);
+      const baseRaw = Number(data.meta.signals_raw || 0);
+      data.meta.signals_unique = baseUnique > 0 ? baseUnique + addedSignals : signalCount;
+      data.meta.signals_raw = baseRaw > 0 ? baseRaw + addedSignals : signalCount;
+
+      return data;
+    }
+
+    async function fetchJsonOrThrow(url) {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      return res.json();
+    }
+
+    async function fetchTextOrEmpty(url) {
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) return '';
+        return res.text();
+      } catch {
+        return '';
+      }
+    }
+
+    async function fetchTextFirstAvailable(urls) {
+      for (const url of urls) {
+        const text = await fetchTextOrEmpty(url);
+        if (text) return text;
+      }
+      return '';
+    }
+
+    function buildBugClusters(themeScores, feedbackSummary) {
+      const themeMap = feedbackSummary?.themes || {};
+      const rows = themeScores
+        .filter((it) => String(it.sentiment).toLowerCase() === 'negative')
+        .map((it) => {
+          const sev = SEVERITY_BY_THEME[it.theme] || 'minor';
+          const breakdown = themeMap[it.theme]?.source_breakdown || {};
+          const p = Number(it.priority_score || 0);
+          const priority = p >= 4.4 ? 'P0' : (p >= 2.6 ? 'P1' : 'P2');
+          return {
+            name: it.theme,
+            severity: sev,
+            frequency: Number(it.frequency || 0),
+            priority,
+            score: Number(it.priority_score || 0),
+            priority_score: Number(it.priority_score || 0),
+            repro_notes: themeMap[it.theme]?.samples?.[0]?.quote || 'Нужна дополнительная валидация repro steps.',
+            source_count: Object.values(breakdown).filter((n) => Number(n) > 0).length || 1,
+            source_breakdown: breakdown
+          };
+        });
+      return rows.length ? rows : fallbackData.actions;
+    }
+
+    function mapFeedbackSummarySignals(feedbackSummary) {
+      const out = [];
+      const themes = feedbackSummary?.themes || {};
+      Object.entries(themes).forEach(([theme, payload]) => {
+        const samples = Array.isArray(payload?.samples) ? payload.samples : [];
+        samples.forEach((sample) => {
+          const src = normalizeSource(sample.source);
+          const severity = SEVERITY_BY_THEME[theme] || inferThemeAndSeverity(sample.quote).severity;
+          out.push({
+            source: src,
+            id: sample.id || '',
+            url: sample.url || '',
+            quote: sample.quote || '',
+            theme,
+            severity,
+            sentiment: 'negative'
+          });
+        });
+      });
+      return out;
+    }
+
+    function buildCompetitorSnapshot(reviewSummaries, pos, neg) {
+      const names = ['Espresso Tycoon', 'Travellers Rest', 'Coffee Caravan', 'Chef RPG'];
+      const fallback = fallbackData.competitor_snapshot;
+      return names.map((name, idx) => {
+        const base = reviewSummaries?.[name] || {};
+        const posWords = Array.isArray(pos?.[name]?.top_words) ? pos[name].top_words.slice(0, 4).join(', ') : 'n/a';
+        const negWords = Array.isArray(neg?.[name]?.top_words) ? neg[name].top_words.slice(0, 4).join(', ') : 'n/a';
+        const fb = fallback[idx] || {};
+        return {
+          game: name,
+          market_role: fb.market_role || 'Cozy cafe competitor',
+          strengths: `Review: ${base.review_score_desc || 'n/a'}; words+: ${posWords}`,
+          weaknesses: `words-: ${negWords}`,
+          opportunity: fb.opportunity || 'Opportunity to differentiate via reliable core loop.'
+        };
+      });
+    }
+
+    function buildSourceSnapshot(appDetails, themeScores) {
+      const store = appDetails?.['3196440']?.data || {};
+      const urls = [];
+      themeScores.forEach((t) => {
+        if (!t || !t.theme) return;
+      });
+      const defaultChecks = fallbackData.source_snapshot.url_checks;
+      return {
+        steam_store_status: {
+          name: store.name || 'Vacation Cafe Simulator',
+          release_date: store.release_date?.date || '2026',
+          review_state: fallbackData.source_snapshot.steam_store_status.review_state,
+          platforms: {
+            windows: Boolean(store.platforms?.windows ?? true),
+            mac: Boolean(store.platforms?.mac ?? false),
+            linux: Boolean(store.platforms?.linux ?? false)
+          }
+        },
+        verified_at: '2026-03-04',
+        url_checks: defaultChecks.concat(urls)
+      };
+    }
+
+    async function parseRawDialogSignalsFallback() {
+      const signals = [];
+      const chatText = await fetchTextOrEmpty('../chatlogs-1380125014942027798-1380125015898325078.html');
+      if (chatText) signals.push(...parseChatlogHtmlToSignals(chatText));
+
+      for (const file of mhtmlFileList) {
+        const mhtmlText = await fetchTextOrEmpty(file);
+        if (!mhtmlText) continue;
+        signals.push(...parseMhtmlToSignals(mhtmlText, file));
+      }
+
+      return dedupeSignals(signals);
+    }
+
+    async function loadDashboardDataV3() {
+      try {
+        const [themeScoresJson, feedbackSummaryJson, reviewSummariesJson, appDetailsJson, compPosJson, compNegJson, compEnJson, dialogCacheJson, marketMd, deepMd, insightTxt] = await Promise.all([
+          fetchJsonOrThrow('./analysis_theme_scores.json'),
+          fetchJsonOrThrow('./vcs_feedback_summary.json'),
+          fetchJsonOrThrow('./steam_review_summaries.json'),
+          fetchJsonOrThrow('./steam_appdetails_snapshot.json'),
+          fetchJsonOrThrow('./competitor_positive_reviews_snapshot.json'),
+          fetchJsonOrThrow('./competitor_negative_reviews_snapshot.json'),
+          fetchJsonOrThrow('./competitor_english_reviews_samples.json'),
+          fetchJsonOrThrow('./dialog_signals_cache.json').catch(() => null),
+          fetchTextOrEmpty('./09_VCS_Market_Feedback_Analysis_2026-03-04.md'),
+          fetchTextOrEmpty('./VCS_Deep_Analysis_Report_RU.md'),
+          fetchTextFirstAvailable(['./vacation insight.txt', '../vacation insight.txt'])
+        ]);
+
+        const themeScores = Array.isArray(themeScoresJson?.theme_scores) ? themeScoresJson.theme_scores : fallbackData.theme_scores;
+        const feedbackSignalsFromSummary = mapFeedbackSummarySignals(feedbackSummaryJson);
+        let dialogSignals = Array.isArray(dialogCacheJson?.signals) ? dialogCacheJson.signals : [];
+        if (!dialogSignals.length) {
+          dialogSignals = await parseRawDialogSignalsFallback();
+        }
+
+        const feedbackSignals = dedupeSignals([
+          ...feedbackSignalsFromSummary,
+          ...dialogSignals,
+          ...fallbackData.feedback_signals
+        ]);
+
+        const data = {
+          meta: {
+            actuality_date: themeScoresJson?.generated_at?.slice(0, 10) || fallbackData.meta.actuality_date,
+            signals_raw: Number(themeScoresJson?.signals_total_raw || feedbackSummaryJson?.total_raw || fallbackData.meta.signals_raw),
+            signals_unique: Number(themeScoresJson?.signals_total_unique || feedbackSummaryJson?.total_unique || fallbackData.meta.signals_unique),
+            method: fallbackData.meta.method,
+            docs_loaded: {
+              market_md_lines: marketMd ? marketMd.split('\n').length : 0,
+              deep_md_lines: deepMd ? deepMd.split('\n').length : 0,
+              insight_txt_lines: insightTxt ? insightTxt.split('\n').length : 0,
+              comp_english_samples: Array.isArray(compEnJson?.['Chef RPG']) ? compEnJson['Chef RPG'].length : 0
+            }
+          },
+          theme_scores: themeScores,
+          bug_clusters: buildBugClusters(themeScores, feedbackSummaryJson),
+          feedback_signals: feedbackSignals,
+          actions: fallbackData.actions,
+          improvements: fallbackData.improvements,
+          insights_shipping: fallbackData.insights_shipping,
+          insights_hypothesis: fallbackData.insights_hypothesis,
+          psychology: fallbackData.psychology,
+          competitor_snapshot: buildCompetitorSnapshot(reviewSummariesJson, compPosJson, compNegJson),
+          roadmap: fallbackData.roadmap,
+          source_snapshot: buildSourceSnapshot(appDetailsJson, themeScores)
+        };
+
+        return applyMarch5Update(data);
+      } catch (error) {
+        console.warn('JSON-first load failed, using inline fallback:', error);
+        return applyMarch5Update(fallbackData);
+      }
+    }
+
+    function getAllThemes(data) {
+      const set = new Set();
+      (data.theme_scores || []).forEach((x) => x?.theme && set.add(x.theme));
+      (data.feedback_signals || []).forEach((x) => x?.theme && set.add(x.theme));
+      (data.actions || []).forEach((x) => x?.theme && set.add(x.theme));
+      return [...set].sort((a, b) => a.localeCompare(b));
+    }
+
+    function getAllSources(data) {
+      const set = new Set();
+      (data.feedback_signals || []).forEach((x) => x?.source && set.add(normalizeSource(x.source)));
+      if (!set.has('Forum')) set.add('Forum');
+      return [...set].sort((a, b) => a.localeCompare(b));
+    }
+
+    function matchesBaseFilters(item) {
+      const theme = item.theme || item.name || item.linked_theme || '';
+      const source = normalizeSource(item.source || '');
+      const severity = item.severity || SEVERITY_BY_THEME[theme] || 'minor';
+      const status = item.status || 'shipping';
+      const category = item.category || 'QoL';
+
+      const passTheme = UIStateV3.theme === 'all' || theme === UIStateV3.theme;
+      const passSource = UIStateV3.source === 'all' || source === UIStateV3.source;
+      const passSeverity = UIStateV3.severity === 'all' || severity === UIStateV3.severity;
+      const passStatus = UIStateV3.status === 'all' || status === UIStateV3.status;
+      const passCategory = UIStateV3.category === 'all' || category === UIStateV3.category;
+
+      return passTheme && passSource && passSeverity && passStatus && passCategory;
+    }
+
+    function initCollapsibles() {
+      document.querySelectorAll('[data-toggle]').forEach((btn) => {
+        const target = btn.getAttribute('data-toggle');
+        btn.addEventListener('click', () => {
+          const section = document.querySelector(`[data-section="${target}"]`);
+          if (!section) return;
+          const expanded = section.getAttribute('data-collapsed') !== 'true';
+          section.setAttribute('data-collapsed', expanded ? 'true' : 'false');
+          btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          UIStateV3.expandedSections[target] = !expanded;
+          updateToggleButtonLabels();
+        });
+      });
+    }
+
+    function syncCollapsedState() {
+      Object.entries(UIStateV3.expandedSections).forEach(([key, expanded]) => {
+        const section = document.querySelector(`[data-section="${key}"]`);
+        const btn = document.querySelector(`[data-toggle="${key}"]`);
+        if (!section || !btn) return;
+        section.setAttribute('data-collapsed', expanded ? 'false' : 'true');
+        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
+      updateToggleButtonLabels();
+    }
+
+    function initFilters() {
+      const themeEl = document.getElementById('themeFilter');
+      const sourceEl = document.getElementById('sourceFilter');
+      const severityEl = document.getElementById('severityFilter');
+      const categoryEl = document.getElementById('categoryFilter');
+      const statusEl = document.getElementById('statusFilter');
+      const sortEl = document.getElementById('sortFilter');
+      const themes = getAllThemes(DashboardDataV3);
+      const sources = getAllSources(DashboardDataV3);
+
+      themeEl.innerHTML = `<option value="all">${t('all_themes')}</option>${themes.map((x) => `<option value="${esc(x)}">${esc(themeLabel(x))}</option>`).join('')}`;
+      sourceEl.innerHTML = `<option value="all">${t('all_sources')}</option>${sources.map((x) => `<option value="${esc(x)}">${esc(sourceLabel(x))}</option>`).join('')}`;
+      severityEl.innerHTML = `
+        <option value="all">${t('all')}</option>
+        <option value="critical">${t('severity_critical')}</option>
+        <option value="major">${t('severity_major')}</option>
+        <option value="minor">${t('severity_minor')}</option>
+      `;
+      categoryEl.innerHTML = `
+        <option value="all">${t('all')}</option>
+        <option value="QoL">${esc(categoryLabel('QoL'))}</option>
+        <option value="Gameplay">${esc(categoryLabel('Gameplay'))}</option>
+        <option value="Retention">${esc(categoryLabel('Retention'))}</option>
+        <option value="USP">${esc(categoryLabel('USP'))}</option>
+      `;
+      statusEl.innerHTML = `
+        <option value="all">${t('status_all')}</option>
+        <option value="shipping">${t('status_shipping')}</option>
+        <option value="hypothesis">${t('status_hypothesis')}</option>
+      `;
+      sortEl.innerHTML = `
+        <option value="desc">${t('sort_desc')}</option>
+        <option value="asc">${t('sort_asc')}</option>
+      `;
+
+      const controlMap = [
+        ['themeFilter', 'theme'],
+        ['sourceFilter', 'source'],
+        ['severityFilter', 'severity'],
+        ['categoryFilter', 'category'],
+        ['statusFilter', 'status'],
+        ['sortFilter', 'sort']
+      ];
+
+      if (!filtersBound) {
+        controlMap.forEach(([id, key]) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener('change', (event) => {
+            UIStateV3[key] = event.target.value;
+            syncSourceButtons();
+            renderAll();
+          });
+        });
+
+        document.getElementById('resetFilters').addEventListener('click', () => {
+          UIStateV3.theme = 'all';
+          UIStateV3.source = 'all';
+          UIStateV3.severity = 'all';
+          UIStateV3.category = 'all';
+          UIStateV3.status = 'all';
+          UIStateV3.sort = 'desc';
+
+          document.getElementById('themeFilter').value = 'all';
+          document.getElementById('sourceFilter').value = 'all';
+          document.getElementById('severityFilter').value = 'all';
+          document.getElementById('categoryFilter').value = 'all';
+          document.getElementById('statusFilter').value = 'all';
+          document.getElementById('sortFilter').value = 'desc';
+          syncSourceButtons();
+          renderAll();
+        });
+
+        document.querySelectorAll('[data-source]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            UIStateV3.source = btn.getAttribute('data-source');
+            document.getElementById('sourceFilter').value = UIStateV3.source;
+            syncSourceButtons();
+            renderAll();
+          });
+        });
+        filtersBound = true;
+      }
+
+      controlMap.forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.value = UIStateV3[key];
+      });
+
+      syncSourceButtons();
+    }
+
+    function syncSourceButtons() {
+      document.querySelectorAll('[data-source]').forEach((btn) => {
+        const pressed = btn.getAttribute('data-source') === UIStateV3.source;
+        btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      });
+    }
+
+    function renderMeta() {
+      const meta = DashboardDataV3.meta || fallbackData.meta;
+      document.getElementById('metaDate').textContent = meta.actuality_date || '-';
+      document.getElementById('metaRaw').textContent = String(meta.signals_raw ?? '-');
+      document.getElementById('metaUnique').textContent = String(meta.signals_unique ?? '-');
+      document.getElementById('metaMethod').textContent = meta.method || '-';
+      renderHeroSub();
+    }
+
+    function renderFiltersSummary() {
+      const parts = [
+        `theme=${UIStateV3.theme}`,
+        `source=${UIStateV3.source}`,
+        `severity=${UIStateV3.severity}`,
+        `category=${UIStateV3.category}`,
+        `status=${UIStateV3.status}`,
+        `sort=${UIStateV3.sort}`
+      ];
+      document.getElementById('filtersSummary').textContent = `${t('filters_state_prefix')}: ${parts.join(' | ')}`;
+    }
+
+    function renderRisks() {
+      const rows = (DashboardDataV3.theme_scores || [])
+        .filter((x) => String(x.sentiment || 'negative').toLowerCase() === 'negative')
+        .map((x) => ({ ...x, severity: SEVERITY_BY_THEME[x.theme] || 'minor', source: 'all' }))
+        .filter((x) => {
+          const passTheme = UIStateV3.theme === 'all' || x.theme === UIStateV3.theme;
+          const passSeverity = UIStateV3.severity === 'all' || x.severity === UIStateV3.severity;
+          const passSource = UIStateV3.source === 'all' || (DashboardDataV3.feedback_signals || []).some((s) => s.theme === x.theme && normalizeSource(s.source) === UIStateV3.source);
+          return passTheme && passSeverity && passSource;
+        });
+
+      const top = sortByScore(rows).slice(0, 3);
+      document.getElementById('riskCount').textContent = `${t('visible_top_risks')}: ${top.length}`;
+      const node = document.getElementById('riskGrid');
+
+      if (!top.length) {
+        node.innerHTML = `<div class="empty">${t('no_risks')}</div>`;
+        return;
+      }
+
+      node.innerHTML = top.map((risk) => {
+        const riskSignals = (DashboardDataV3.feedback_signals || []).filter((s) => s.theme === risk.theme);
+        const url = riskSignals.find((s) => s.url)?.url || '';
+        const quote = riskSignals[0]?.quote || t('no_evidence');
+        return `<article class="risk-card">
+          <div class="risk-top">
+            <h3 class="risk-title">${esc(themeLabel(risk.theme))}</h3>
+            <span class="badge ${severityClass(risk.severity)}">${t('score_label')} ${Number(risk.priority_score || 0).toFixed(2)}</span>
+          </div>
+          <div class="metrics">
+            <div class="metric"><small>${t('metric_frequency')}</small><b>${Number(risk.frequency || 0)}</b></div>
+            <div class="metric"><small>${t('metric_severity')}</small><b>${Number(risk.severity_score || 0).toFixed(2)}</b></div>
+            <div class="metric"><small>${t('metric_recency')}</small><b>${Number(risk.recency_score || 0).toFixed(2)}</b></div>
+          </div>
+          <div class="risk-narrative">
+            <p><b>${t('evidence_preview')}:</b> ${esc(trunc(quote, 210))}</p>
+            <p><b>${t('risk_context_label')}:</b> ${esc(tn(risk.theme, 'summary'))}</p>
+            <p><b>${t('risk_risk_label')}:</b> ${esc(tn(risk.theme, 'risk'))}</p>
+            <p><b>${t('risk_impact_label')}:</b> ${esc(tn(risk.theme, 'impact'))}</p>
+            <p><b>${t('risk_action_label')}:</b> ${esc(tn(risk.theme, 'action'))}</p>
+          </div>
+          ${url ? `<p style="margin:8px 0 0"><a target="_blank" rel="noopener noreferrer" href="${esc(url)}">${t('source_link')}</a></p>` : ''}
+        </article>`;
+      }).join('');
+    }
+
+    function inferBugCause(theme) {
+      const map = {
+        'Save loss': UIStateV3.locale === 'ru' ? 'Несогласованность формата сохранений между версиями и неполный путь восстановления.' : 'Save format drift between builds and incomplete recovery path.',
+        'Co-op stability': UIStateV3.locale === 'ru' ? 'Сетевые таймауты и рассинхронизация состояния между хостом и клиентами.' : 'Network timeout/state desync between host and clients.',
+        'Performance': UIStateV3.locale === 'ru' ? 'Переизбыточная нагрузка рендера и неоптимальные графические профили.' : 'Render overload and non-optimal quality profiles.',
+        'Controls/UI friction': UIStateV3.locale === 'ru' ? 'Неинтуитивные паттерны ввода и высокая стоимость действий в основном цикле.' : 'Unintuitive input patterns and high click-cost in the core loop.',
+        'AI-art perception': UIStateV3.locale === 'ru' ? 'Сигнал по доверию к бренду и ощущению визуальной аутентичности.' : 'Brand trust and perceived authenticity concern.',
+        'Localization': UIStateV3.locale === 'ru' ? 'Нехватка языкового покрытия и непоследовательный текстовый слой интерфейса.' : 'Insufficient language coverage and inconsistent copy layer.'
+      };
+      return map[theme] || (UIStateV3.locale === 'ru' ? 'Требуется дополнительная диагностика источников.' : 'Needs additional source diagnostics.');
+    }
+
+    function inferFixTrack(priority) {
+      if (priority === 'P0') return UIStateV3.locale === 'ru' ? 'Горячее исправление + регрессионная проверка QA в текущем цикле.' : 'Hotfix + QA regression in current cycle.';
+      if (priority === 'P1') return UIStateV3.locale === 'ru' ? 'Спринтовое исправление с проверкой KPI эффекта.' : 'Sprint fix with KPI impact validation.';
+      return UIStateV3.locale === 'ru' ? 'Бэклог + A/B-тест или исследование перед выпуском в продакшен.' : 'Backlog + A/B or discovery before production rollout.';
+    }
+
+    function renderBugs() {
+      const rows = sortByScore(getEffectiveBugClusters().filter((x) => {
+        const theme = x.name || '';
+        const sourceOk = UIStateV3.source === 'all'
+          || Object.entries(x.source_breakdown || {}).some(([k, v]) => Number(v) > 0 && normalizeSource(k) === UIStateV3.source);
+        const themeOk = UIStateV3.theme === 'all' || theme === UIStateV3.theme;
+        const severityOk = UIStateV3.severity === 'all' || (x.severity || 'minor') === UIStateV3.severity;
+        return sourceOk && themeOk && severityOk;
+      }));
+
+      document.getElementById('bugCount').textContent = `${t('visible_bug_clusters')}: ${rows.length}`;
+      const node = document.getElementById('bugRows');
+      if (!rows.length) {
+        node.innerHTML = `<tr><td colspan="7">${t('no_bug_clusters')}</td></tr>`;
+        return;
+      }
+
+      node.innerHTML = rows.map((x) => `<tr>
+        <td data-label="${esc(t('bug_th_cluster'))}"><b>${esc(themeLabel(x.name))}</b></td>
+        <td data-label="${esc(t('bug_th_severity'))}"><span class="badge ${severityClass(x.severity)}">${esc(severityLabel(x.severity))}</span></td>
+        <td data-label="${esc(t('bug_th_priority'))}"><span class="badge ${priorityClass(x.priority)}">${esc(x.priority)}</span></td>
+        <td data-label="${esc(t('bug_th_frequency'))}">${Number(x.frequency || 0)}</td>
+        <td data-label="${esc(t('bug_th_score'))}" class="mono">${Number(x.priority_score ?? x.score ?? 0).toFixed(2)}</td>
+        <td data-label="${esc(t('bug_th_hints'))}">
+          ${esc(trunc(x.repro_notes, 160))}
+          <span class="table-cell-detail"><b>${t('bug_detail_symptom')}:</b> ${esc(trunc(x.repro_notes, 85))}</span>
+          <span class="table-cell-detail"><b>${t('bug_detail_cause')}:</b> ${esc(inferBugCause(x.name))}</span>
+          <span class="table-cell-detail"><b>${t('bug_detail_track')}:</b> ${esc(inferFixTrack(x.priority))}</span>
+        </td>
+        <td data-label="${esc(t('bug_th_sources'))}">${Number(x.source_count || 0)}</td>
+      </tr>`).join('');
+    }
+
+    function renderEvidence() {
+      const rows = (DashboardDataV3.feedback_signals || []).filter((x) => {
+        const source = normalizeSource(x.source);
+        const theme = x.theme || '';
+        const severity = x.severity || SEVERITY_BY_THEME[theme] || 'minor';
+        const categoryGuess = (DashboardDataV3.actions || []).find((a) => a.theme === theme)?.category || 'QoL';
+
+        const sourceOk = UIStateV3.source === 'all' || source === UIStateV3.source;
+        const themeOk = UIStateV3.theme === 'all' || theme === UIStateV3.theme;
+        const severityOk = UIStateV3.severity === 'all' || severity === UIStateV3.severity;
+        const categoryOk = UIStateV3.category === 'all' || categoryGuess === UIStateV3.category;
+        return sourceOk && themeOk && severityOk && categoryOk;
+      });
+
+      document.getElementById('evidenceCount').textContent = `${t('signals_in_view')}: ${rows.length}`;
+      const node = document.getElementById('evidenceGrid');
+
+      if (!rows.length) {
+        node.innerHTML = `<div class="empty">${t('no_evidence')}</div>`;
+        return;
+      }
+
+      node.innerHTML = rows.slice(0, 80).map((x) => {
+        const source = normalizeSource(x.source);
+        const sourceText = sourceLabel(source);
+        const themeText = themeLabel(x.theme || t('unknown_theme'));
+        const severity = x.severity || SEVERITY_BY_THEME[x.theme] || 'minor';
+        const href = x.url ? `<p style="margin:8px 0 0"><a target="_blank" rel="noopener noreferrer" href="${esc(x.url)}">${t('open_source_link')}</a></p>` : '';
+        return `<article class="card">
+          <p class="evidence-meta">
+            <span class="badge chip-muted">${esc(sourceText)}</span>
+            <span class="badge ${severityClass(severity)}">${esc(severityLabel(severity))}</span>
+            <span class="badge chip-muted">${esc(themeText)}</span>
+          </p>
+          <p class="evidence-quote"><b>${t('evidence_preview')}:</b> ${esc(trunc(x.quote, 180))}</p>
+          <details class="evidence-details">
+            <summary>${t('evidence_details')}</summary>
+            <div style="margin-top:6px">${esc(trunc(x.quote, 420))}</div>
+            <div style="margin-top:6px"><b>${t('label_theme')}:</b> ${esc(themeText)}</div>
+            <div style="margin-top:4px"><b>${t('label_severity')}:</b> ${esc(severityLabel(severity))}</div>
+            <div style="margin-top:4px"><b>${t('label_source')}:</b> ${esc(sourceText)}${x.id ? ` · ID: ${esc(x.id)}` : ''}</div>
+          </details>
+          ${href}
+        </article>`;
+      }).join('');
+    }
+
+    function renderActions() {
+      const rank = { P0: 3, P1: 2, P2: 1 };
+      const rows = (DashboardDataV3.actions || [])
+        .filter((x) => matchesBaseFilters(x))
+        .sort((a, b) => (rank[b.priority] || 0) - (rank[a.priority] || 0));
+
+      document.getElementById('actionCount').textContent = `${t('visible_actions')}: ${rows.length}`;
+      const node = document.getElementById('actionRows');
+      if (!rows.length) {
+        node.innerHTML = `<tr><td colspan="10">${t('no_actions')}</td></tr>`;
+        return;
+      }
+
+      node.innerHTML = rows.map((x) => {
+        const solutionText = localizedField('actions', x, 'solution');
+        const kpiText = localizedField('actions', x, 'kpi');
+        return `<tr>
+        <td data-label="ID" class="mono">${esc(x.id)}</td>
+        <td data-label="${esc(t('label_category'))}">${esc(categoryLabel(x.category))}</td>
+        <td data-label="${esc(t('label_status'))}"><span class="badge ${x.status === 'hypothesis' ? 'status-hypothesis' : 'status-shipping'}">${x.status === 'hypothesis' ? t('status_hypothesis') : t('status_shipping')}</span></td>
+        <td data-label="${esc(t('label_problem'))}"><a target="_blank" rel="noopener noreferrer" href="${esc(x.problem_link)}">${t('source_link')}</a></td>
+        <td data-label="${esc(t('label_solution'))}">
+          ${esc(trunc(solutionText, 170))}
+          <span class="table-cell-detail"><b>${t('kpi_label')}:</b> ${esc(trunc(kpiText, 90))}</span>
+        </td>
+        <td data-label="${esc(t('label_impact_effort'))}" class="mono">${esc(impactLabel(x.impact))}/${esc(effortLabel(x.effort))}</td>
+        <td data-label="${esc(t('bug_th_priority'))}"><span class="badge ${priorityClass(x.priority)}">${esc(x.priority)}</span></td>
+        <td data-label="${esc(t('kpi_label'))}">${esc(trunc(kpiText, 150))}</td>
+        <td data-label="${esc(t('label_owner'))}">${esc(ownerLabel(x.owner))}</td>
+        <td data-label="${esc(t('label_eta'))}" class="mono">${esc(etaLabel(x.eta))}</td>
+      </tr>`;
+      }).join('');
+    }
+
+    function renderPsychology() {
+      const psych = DashboardDataV3.psychology || fallbackData.psychology;
+
+      document.getElementById('personasGrid').innerHTML = (psych.personas || []).map((row) => {
+        const p = localizedPersona(row);
+        return `<article class="card">
+        <div class="card-top">
+          <h3 class="card-title">${esc(p.name)}</h3>
+          <span class="badge chip-muted">${esc(p.role)}</span>
+        </div>
+        <p class="insight-text" style="margin-top:8px">${esc(p.desc)}</p>
+        <p style="margin:8px 0 0;color:var(--text-muted)"><b>${t('action_label')}:</b> ${esc(p.action)}</p>
+      </article>`;
+      }).join('') || `<div class="empty">${t('no_personas')}</div>`;
+
+      document.getElementById('frictionRows').innerHTML = (psych.friction || []).map((raw) => {
+        const f = localizedFriction(raw);
+        return `<tr>
+        <td data-label="${esc(t('friction_th_trigger'))}"><b>${esc(f.trigger)}</b></td>
+        <td data-label="${esc(t('friction_th_issue'))}">${esc(f.issue)}</td>
+        <td data-label="${esc(t('friction_th_solution'))}">
+          ${esc(f.solution)}
+          <span class="table-cell-detail">${t('friction_expected_result')}</span>
+        </td>
+        <td data-label="${esc(t('friction_th_impact'))}"><span class="badge ${raw.impact === 'Critical' ? 'severity-critical' : (raw.impact === 'High' ? 'severity-major' : 'severity-minor')}">${esc(impactLabel(raw.impact))}</span></td>
+      </tr>`;
+      }).join('') || `<tr><td colspan="4">${t('no_friction')}</td></tr>`;
+
+      document.getElementById('dopamineGrid').innerHTML = (psych.dopamine || []).map((row) => {
+        const d = localizedDopamine(row);
+        return `<article class="card">
+        <h3 class="card-title">${esc(d.name)}</h3>
+        <p class="insight-text" style="margin-top:8px">${esc(d.desc)}</p>
+      </article>`;
+      }).join('') || `<div class="empty">${t('no_dopamine')}</div>`;
+    }
+
+    function renderImprovements() {
+      const rows = (DashboardDataV3.improvements || []).filter((x) => {
+        const themeOk = UIStateV3.theme === 'all' || x.linked_theme === UIStateV3.theme;
+        const severityOk = UIStateV3.severity === 'all' || (SEVERITY_BY_THEME[x.linked_theme] || 'minor') === UIStateV3.severity;
+        const categoryOk = UIStateV3.category === 'all' || x.category === UIStateV3.category;
+        return themeOk && severityOk && categoryOk;
+      });
+
+      const stages = ['Quick Wins', 'Mid-term', 'Big Bet'];
+      const stageLabel = (stage) => {
+        if (UIStateV3.locale === 'en') return stage;
+        if (stage === 'Quick Wins') return 'Быстрые победы';
+        if (stage === 'Mid-term') return 'Среднесрочные';
+        return 'Стратегические';
+      };
+      const node = document.getElementById('improvementGroups');
+      node.innerHTML = stages.map((stage) => {
+        const group = rows.filter((x) => x.stage === stage);
+        return `<section class="card" style="margin-bottom:10px">
+          <div class="card-top">
+            <h3 class="card-title">${esc(stageLabel(stage))}</h3>
+            <span class="badge chip-muted">${group.length} ${UIStateV3.locale === 'ru' ? 'элементов' : 'items'}</span>
+          </div>
+          <div class="table-wrap" style="margin-top:10px">
+            <table class="mobile-stack" aria-label="${esc(stage)} improvements">
+              <thead><tr><th>ID</th><th>${esc(t('label_category'))}</th><th>${esc(t('label_theme'))}</th><th>${esc(t('label_solution'))}</th><th>${esc(t('bug_th_priority'))}</th><th>${esc(t('kpi_label'))}</th><th>${esc(t('label_link'))}</th></tr></thead>
+              <tbody>
+                ${group.length ? group.map((x) => {
+                  const solutionText = localizedField('improvements', x, 'solution');
+                  const kpiText = localizedField('improvements', x, 'kpi');
+                  return `<tr>
+                  <td data-label="ID" class="mono">${esc(x.id)}</td>
+                  <td data-label="${esc(t('label_category'))}">${esc(categoryLabel(x.category))}</td>
+                  <td data-label="${esc(t('label_theme'))}">${esc(themeLabel(x.linked_theme))}</td>
+                  <td data-label="${esc(t('label_solution'))}">${esc(trunc(solutionText, 170))}</td>
+                  <td data-label="${esc(t('bug_th_priority'))}"><span class="badge ${priorityClass(x.priority)}">${esc(x.priority)}</span></td>
+                  <td data-label="${esc(t('kpi_label'))}">${esc(trunc(kpiText, 120))}</td>
+                  <td data-label="${esc(t('label_link'))}"><a target="_blank" rel="noopener noreferrer" href="${esc(x.problem_link)}">${t('source_link')}</a></td>
+                </tr>`;
+                }).join('') : `<tr><td colspan="7">${t('no_improvements')}</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+        </section>`;
+      }).join('');
+    }
+
+    function renderInsights() {
+      const all = [...(DashboardDataV3.insights_shipping || []), ...(DashboardDataV3.insights_hypothesis || [])]
+        .filter((x) => matchesBaseFilters(x));
+      document.getElementById('insightCount').textContent = `${t('visible_insights')}: ${all.length}`;
+      const node = document.getElementById('insightGrid');
+
+      if (!all.length) {
+        node.innerHTML = `<div class="empty">${t('no_insights')}</div>`;
+        return;
+      }
+
+      node.innerHTML = all.map((x) => {
+        const titleText = localizedField('insights', x, 'title');
+        const solutionText = localizedField('insights', x, 'solution');
+        const kpiText = localizedField('insights', x, 'kpi');
+        return `<article class="card">
+        <div class="card-top">
+          <h3 class="card-title">${esc(titleText || x.title)}</h3>
+          <span class="badge ${x.status === 'hypothesis' ? 'status-hypothesis' : 'status-shipping'}">${x.status === 'hypothesis' ? t('status_hypothesis') : t('status_shipping')}</span>
+        </div>
+        <p class="card-meta" style="margin-top:8px">
+          <span class="badge chip-muted">${esc(categoryLabel(x.category))}</span>
+          <span class="badge ${priorityClass(x.priority)}">${esc(x.priority)}</span>
+          <span class="badge chip-muted">${esc(evidenceStrengthLabel(x.evidence_strength || 'Unknown'))} ${t('evidence_strength_suffix')}</span>
+        </p>
+        <p class="insight-text">${esc(trunc(solutionText, 220))}</p>
+        <p style="margin:8px 0 0;color:var(--text-muted)"><b>${t('kpi_label')}:</b> ${esc(kpiText)}</p>
+        <p style="margin:8px 0 0">${renderSourceRefs(x.source_refs)}</p>
+      </article>`;
+      }).join('');
+    }
+
+    function renderCompetitors() {
+      const rows = DashboardDataV3.competitor_snapshot || [];
+      const node = document.getElementById('competitorRows');
+      node.innerHTML = rows.length ? rows.map((raw) => {
+        const x = localizedCompetitor(raw);
+        return `<tr>
+        <td data-label="${esc(t('competitor_th_game'))}"><b>${esc(x.game)}</b></td>
+        <td data-label="${esc(t('competitor_th_role'))}">${esc(x.market_role)}</td>
+        <td data-label="${esc(t('competitor_th_strengths'))}">${esc(trunc(x.strengths, 220))}</td>
+        <td data-label="${esc(t('competitor_th_weaknesses'))}">${esc(trunc(x.weaknesses, 220))}</td>
+        <td data-label="${esc(t('competitor_th_opportunity'))}">${esc(trunc(x.opportunity, 220))}</td>
+      </tr>`;
+      }).join('') : `<tr><td colspan="5">${t('no_competitors')}</td></tr>`;
+    }
+
+    function renderRoadmap() {
+      const rows = DashboardDataV3.roadmap || [];
+      const node = document.getElementById('timelineRows');
+      node.innerHTML = rows.length ? rows.map((x) => `<div class="timeline-step ${esc(x.urgency || 'minor')}">
+        <div class="timeline-window">${esc(x.window)}</div>
+        <div><b>${esc(x.initiative)}</b></div>
+        <div style="color:var(--text-muted)">${esc(x.dependency)}</div>
+        <div class="table-cell-detail">${t('roadmap_delivery_note')}</div>
+      </div>`).join('') : `<div class="empty">${t('no_roadmap')}</div>`;
+    }
+
+    function renderSources() {
+      const src = DashboardDataV3.source_snapshot || fallbackData.source_snapshot;
+      const checks = Array.isArray(src.url_checks) ? src.url_checks : [];
+      const okCount = checks.filter((x) => Number(x.status) === 200).length;
+      if (UIStateV3.locale === 'ru') {
+        document.getElementById('steamStatus').textContent = 'Обсуждения Steam + отзывы Steam + карточка игры.';
+        document.getElementById('platforms').textContent = 'Discord каналы: отчеты о багах, обратная связь и общий чат.';
+        document.getElementById('verifiedAt').textContent = src.verified_at || 'n/a';
+        document.getElementById('httpSummary').textContent = 'YouTube-обзоры + конкурентные срезы + локальный парсинг логов.';
+        document.getElementById('sourceLinks').innerHTML = [
+          'Учтены темы и дискуссии из Steam Community (баги, обратная связь по пользовательскому опыту, баланс, кооператив).',
+          'Учтены сообщения из Discord (включая отчеты о багах, обратную связь и FAQ-потоки).',
+          'Включены локально распарсенные выгрузки чатов и mhtml-репорты по багам.',
+          'Добавлены агрегированные сигналы из сводок Steam-отзывов.',
+          'Учтены обзоры и комментарии с YouTube как качественные сигналы по тону, сложности и темпу игры.',
+          'Проведено сравнение с конкурентами: Espresso Tycoon, Travellers Rest, Coffee Caravan, Chef RPG.',
+          `Техническая проверка ссылок: ${okCount}/${checks.length} URL ответили HTTP 200.`
+        ].map((line) => `<li style="font-size:0.88rem;color:var(--text-muted)">${esc(line)}</li>`).join('');
+        return;
+      }
+
+      const platforms = Object.entries(src.steam_store_status?.platforms || {})
+        .filter(([, enabled]) => enabled)
+        .map(([name]) => name)
+        .join(', ');
+      document.getElementById('steamStatus').textContent = `${src.steam_store_status?.name || 'n/a'} | ${t('source_release')}: ${src.steam_store_status?.release_date || 'n/a'} | ${t('source_reviews')}: ${src.steam_store_status?.review_state || 'n/a'}`;
+      document.getElementById('platforms').textContent = platforms || 'n/a';
+      document.getElementById('verifiedAt').textContent = src.verified_at || 'n/a';
+      document.getElementById('httpSummary').textContent = `${okCount}/${checks.length} HTTP 200`;
+      document.getElementById('sourceLinks').innerHTML = checks.map((x) => `<li style="display:flex;align-items:center;gap:8px;font-size:0.84rem">
+        <span class="badge ${Number(x.status) === 200 ? 'status-shipping' : 'severity-critical'}">HTTP ${Number(x.status || 0)}</span>
+        <a target="_blank" rel="noopener noreferrer" href="${esc(x.url)}">${esc(trunc(x.url, 96))}</a>
+      </li>`).join('');
+    }
+
+    function renderAll() {
+      renderFiltersSummary();
+      renderMeta();
+      renderRisks();
+      renderBugs();
+      renderEvidence();
+      renderActions();
+      renderPsychology();
+      renderImprovements();
+      renderInsights();
+      renderCompetitors();
+      renderRoadmap();
+      renderSources();
+    }
+
+    async function boot() {
+      DashboardDataV3 = await loadDashboardDataV3();
+      initLocaleSwitch();
+      syncCollapsedState();
+      initCollapsibles();
+      applyLocale();
+      initFilters();
+      renderAll();
+    }
+
+    boot();
+  </script>
+</body>
+</html>

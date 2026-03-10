@@ -1,0 +1,1183 @@
+{
+  "generated_at": "2026-03-04T20:05:50.186Z",
+  "source_files": {
+    "chatlogs_count": 1,
+    "mhtml_count": 17
+  },
+  "totals": {
+    "extracted_raw": 130,
+    "kept": 130
+  },
+  "signals": [
+    {
+      "source": "Discord",
+      "id": "1477020991233327335",
+      "url": "",
+      "quote": "It is a common thing for the small game in pre-release phase. We add something that is not compatible with the previous game version, so your previous game save would just crash. I know it is still frustrating, but it is the development process.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478034198022459442",
+      "url": "",
+      "quote": "I understand your sadness, I feel the same way, but at the latest in the full version, the game scores will be saved even after updates. Unfortunately, this is the case with many demo games, so they are not saved.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477081371985055745",
+      "url": "",
+      "quote": "Okay. Don't see why everyone is so upset. Like I said before, MOST demos don't have a save. So this is a PLUS. Besides, new code over old code isn't always the best way to do things.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478034450838323280",
+      "url": "",
+      "quote": "yeah i understand, i may have uninstalled the game out of anger of losing my saved solo but i might come back again someday.. i really vibe with this game so i dont wanna abandon it",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476938160519905341",
+      "url": "",
+      "quote": "no im not talking about saved, i cannot go in a solo game, it starts to load (the painting) then my screen gets white and it tells me the game is not responding :)",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476935268903948318",
+      "url": "",
+      "quote": ", you can't save CoOp 🫩 sole and coop are also different games. Start a new solo, clean the floors and log out. Try logging back in and it should have saved.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476282943440818307",
+      "url": "",
+      "quote": "Good evening, Is there a way to recover a co-op and solo save file? I restarted the game and my save file is gone, even though automatic saving is enabled.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475292854208299190",
+      "url": "",
+      "quote": "I’m hosting and it takes 5 minutes to load and then most of the other people don’t load in and they freeze when they interact with anything",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476449282352615557",
+      "url": "",
+      "quote": "Pleaaaase tell me save option for coop has been added. My friends and i are planning to play later",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478353074396598453",
+      "url": "",
+      "quote": "I thought she meant if you will be able to transfer you demo progress to the releaser version 🥹",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476973005119946752",
+      "url": "",
+      "quote": "Your Co-Ops do get saved if you created it. They get deleted if the Demo gets an update though.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478501778751488123",
+      "url": "",
+      "quote": "Question. If I play the demo, will my progress carry over to the full game when it’s released?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476989605721931827",
+      "url": "",
+      "quote": "I have played tons of Demos that don't even save your game. So this is atleast something.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477875584750325820",
+      "url": "",
+      "quote": "Hii , i jsut started playing the demo and i wonder, how do you save your game ?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478353943028301886",
+      "url": "",
+      "quote": "oh no haha, she wanted to know if they can save the game after its release",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477063189731606588",
+      "url": "",
+      "quote": "guys is it normal that I have lost all my progress after the update??",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476172900783620191",
+      "url": "",
+      "quote": "Will we be able to move our progress from the demo to the main game?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476302741939687444",
+      "url": "",
+      "quote": "bro the new update deleted my multiplayer save with my friend :cccc",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478033684987772949",
+      "url": "",
+      "quote": "so it really deletes the saved solo games once there's updates?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478350876090437643",
+      "url": "",
+      "quote": "would we save our progress when we get the game? or start over?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478352063858737263",
+      "url": "",
+      "quote": "Once the game is fully released, we can save our games right?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477981357673025611",
+      "url": "",
+      "quote": "so every update in the demo will wipe out my current save?",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478356043720429639",
+      "url": "",
+      "quote": "okay, my bad. You can't transfer the demo progress sadly",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478351833461162136",
+      "url": "",
+      "quote": "Progress won't be saved you will need to start over.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476668421772148746",
+      "url": "",
+      "quote": "Agreed, but most Demo's do not have a save option.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477510439356334223",
+      "url": "",
+      "quote": "When the game is updated, it deletes the old save.",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477000177981329532",
+      "url": "",
+      "quote": "hello i updated the game and my save is gone",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476988591870705787",
+      "url": "",
+      "quote": "Its like that every update erase your save",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477558621863936061",
+      "url": "",
+      "quote": "do any of yall know how to save the game",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477683781262381136",
+      "url": "",
+      "quote": "should save automatically",
+      "theme": "Save loss",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476543401469149256",
+      "url": "",
+      "quote": "Hello, I launched the game and created a multiplayer group for myself and a friend, but each time one of us can't do anything. The person who created the group does everything, and the other can't buy anything, can only clean the floor, can't even open the restaurant or take plates. Is this a bug?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476924829574893792",
+      "url": "",
+      "quote": "hmm also when i first tried the demo i tried it with a friend in co-op mode, then i tried solo playing it twice but it neevr loads me in the game i create. it always says the app is not responding and ends up closing it, is it just me?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475331750925176974",
+      "url": "",
+      "quote": "I had the issue of other people not loading in, I went back to main menu and the host restarted the lobby, we could see eachother then. Idk if it’s just after character customisation you can’t see other ppl in the lobby",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476019052630511617",
+      "url": "",
+      "quote": "Demo is out now. You can Co-Op easily and password protect your server if you and your friend are wanting to play. You can reach Level 8 and then the customers will slowly stop coming by. I highly recommend playing it.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475333401866272841",
+      "url": "",
+      "quote": "I haven’t experienced many bugs except for the multiplayer one, I mostly played single player. The graphics are a little fuzzy and pixelated however even on high settings",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478519572146426097",
+      "url": "",
+      "quote": "The developer has expressed that host +3 will be the Co-Op number at launch. Will there be more down the road? Who knows. IMO, 4 people in that kitchen was way plenty.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332455828557854",
+      "url": "",
+      "quote": "I haven’t been a host yet so idk what that side of it is like, pretty sure host could see me tho I just couldn’t see them, so we started the lobby",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476991373008703571",
+      "url": "",
+      "quote": "does anyone want to play a Coop game with me, ( on another simulator Game) would love to run a business with freinds.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475779243941298307",
+      "url": "",
+      "quote": "why i cant play with friends we got in same lobby and when i start only me join everyone still in lobby",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475943252476694714",
+      "url": "",
+      "quote": "Will the number of players in multiplayer increase, and will we have, let's say, AI employees?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476315405210615838",
+      "url": "",
+      "quote": "By password protecting the Co-Op. That's the only way. Publish their names here may help.",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332239863582882",
+      "url": "",
+      "quote": "yeah mine was kinda odd it only happened when i hosted and i couldnt join other people",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476550170043879485",
+      "url": "",
+      "quote": "we kinda wanna rejoin our old lobby from last night. cant seem to find it",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476293302247489661",
+      "url": "",
+      "quote": "i want to make a lobby to play but it gives a error anyone knows why?",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475292678693453825",
+      "url": "",
+      "quote": "Is anyone else having issues with multiplayer",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477765936118239396",
+      "url": "",
+      "quote": "I can not join multi",
+      "theme": "Co-op stability",
+      "severity": "critical",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478406462802890792",
+      "url": "",
+      "quote": "Perso depuis la dernière maj j'ai vraiment bcp moins de lag alors que j'ai pas une machine de guerre du tout",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476306123274457211",
+      "url": "",
+      "quote": "I had better FPS on the last version. Running 12.17 now and it gets laggy in the shops.",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476304128799150130",
+      "url": "",
+      "quote": "thanks... very much less FPS since the update",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476304232759164938",
+      "url": "",
+      "quote": "i had more fps on the 12.12 version",
+      "theme": "Performance",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476733808526229595",
+      "url": "",
+      "quote": "Although the game is only a demo at the moment, I must say that it looks promising. I hope that it will be optimized when it launches, because my PC, despite being an average PC, can't handle it very well. Otherwise, as I said, it seems like a well-made game, but if I may offer some advice (as an Italian), I would change some of the recipes, such as the carbonara, which, honestly, with cream, is just inedible.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#5791",
+      "url": "",
+      "quote": "ioArxDDWUg61i3RIBwEY/jxDS4m/VW5XpuBYBAdHKB/VVq4yClggAMvo9Jfftd22ZlIxbjACNjg1SKpOeiDRZPeGjLgD4W30k1eQXe/S8HRknbhEge8AcK75FGFUBwBMcfMBjcfsWZcYlAgYQUKA+HO1PkEVNAHC/H1XKcsq/nOlHIMhDIhApAqQ5t6oGlkZzfkDUBEB5QruF8hPdkb5yGV4iEISAIsZl7Cq5Jci30a1ej6gIAF7kAyF+p5cpGU8iIBE4goCqipsyc4rHH/Ex78p0AcCqvw+eJcSiVP0JBHlIBIwiIAAvFCzhumWUVnB8JdjD6L2m+vNnkowSkvElAhKBegR4aLAsoZ3pXQFTBYBU/evfl7yQCJiPAHW",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#6709",
+      "url": "",
+      "quote": "Tj79EQMGehBUhLkzyACwdH1agERCwDZ+gdDr++eK/zRgz2YeU4ibr8+BU89lA6u7Fxxjh/rRUanhq+mTWsFZ5ycqC8xC2Odd1YSmNfAJDt2UDButBezZyThtt+m4ukH03HHwlRknVurJUiBEIiWvmu9WkDDUhZe2leHF0yGCkagV3dFU40XXllb4W++NhUzpiZh8IAEJHpFcPBG92dMSXS0FtD6KIEpE72N+A728HgEBvT14JwzkjQt4a+kJdx6XYqmITBGweHlfXgI6NECIhIAs/NKphMrI8jJIwwEFEKXVd4LZyVpavAfb0vTVOMRR4dX4YOTSEsVjtYCWMUPR5AF54vjDB2UoGkIjBF3GRizo4d4wBgGh5f3oREQb",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#7163",
+      "url": "",
+      "quote": "c7DNWjNnN16TiifvTkXtRMlgYhBM3HsK0kMcFLTxv8DhsAVC3J9m4BrHlTT0CXTIUzDk/CQ+S8Y77uadMTMRRrUT9c7MunKoFsH2CW3Kz8umn04pGESZP8IKFwaP3pGl2A9lN8KMT4iyUiTPzSiaEeBLSK2wBQEVZtv5BELLF+yQqnHfdlIoH7kjDtFMTwa1XUDDTb1kLYCNiMGE2pnXvqmiW9l+NSsCpNHzIajkb27JnJ2kjCWyNv3Z+CkI5Hn2YR6MNHJbjTD8zESef6MVxYxI0mizkOM/B6TIvU8Lo+wfHi/S+fVtFsxtwN4GNiMwb5zlSOrEeXlHVeeHmMSwBoK33F+LUcInGerjOHRXkXkj9+rvTkUfqad/eHku",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#10779",
+      "url": "",
+      "quote": "iBEwXAH12f4rst2cgrfwA5E8iIBEwB4HRP/1N26zEHGqAqiBdUYVINIsg0+FlkBe+m4nEqoN8K51EQCJgIgK8XRlvXWYGSQGRqqgq0s0gxjQ6Ff5XM1rI3XcYDekkAuEhEGko3rrsrM+uizRaqPBkAxBICPUkUr/UigJkvZ+N9BjYMy3SvMvwEgGrERi/4UlMXmt8Mh2vBjRlIdDMD3PQmTQAq4GQ6UkE4hWBk7/+A0Zt/Lvu7NMoQDoLAN0E/BGnfnEDBm5/z38rzxIBiYBFCJz38eW6NxoRgFcxyufon5bi+O8fN0pGxpcIxCUCZmT63FULwBvp6KFlSAB0KvoJ53x2tZ50ZRyJgETAJAS46332Z9fqomZIAEz7/Hp",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#10799",
+      "url": "",
+      "quote": "A5E8iIBEwB4HRP/1N26zEHGqAqiBdUYVINIsg0+FlkBe+m4nEqoN8K51EQCJgIgK8XRlvXWYGSQGRqqgq0s0gxjQ6Ff5XM1rI3XcYDekkAuEhEGko3rrsrM+uizRaqPBkAxBICPUkUr/UigJkvZ+N9BjYMy3SvMvwEgGrERi/4UlMXmt8Mh2vBjRlIdDMD3PQmTQAq4GQ6UkE4hWBk7/+A0Zt/Lvu7NMoQDoLAN0E/BGnfnEDBm5/z38rzxIBiYBFCJz38eW6NxoRgFcxyufon5bi+O8fN0pGxpcIxCUCZmT63FULwBvp6KFlSAB0KvoJ53x2tZ50ZRyJgETAJAS46332Z9fqomZIAEz7/Hp4aip1JSwjSQQkAuYhwHM",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#11127",
+      "url": "",
+      "quote": "0ZRyJgETAJAS46332Z9fqomZIAEz7/Hp4aip1JSwjSQQkAuYhwHMEeHQgUoosAKoijcThT1j/kKVrlzlN6SQCEoGmETjzi5siHoVjARDxjB3ewuj0L29tmhP5RCIgEWgRAbMD8FD8aWtui4RsIQuASCJoYa3asEBLTP5JBCQCYSPA+2sO2vZumOHVahYARWGG1oIN/eVfOHrLa9q1/JMISASchwDPDwiPK3FQUVX1cHiBa0Od9M29tRfyXyIgEXAkAt0OfINxG54Mh7dyXg4ctg1gzI/PoeuBdeEQlmEkAhKBZhCI9qOJ6x6gJFRyzRw+tURRBcLuArDlH/InEZAIOB6B1od24oT1jzTLJ9d9RQBhCQBu/TsU/wz5kwh",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#18265",
+      "url": "",
+      "quote": "70Z/KhJAUCGgv0UeCU5eViIAM8x57nmZiTp6doVadOnGyKVPncuEvr0MUTDH7ly/XrY0f9PHDwYIiXFz4aus6+gAOUffaQrrlMi+YDXg3lpUgDUBXy57ixPFiHAdgCea25GcsLrRdqMGUikFhA6fhyP45sy/FdejvLVq3VwYTyKNoJhcI+E6p073b78t4ga9deC0WxWAFA34KXgCPI++gjwRpM8Xm5GSt6+fdH6hht0keJ43HrqihwUya7ts3n+f0LPnkHcRHirqqjatCnCSM4KTsa/FaE4alYADAJ4KFAKgVDIRdGv7N//Bn9s0pQkPB6kz5qFdvfcExE5Ds/xQPEjithEYB7itOPbeWwDMTr9l1cv1pAG0ETW3OK9P",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#18762",
+      "url": "",
+      "quote": "Gs/yEXMFD9bp4tMv9wv8Hd+k/zWXTk08Ovvw62mpvFHM8O5H3wu9M4vFbBf/ObemHAff3WV1+NLh98gK7vvw+eP8DhzUqbx8/t2j5bmxKdlGQoKzwC4OZNWwWwBE38WhQAdfGerjvLk0UI8PfmKtasAS9AMTNJ7hNzBW//8MPouX07+lL/tvsPP6D94sXgz2SZMd4fyC+rz/zlXK5Egf5WXSsdOsCoMLNr/wKTMKopA55pilZYAqAS+CsRIJsg/cvDMgT4i7Nc+CxLMAoJVf30Ew4uta8XadgACMCu/QvMeB3U+j8xDChoilZYAmAIkE8E/kxOHhYicHD5cpS9957pWoBVWeDZcyzE2KZhVZrB6RidAcj07Fi8xOma4W",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#20318",
+      "url": "",
+      "quote": "o++qhBFHljOwKraEQu2wgXpggAZoD6H7znWMRGCI4rXfQQ4K3Fih95BNxf3zF8OH5p1w5b0tKwWVEato50z/78nFu9PWedhaI//lEa96L3aoxS3ugFZhslYpoAYEaoH/IQnReRk4dEwLUIuIDxPcTj+T2BXXQ2dJgqAJgTEgK/J6L2TwRnZqSTCMQYAmTwy6d+/zlUz74zI2tUV80g05BGH+AmYlIuGmoIi7yTCBhFYA9V2DOp37/GKCF/fKLnvzT3TEzyeoGbzKUqqUkE4haBjZTzU6lemVb5iR6iJgCYOKkpd5MmkMvX0kkE3ICAQ3lcRQa/k6g+maL2B+YxqgKAEyKJ9RQJgdPomg0XdJKHREAiEC4CVHeeo4o/0Q",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#14492",
+      "url": "",
+      "quote": "6/X+BfMLs9Gq9q0Kdhb1723Tx/XLm4KzDB3WVmLFWlpgd5hX2v9/iVLtMlZYUcyOWA50JPq/BGqpBa4f2tX6lNxi6VWVh7JmEuueMacKZOdqP9vVoX1Q1f144+Aj3REv4fOM+eP86kzuiOicb+/9bXXIqFbN3380PspX7UKBdb3+xvw6wnWAEgAdGkQwm03VPkPLl8O7rO6jXXml+0h3E/mayOOW5dqk1psPx/V27ZBrajw3+o+s6HX298yW7NuPpuLyLNSjezIzFOwi+65p7kkLHlG4rxLAw2AzBidLUk5Colwi1/67LPYN3cuzJq9FgU2myXp6d7dnPF/0n64kDWbWIQPq7ZsgVpWFmGsxsEFjeXzp8YaP3GHD285",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#20320",
+      "url": "",
+      "quote": "qhBFHljOwKraEQu2wgXpggAZoD6H7znWMRGCI4rXfQQ4K3Fih95BNxf3zF8OH5p1w5b0tKwWVEato50z/78nFu9PWedhaI//lEa96L3aoxS3ugFZhslYpoAYEaoH/IQnReRk4dEwLUIuIDxPcTj+T2BXXQ2dJgqAJgTEgK/J6L2TwRnZqSTCMQYAmTwy6d+/zlUz74zI2tUV80g05BGH+AmYlIuGmoIi7yTCBhFYA9V2DOp37/GKCF/fKLnvzT3TEzyeoGbzKUqqUkE4haBjZTzU6lemVb5iR6iJgCYOKkpd5MmkMvX0kkE3ICAQ3lcRQa/k6g+maL2B+YxqgKAEyKJ9RQJgdPomg0XdJKHREAiEC4CVHeeo4o/0QyD",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#36016",
+      "url": "",
+      "quote": "aria-hidden=\"true\" style=\"position: absolute; pointer-events: none; top: -1px; left: -1px; width: 1px; height: 1px;\"> <path fill=\"white\" d=\"M0 0.464C0 0.301585 0 0.220377 0.0316081 0.158343C0.0594114 0.103776 0.103776 0.0594114 0.158343 0.0316081C0.220377 0 0.301585 0 0.464 0H0.536C0.698415 0 0",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478193365748154429",
+      "url": "",
+      "quote": "can you explain this? do you not have a team to pitch concepts? i’m confused bc i came in late when most of whatever was discussed was deleted, but i also don’t really want to support games that are using gen AI in certain ways nowadays so can you elaborate a bit more?",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#86967",
+      "url": "",
+      "quote": "88V0.55C0.0138071 0.55 0.025 0.527614 0.025 0.5C0.025 0.472386 0.0138071 0.45 0 0.45V0.12Z\" fill=\"white\"> <path fill=\"white\" d=\"M0 0.464C0 0.301585 0 0.220377 0.0316081 0.158343C0.0594114 0.103776 0.103776 0.0594114 0.158343 0.0316081C0.220377 0 0.301585 0 0.464",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1478008938346840135 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:18 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (10).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477179093106561109 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:46:00 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (11).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477263204324479047 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:46:05 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (12).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477667087987118190 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:46:08 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (13).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477263031716286504 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:46:27 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (14).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477050080153567363 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:46:30 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (15).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1476953178141622272 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:46:33 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (16).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1476876235744215121 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:46:36 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (2).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1478084032460886016 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:20 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (3).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1476332789044351036 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:24 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (4).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1476809791434129479 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:27 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (5).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477751840174244133 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:30 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (6).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477304389285838878 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:33 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (7).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477198990595461162 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:37 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (8).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477027279056928790 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:40 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (9).mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1477694248148140133 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:57 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com.mhtml#7",
+      "url": "",
+      "quote": "From: Snapshot-Content-Location: https://discord.com/channels/1380125014942027798/1380126966438428682/threads/1478084895296454806 Subject: (107) Discord | #bug-report | Vacation Cafe Simulator Date: Wed, 4 Mar 2026 10:45:16 +03",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#35728",
+      "url": "",
+      "quote": "rspack=\"discord_app:chunk-46875\" rel=\"stylesheet\" href=\"https://discord.com/assets/ae63290c8ac7d4fd.css\"> <svg viewBox=\"0 0 1 1\" aria-hidden=\"true\" style=\"position: absolute; pointer-events: none; top: -1px; left: -1px;",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#87720",
+      "url": "",
+      "quote": "9623 0 0.698415 0 0.536V0.464Z\"> <path fill=\"white\" d=\"M0 0.464C0 0.301585 0 0.220377 0.0316081 0.158343C0.0594114 0.103776 0.103776 0.0594114 0.158343 0.0316081C0.220377 0 0.301585 0 0.464 0H0.536C0.698415",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476990360424153139",
+      "url": "",
+      "quote": "It's a demo version, they expect players to help them develop the game better by giving information on bugs, required features, etc. in this phase. I believe the game could be much better after it's launch",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#95672",
+      "url": "",
+      "quote": "false\" class=\"sidebar__5e434 theme-dark theme-darker images-dark\" style=\"width: 264px; --custom-overdrag: 0px;\"> <div class=\"bar__3b95d unreadMentionsBar_ef3116 unread__3b95d active__3b95d hidden__3",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#1070",
+      "url": "",
+      "quote": "theme-darker images-dark density-default font-size-16 has-webkit-scrollbar mouse-mode reduce-motion app-focused visual-refresh mana-toggle-inputs\" data-rh=\"lang,style,class\"> <meta content=\"",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#1124",
+      "url": "",
+      "quote": "has-webkit-scrollbar mouse-mode reduce-motion app-focused visual-refresh mana-toggle-inputs\" data-rh=\"lang,style,class\"> <meta content=\"width=device-width, initial-scale=1.0, maximum-scale=3",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#96074",
+      "url": "",
+      "quote": "e\" style=\"transform: translateY(-180%);\"> Ð½Ð¾Ð²Ð¾Ðµ <div data-align=\"stretch\" data-justify=\"start\" data-direction=\"vertical\" data-wrap=\"false\" data-full-width=\"true\" class=",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#85470",
+      "url": "",
+      "quote": "6087C0.137894 1 0.0764069 1 0.0382035 0.961797C0 0.923593 0 0.862106 0 0.73913V0.26087Z\" fill=\"white\"> <mask id=\"svg-mask-sticker-shop-notification\"",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477690059762303139",
+      "url": "",
+      "quote": "Hey I have a problem not getting guests it’s middle of the day i have been waiting for 15 minutes not a single guest the open sign is on open?",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#88989",
+      "url": "",
+      "quote": "0.896224 0.0316081 0.841657C0 0.779623 0 0.698415 0 0.536V0.464Z\" transform=\"translate(0.45 0.45)\"> <mask id=\"svg-mask-guild-popout-activity",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332579258531950",
+      "url": "",
+      "quote": "I’ve seen other people having the same issue of players not loading in, all the interaction is there just not their actual body lmao",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476116731230556161",
+      "url": "",
+      "quote": "Please, describe the situation in detail in the survey after playing the game. This will help us solve the problem faster and better",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476116991482925097",
+      "url": "",
+      "quote": "We're glad to hear you love the game. We can't give an exact release date, since we have much to polish and add to the final version",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476264747711332433",
+      "url": "",
+      "quote": "is anyone else having a problem with the demo. as soon as it says to clean the restraunt i turn to look and my game crashes",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476733782718550292",
+      "url": "",
+      "quote": "guys im stuck at lvl 3 it says i gotta grab the box and go to the restaurant but i cant find the damn thing. help plsss",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477721723347402903",
+      "url": "",
+      "quote": "Are you utilizing the Sign? Wondering if that might be an issue. Maybe Close and then Open the Cafe to spark something?",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477072557906858054",
+      "url": "",
+      "quote": "j'ai un probleme avec mon jeu car javais commencer a jouer avec ma pote et mon serveur a disparu tout seul",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477886002659065856",
+      "url": "",
+      "quote": "As far as I can tell, game saves automatically. But during the demo, game saves are wiped after any update",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476730368844497059",
+      "url": "",
+      "quote": "Hey all. Do you have to play fullscreen? I can't change it to play in a window with a smaller resolution.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478097423984234496",
+      "url": "",
+      "quote": "you can't download the demo anymore but I downloaded it during Next Fest and I can still play for now",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475554699108159690",
+      "url": "",
+      "quote": "Hi !! Some have a problem with mouse, when i ḿ cooking or similar actions, the mouse dissapear...",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#89604",
+      "url": "",
+      "quote": "ts=\"objectBoundingBox\" viewBox=\"0 0 1 1\"> <mask id=\"svg-mask-forward-attachment-pile-overfl",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#92283",
+      "url": "",
+      "quote": "Gradient id=\"6595063c-8817-4b86-84e2-2a3cd1e2f757\"> <stop offset=\"1\" stop-color=\"var(--pre",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478402341907599493",
+      "url": "",
+      "quote": "C’est l’opti du jeu, pareil j’ai le pc de la nasa mais ça bug depuis la mise a jour…",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#93254",
+      "url": "",
+      "quote": "rk theme-darker images-dark\"> <div class=\"defaultColor__4bd52 lineClamp1__4bd52 text",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476120798879289374",
+      "url": "",
+      "quote": "please, tell about the problem in detail in the Google-form after your game session",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476303763730858226",
+      "url": "",
+      "quote": "All saves get deleted when there is an update. The Dev was working on a fix for it.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478345958864584808",
+      "url": "",
+      "quote": "However, I take issue with major studios using it despite having the funds....",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#92219",
+      "url": "",
+      "quote": "mium-tier-2-pink-for-gradients)\"> <stop offset=\"0\" stop-color=\"var(--premi",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332885887193180",
+      "url": "",
+      "quote": "every time he joined he would be stuck with his camera next to the door",
+      "theme": "Controls/UI friction",
+      "severity": "major",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#1729",
+      "url": "",
+      "quote": "All Fun & Games\"> <meta name=\"twitter:card\" content=\"summary_large",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475337289646473276",
+      "url": "",
+      "quote": "Some of these issues might be stemming from a bad ISP Connection.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477986597935911005",
+      "url": "",
+      "quote": "since the update crashes their previous server after every update",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1478352237108400301",
+      "url": "",
+      "quote": "Of course 😊 The saves issue is only for development stage",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476988496207020183",
+      "url": "",
+      "quote": "I just updated the game and i lost my last game help",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476977781630963742",
+      "url": "",
+      "quote": "Hi, thank you for responding, so very bug fix lol",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477471836039155930",
+      "url": "",
+      "quote": "IT'S A GOOD GAME BUT IT HAS MORE BUGS THAN GAME",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475334338165080124",
+      "url": "",
+      "quote": "That would be an aweful bug to have. Sheesh...",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477081854648778935",
+      "url": "",
+      "quote": "Saves get deleted when there is an update.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477683816058454067",
+      "url": "",
+      "quote": "but data gets deleted after every update",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332786104832111",
+      "url": "",
+      "quote": "one of them had an oddly specific bug",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Forum",
+      "id": "107-Discord-bug-report-Vacation-Cafe-Simulator-discord.com (1).mhtml#89209",
+      "url": "",
+      "quote": "0 1 1\"> <mask id=\"svg-mask-clan-icon\"",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476306216148926717",
+      "url": "",
+      "quote": "Yeah… first « big crash » just now",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1477471910064422943",
+      "url": "",
+      "quote": "THERE'S A LITTLE GAME IN YOUR BUG",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475332353671827599",
+      "url": "",
+      "quote": "idk what the issue couldve been",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476551088189735068",
+      "url": "",
+      "quote": "The updates erase the saves.",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1475333110018216036",
+      "url": "",
+      "quote": "Wow that bug seems annoying",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    },
+    {
+      "source": "Discord",
+      "id": "1476988931118469141",
+      "url": "",
+      "quote": "i lost evewrything",
+      "theme": "Controls/UI friction",
+      "severity": "minor",
+      "sentiment": "negative"
+    }
+  ]
+}
