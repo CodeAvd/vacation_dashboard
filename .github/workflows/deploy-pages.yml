@@ -42,6 +42,11 @@ jobs:
       - name: Build static export
         run: pnpm build
 
+      - name: Check bundle budget
+        run: pnpm check:bundle
+        env:
+          BUNDLE_SIZE_THRESHOLD_KB: 525
+
       - name: Disable Jekyll
         run: touch out/.nojekyll
 

@@ -15,6 +15,7 @@ export function getDashboardBootstrap(): DashboardBootstrap {
     initialTopRisks: selectTopRisks(initialState, dashboardData),
     initialBugClusters: selectBugClusters(initialState, dashboardData),
     sectionCounts: {
+      evidence: dashboardData.feedback_signals.length,
       actions: selectActions(initialState, dashboardData).length,
       improvements: selectImprovements(initialState, dashboardData).length,
       insights: selectInsights(initialState, dashboardData).length,

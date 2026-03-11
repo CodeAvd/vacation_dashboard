@@ -180,6 +180,7 @@ export interface DashboardBootstrap {
   initialTopRisks: TopRisk[];
   initialBugClusters: BugCluster[];
   sectionCounts: {
+    evidence: number;
     actions: number;
     improvements: number;
     insights: number;
@@ -188,6 +189,28 @@ export interface DashboardBootstrap {
     roadmap: number;
     sources: number;
   };
+}
+
+export type SecondarySectionKey = 'actions' | 'psychology' | 'improvements' | 'insights' | 'competitors' | 'roadmap' | 'sources';
+
+export interface DashboardInitialData {
+  meta: DashboardData['meta'];
+  theme_scores: DashboardData['theme_scores'];
+  bug_clusters: DashboardData['bug_clusters'];
+  feedback_signals: DashboardData['feedback_signals'];
+}
+
+export interface DashboardSectionData {
+  actions: DashboardData['actions'];
+  psychology: DashboardData['psychology'];
+  improvements: DashboardData['improvements'];
+  insights: {
+    shipping: DashboardData['insights_shipping'];
+    hypothesis: DashboardData['insights_hypothesis'];
+  };
+  competitors: DashboardData['competitor_snapshot'];
+  roadmap: DashboardData['roadmap'];
+  sources: DashboardData['source_snapshot'];
 }
 
 export interface DashboardUIState {

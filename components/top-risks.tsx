@@ -36,15 +36,15 @@ export function TopRisks({ locale, risks }: TopRisksProps) {
       {risks.length ? (
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
           {risks.map((risk, index) => (
-            <article key={risk.theme} className="surface-card surface-card-hover motion-fade-up flex min-w-0 h-full flex-col relative group">
+            <article key={risk.theme} className="surface-card surface-card-hover motion-fade-up relative flex h-full min-w-0 flex-col group">
               <input type="checkbox" id={`risk-${index}`} className="peer hidden" defaultChecked={index === 0} />
 
-              <label htmlFor={`risk-${index}`} className={`flex flex-col flex-1 p-5 lg:p-6 mb-0 cursor-pointer ${index === 0 ? 'md:cursor-auto' : 'md:cursor-auto'}`}>
+              <label htmlFor={`risk-${index}`} className="mb-0 flex flex-1 cursor-pointer flex-col p-5 lg:p-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0 space-y-2">
                     <div className="eyebrow flex items-center gap-2">
                       #{index + 1} / PriorityScore
-                      {index > 0 && <span className="md:hidden text-primary inline-flex peer-checked:hidden">...</span>}
+                      {index > 0 ? <span className="inline-flex text-primary md:hidden peer-checked:hidden">...</span> : null}
                     </div>
                     <h3 className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">
                       {themeLabel(locale, risk.theme)}
@@ -61,13 +61,13 @@ export function TopRisks({ locale, risks }: TopRisksProps) {
                   </div>
                 </div>
 
-                <div className={`mt-5 gap-3 sm:grid-cols-3 hidden peer-checked:grid md:!grid`}>
+                <div className="mt-5 hidden gap-3 sm:grid-cols-3 md:!grid peer-checked:grid">
                   <MetricCard label={t(locale, 'metric_frequency')} value={risk.frequency} />
                   <MetricCard label={t(locale, 'metric_severity')} value={risk.severity_score} />
                   <MetricCard label={t(locale, 'metric_recency')} value={risk.recency_score} />
                 </div>
 
-                <div className={`mt-5 rounded-[1.3rem] border border-border-subtle bg-[rgba(255,250,243,0.82)] p-4 hidden peer-checked:block md:!block`}>
+                <div className="mt-5 hidden rounded-[1.3rem] border border-border-subtle bg-[rgba(255,250,243,0.82)] p-4 md:!block peer-checked:block">
                   <div className="mb-2 flex items-center justify-between gap-3">
                     <span className="eyebrow">{t(locale, 'evidence_preview')}</span>
                     <span className="font-mono text-xs text-foreground-soft">{risk.totalSignals} signals</span>
@@ -75,7 +75,19 @@ export function TopRisks({ locale, risks }: TopRisksProps) {
                   <p className="line-clamp-4 text-sm leading-6 text-foreground-muted">{risk.evidencePreview || narrative(locale, risk.theme, 'summary')}</p>
                 </div>
 
-                <div className={`mt-5 space-y-4 hidden peer-checked:block md:!block`}>
+                {index > 0 ? (
+                  <div className="mt-5 rounded-[1.2rem] border border-border-subtle/90 bg-surface-raised p-4 md:hidden peer-checked:hidden">
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <span className="eyebrow">{t(locale, 'evidence_preview')}</span>
+                      <span className="font-mono text-xs text-foreground-soft">{risk.totalSignals} signals</span>
+                    </div>
+                    <p className="line-clamp-3 text-sm leading-6 text-foreground-muted">
+                      {risk.evidencePreview || narrative(locale, risk.theme, 'summary')}
+                    </p>
+                  </div>
+                ) : null}
+
+                <div className="mt-5 hidden space-y-4 md:!block peer-checked:block">
                   <NarrativeBlock icon={<MessageSquareQuote className="h-4 w-4" />} label={t(locale, 'risk_context_label')} text={narrative(locale, risk.theme, 'summary')} />
                   <NarrativeBlock icon={<Target className="h-4 w-4" />} label={t(locale, 'risk_risk_label')} text={narrative(locale, risk.theme, 'risk')} />
                   <NarrativeBlock icon={<Clock3 className="h-4 w-4" />} label={t(locale, 'risk_impact_label')} text={narrative(locale, risk.theme, 'impact')} />
@@ -83,7 +95,7 @@ export function TopRisks({ locale, risks }: TopRisksProps) {
                 </div>
 
                 {risk.sourceUrl ? (
-                  <div className={`mt-5 pt-4 hidden peer-checked:block md:!block`}>
+                  <div className="mt-5 hidden pt-4 md:!block peer-checked:block">
                     <a href={risk.sourceUrl} target="_blank" rel="noopener noreferrer" className="font-mono text-xs uppercase tracking-[0.12em] text-primary transition hover:text-primary-strong">
                       {t(locale, 'source_link')}
                     </a>

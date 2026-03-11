@@ -78,7 +78,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
               </div>
             </div>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {metaCards.map(({ icon: Icon, label, value, hint }) => (
                 <div key={label} className="surface-card surface-card-hover flex min-h-[96px] flex-col justify-between p-4">
                   <div className="flex items-center justify-between gap-3">
@@ -101,7 +101,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
               <div>
                 <div className="eyebrow">{locale === 'ru' ? 'Немедленный фокус' : 'Immediate focus'}</div>
                 <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">
-                  {leadRisk ? themeLabel(locale, leadRisk.theme) : (locale === 'ru' ? 'Приоритет загружается' : 'Priority is loading')}
+                  {leadRisk ? themeLabel(locale, leadRisk.theme) : locale === 'ru' ? 'Приоритет загружается' : 'Priority is loading'}
                 </h2>
               </div>
               {leadRisk ? (
@@ -114,7 +114,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
 
             {leadRisk ? (
               <>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-4">
                     <div className="eyebrow">{locale === 'ru' ? 'Сигналов в теме' : 'Signals in theme'}</div>
                     <div className="mt-2 font-display text-3xl font-semibold tracking-[-0.03em] text-foreground">{leadRisk.totalSignals}</div>

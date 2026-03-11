@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { startTransition, useDeferredValue, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Brain, CheckSquare, Database, Lightbulb, Map, Rocket, Users, MessageSquareQuote } from 'lucide-react';
+import { Brain, CheckSquare, Database, Lightbulb, Map, MessageSquareQuote, Rocket, Users } from 'lucide-react';
 import type { DashboardBootstrap, DashboardData, DashboardUIState } from '@/lib/data';
 import { DEFAULT_UI_STATE } from '@/lib/data';
 import { loadDashboardData } from '@/lib/dashboard-data-loader';
@@ -17,13 +17,13 @@ import {
   selectInsights,
   selectTopRisks,
 } from '@/lib/selectors';
+import { BugTriage } from '@/components/bug-triage';
 import { CollapsibleSection } from '@/components/collapsible-section';
 import { DecisionRail } from '@/components/decision-rail';
 import { ActiveFilterChips, GlobalFilters } from '@/components/global-filters';
 import { HeroHeader } from '@/components/hero-header';
 import { SectionSkeleton, SectionState } from '@/components/section-state';
 import { TopRisks } from '@/components/top-risks';
-import { BugTriage } from '@/components/bug-triage';
 
 const EvidenceDrawer = dynamic(() => import('@/components/evidence-drawer').then((module) => module.EvidenceDrawer), {
   loading: () => <SectionSkeleton />,
@@ -132,6 +132,7 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
     () =>
       fullDataReady
         ? {
+          evidence: evidence.length,
           actions: actions.length,
           improvements: improvements.length,
           insights: insights.length,
@@ -144,7 +145,7 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
             fullData.source_snapshot.update_notes.length,
         }
         : bootstrap.sectionCounts,
-    [actions.length, bootstrap.sectionCounts, fullData, fullDataReady, improvements.length, insights.length],
+    [actions.length, bootstrap.sectionCounts, evidence.length, fullData, fullDataReady, improvements.length, insights.length],
   );
 
   const setLocale = (nextLocale: DashboardUIState['locale']) => {
@@ -209,29 +210,23 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
         <BugTriage locale={locale} rows={bugClusters} />
 
         <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-          {fullDataReady ? (
-            <div className="overflow-hidden rounded-[2rem] border border-border-subtle bg-surface shadow-card [content-visibility:auto] [contain-intrinsic-size:auto_800px]">
-              <CollapsibleSection
-                id="evidence"
-                locale={locale}
-                title={t(locale, 'evidence_title')}
-                description={t(locale, 'evidence_desc')}
-                summary={t(locale, 'evidence_intro')}
-                count={fullDataReady ? evidence.length : undefined}
-                open={uiState.expandedSections.evidence}
-                onToggle={() => toggleSection('evidence')}
-                icon={<MessageSquareQuote className="h-5 w-5" />}
-                lazyMount={getSectionManifest('evidence').lazy === 'on-demand'}
-                motionDelayMs={getSectionManifest('evidence').motionDelayMs}
-              >
-                <EvidenceDrawer locale={locale} rows={evidence} />
-              </CollapsibleSection>
-            </div>
-          ) : (
-            <section id="evidence" data-section="evidence" data-collapsed="false" className="motion-fade-up">
-              <SectionState locale={locale} status={sectionState} />
-            </section>
-          )}
+          <div className="overflow-hidden rounded-[2rem] border border-border-subtle bg-surface shadow-card [content-visibility:auto] [contain-intrinsic-size:auto_560px]">
+            <CollapsibleSection
+              id="evidence"
+              locale={locale}
+              title={t(locale, 'evidence_title')}
+              description={t(locale, 'evidence_desc')}
+              summary={t(locale, 'evidence_intro')}
+              count={sectionCounts.evidence}
+              open={uiState.expandedSections.evidence}
+              onToggle={() => toggleSection('evidence')}
+              icon={<MessageSquareQuote className="h-5 w-5" />}
+              lazyMount={getSectionManifest('evidence').lazy === 'on-demand'}
+              motionDelayMs={getSectionManifest('evidence').motionDelayMs}
+            >
+              {fullDataReady ? <EvidenceDrawer locale={locale} rows={evidence} /> : <SectionState locale={locale} status={sectionState} />}
+            </CollapsibleSection>
+          </div>
         </div>
 
         <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -371,7 +366,7 @@ function countActiveFilters(state: DashboardUIState): number {
 
 function subscribeDashboardState(onStoreChange: () => void) {
   if (typeof window === 'undefined') {
-    return () => { };
+    return () => {};
   }
 
   const handler = (event: StorageEvent) => {

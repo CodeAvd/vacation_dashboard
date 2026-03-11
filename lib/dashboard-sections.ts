@@ -26,7 +26,7 @@ export const DASHBOARD_SECTION_MANIFEST: DashboardSectionManifestItem[] = [
   { id: 'filters', defaultExpanded: false, lazy: 'eager', motionDelayMs: 0, priority: 'primary' },
   { id: 'risks', navKey: 'nav_risks', defaultExpanded: true, lazy: 'eager', motionDelayMs: 40, priority: 'primary' },
   { id: 'bugs', navKey: 'nav_bugs', defaultExpanded: true, lazy: 'visible', motionDelayMs: 70, priority: 'primary' },
-  { id: 'evidence', navKey: 'nav_evidence', defaultExpanded: true, lazy: 'visible', motionDelayMs: 100, priority: 'primary' },
+  { id: 'evidence', navKey: 'nav_evidence', defaultExpanded: false, lazy: 'on-demand', motionDelayMs: 100, priority: 'primary' },
   { id: 'actions', navKey: 'nav_actions', defaultExpanded: false, lazy: 'on-demand', motionDelayMs: 140, priority: 'primary' },
   { id: 'psychology', navKey: 'nav_psychology', defaultExpanded: false, lazy: 'on-demand', motionDelayMs: 170, priority: 'secondary' },
   { id: 'improvements', navKey: 'nav_improvements', defaultExpanded: false, lazy: 'on-demand', motionDelayMs: 200, priority: 'secondary' },
