@@ -36,7 +36,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
                   <h1 className="max-w-4xl text-balance font-display text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl xl:text-[3.5rem] xl:leading-[1.02]">
                     {t(locale, 'hero_title')}
                   </h1>
-                  <p className="max-w-3xl text-pretty text-[0.98rem] leading-7 text-foreground-muted sm:text-[1.04rem]">
+                  <p className="max-w-3xl text-pretty text-[0.98rem] leading-7 text-foreground-muted sm:text-[1.04rem] [font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif]">
                     {t(locale, 'hero_sub')} <span className="font-semibold text-foreground">{meta.actuality_date}</span>
                   </p>
                 </div>
