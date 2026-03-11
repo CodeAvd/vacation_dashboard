@@ -10,7 +10,7 @@ const sora = Sora({
 
 const plexSans = IBM_Plex_Sans({
   subsets: ['latin', 'cyrillic'],
-  preload: false,
+  preload: true,
   weight: ['400', '600'],
   variable: '--font-body',
 });
