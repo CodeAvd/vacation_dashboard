@@ -17,6 +17,11 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
     { icon: Sparkles, label: t(locale, 'meta_unique'), value: formatNumber(meta.signals_unique) },
     { icon: Sigma, label: t(locale, 'meta_method'), value: '0.5F / 0.3S / 0.2R', hint: meta.method },
   ];
+  const heroSubtitleMobile =
+    locale === 'ru'
+      ? 'Критичные баги и сигналы игроков остаются первым фокусом.'
+      : 'Critical bugs and player signals stay in the first focus.';
+  const actualityLabel = locale === 'ru' ? 'Актуально:' : 'Updated:';
 
   return (
     <header className="relative overflow-hidden border-b border-border-subtle/80 bg-[linear-gradient(180deg,rgba(255,252,247,0.92),rgba(246,241,232,0.42))]">
@@ -33,12 +38,21 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
                 </div>
                 <div className="space-y-3">
                   <p className="eyebrow">Product feedback operating layer</p>
-                  <h1 className="max-w-4xl text-balance font-display text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl xl:text-[3.5rem] xl:leading-[1.02]">
+                  <h1 className="max-w-4xl text-balance text-3xl font-semibold tracking-[-0.04em] text-foreground [font-family:var(--font-body),sans-serif] sm:text-4xl sm:[font-family:var(--font-display),sans-serif] xl:text-[3.5rem] xl:leading-[1.02]">
                     {t(locale, 'hero_title')}
                   </h1>
-                  <p className="max-w-3xl text-pretty text-[0.98rem] leading-7 text-foreground-muted sm:text-[1.04rem] [font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif]">
-                    {t(locale, 'hero_sub')} <span className="font-semibold text-foreground">{meta.actuality_date}</span>
-                  </p>
+                  <div className="space-y-2">
+                    <p className="max-w-3xl text-[0.95rem] leading-6 text-foreground-muted [font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] sm:hidden">
+                      {heroSubtitleMobile}
+                    </p>
+                    <p className="hidden max-w-3xl text-pretty text-[0.98rem] leading-7 text-foreground-muted [font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] sm:block sm:text-[1.04rem]">
+                      {t(locale, 'hero_sub')} <span className="font-semibold text-foreground">{meta.actuality_date}</span>
+                    </p>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface/80 px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-foreground-soft sm:hidden">
+                      <span>{actualityLabel}</span>
+                      <span className="text-foreground">{meta.actuality_date}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
