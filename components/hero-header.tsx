@@ -23,7 +23,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(196,120,90,0.12),transparent_34%),radial-gradient(circle_at_top_right,rgba(40,95,89,0.08),transparent_36%)]" />
       <div className="relative mx-auto max-w-7xl px-4 pb-7 pt-6 sm:px-6 lg:px-8 lg:pb-9 lg:pt-7">
         <div className="flex flex-col gap-6 xl:grid xl:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.8fr)]">
-          <div className="motion-fade-up space-y-5">
+          <div className="space-y-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center gap-2 text-[0.72rem] uppercase tracking-[0.16em] text-foreground-soft">
@@ -96,7 +96,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
             </div>
           </div>
 
-          <aside className="surface-card motion-fade-up motion-delay-2 flex h-full flex-col justify-between gap-5 p-5 lg:p-6">
+          <aside className="surface-card flex h-full flex-col justify-between gap-5 p-5 lg:p-6">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="eyebrow">{locale === 'ru' ? 'Немедленный фокус' : 'Immediate focus'}</div>
