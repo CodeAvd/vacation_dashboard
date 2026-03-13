@@ -9,12 +9,13 @@ interface GlobalFiltersProps {
   locale: Locale;
   uiState: DashboardUIState;
   themes: string[];
+  quickThemes: string[];
   sources: Source[];
   onChange: (patch: Partial<DashboardUIState>) => void;
   onReset: () => void;
 }
 
-export function GlobalFilters({ locale, uiState, themes, sources, onChange, onReset }: GlobalFiltersProps) {
+export function GlobalFilters({ locale, uiState, themes, quickThemes, sources, onChange, onReset }: GlobalFiltersProps) {
   return (
     <section
       id="filters"
@@ -95,15 +96,34 @@ export function GlobalFilters({ locale, uiState, themes, sources, onChange, onRe
               />
             </div>
 
-            <div className="flex items-center justify-end">
-              <button
-                type="button"
-                onClick={onReset}
-                className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-4 py-2 font-mono text-[0.74rem] uppercase tracking-[0.12em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                {t(locale, 'reset_btn')}
-              </button>
+            <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+              <div className="space-y-3">
+                <QuickChipRow
+                  label={t(locale, 'quick_sources')}
+                  items={['all', ...sources]}
+                  active={uiState.source}
+                  getLabel={(source) => source === 'all' ? t(locale, 'all_sources') : sourceLabel(locale, source)}
+                  onClick={(source) => onChange({ source: source as DashboardUIState['source'] })}
+                />
+                <QuickChipRow
+                  label={t(locale, 'quick_themes')}
+                  items={['all', ...quickThemes.filter((theme) => themes.includes(theme))]}
+                  active={uiState.theme}
+                  getLabel={(theme) => theme === 'all' ? t(locale, 'all_themes') : themeLabel(locale, theme)}
+                  onClick={(theme) => onChange({ theme })}
+                />
+              </div>
+
+              <div className="flex items-center justify-end">
+                <button
+                  type="button"
+                  onClick={onReset}
+                  className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-4 py-2 font-mono text-[0.74rem] uppercase tracking-[0.12em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  {t(locale, 'reset_btn')}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -134,6 +154,46 @@ function FilterField({
         ))}
       </select>
     </label>
+  );
+}
+
+function QuickChipRow<T extends string>({
+  label,
+  items,
+  active,
+  getLabel,
+  onClick,
+}: {
+  label: string;
+  items: T[];
+  active: string;
+  getLabel: (item: T) => string;
+  onClick: (item: T) => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <div className="eyebrow">{label}</div>
+      <div className="flex flex-wrap gap-2">
+        {items.map((item) => {
+          const isActive = active === item;
+          return (
+            <button
+              key={item}
+              type="button"
+              onClick={() => onClick(item)}
+              aria-pressed={isActive}
+              className={
+                isActive
+                  ? 'inline-flex items-center rounded-full bg-foreground px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-white transition'
+                  : 'inline-flex items-center rounded-full border border-border-subtle bg-surface px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-foreground-muted transition hover:border-border-strong hover:text-foreground'
+              }
+            >
+              {getLabel(item)}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

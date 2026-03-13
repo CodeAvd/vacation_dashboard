@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
+const pagesRepoName = process.env.PAGES_REPO_NAME || "vacation_dashboard";
+const pagesBasePath = `/${pagesRepoName}`;
 
 const nextConfig: NextConfig = {
   output: "export",
@@ -10,8 +12,8 @@ const nextConfig: NextConfig = {
   },
   ...(isProd
     ? {
-        basePath: "/vacation_dashboard",
-        assetPrefix: "/vacation_dashboard/",
+        basePath: pagesBasePath,
+        assetPrefix: `${pagesBasePath}/`,
       }
     : {}),
 };

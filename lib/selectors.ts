@@ -54,6 +54,14 @@ export function getAllThemes(data: DashboardData = dashboardData): string[] {
   return [...set].sort((a, b) => a.localeCompare(b));
 }
 
+export function getQuickThemes(data: DashboardData = dashboardData): string[] {
+  return data.theme_scores
+    .filter((row) => String(row.sentiment).toLowerCase() === 'negative')
+    .sort((a, b) => b.priority_score - a.priority_score)
+    .slice(0, 6)
+    .map((row) => row.theme);
+}
+
 export function getAllSources(data: DashboardData = dashboardData): Source[] {
   const set = new Set<Source>();
   data.feedback_signals.forEach((row) => set.add(normalizeSource(row.source)));

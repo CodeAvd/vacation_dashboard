@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - vacation-cafe-dashboard
-      - codex/react-dashboard-parity
   workflow_dispatch:
 
 permissions:
@@ -20,6 +18,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PAGES_REPO_NAME: ${{ github.event.repository.name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

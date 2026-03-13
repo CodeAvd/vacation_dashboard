@@ -7,6 +7,7 @@ import { t } from '@/lib/i18n';
 import {
   getAllSources,
   getAllThemes,
+  getQuickThemes,
   persistState,
   selectActions,
   selectBugClusters,
@@ -51,6 +52,7 @@ export function DashboardClient() {
   }, [uiState]);
 
   const themes = useMemo(() => getAllThemes(dashboardData), []);
+  const quickThemes = useMemo(() => getQuickThemes(dashboardData), []);
   const sources = useMemo(() => getAllSources(dashboardData), []);
   const topRisks = useMemo(() => selectTopRisks(uiState, dashboardData), [uiState]);
   const bugClusters = useMemo(() => selectBugClusters(uiState, dashboardData), [uiState]);
@@ -105,6 +107,7 @@ export function DashboardClient() {
         locale={locale}
         uiState={uiState}
         themes={themes}
+        quickThemes={quickThemes}
         sources={sources}
         onChange={setFilters}
         onReset={resetFilters}
