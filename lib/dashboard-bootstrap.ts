@@ -2,6 +2,7 @@ import 'server-only';
 
 import type { DashboardBootstrap } from '@/lib/data';
 import { DEFAULT_UI_STATE } from '@/lib/data';
+import { getSignalDateRange } from '@/lib/signal-analytics';
 import { dashboardData } from '@/lib/dashboard-static';
 import { getAllSources, getAllThemes, selectActions, selectBugClusters, selectInsights, selectImprovements, selectTopRisks } from '@/lib/selectors';
 
@@ -12,6 +13,7 @@ export function getDashboardBootstrap(): DashboardBootstrap {
     meta: dashboardData.meta,
     themes: getAllThemes(dashboardData),
     sources: getAllSources(dashboardData),
+    signalDateRange: getSignalDateRange(dashboardData.feedback_signals),
     initialTopRisks: selectTopRisks(initialState, dashboardData),
     initialBugClusters: selectBugClusters(initialState, dashboardData),
     sectionCounts: {

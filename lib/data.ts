@@ -9,6 +9,8 @@ export type Source = 'Steam' | 'Discord' | 'YouTube' | 'Forum' | 'Unknown';
 export type Priority = 'P0' | 'P1' | 'P2';
 export type Impact = 'Critical' | 'High' | 'Medium' | 'Low';
 export type Effort = 'XS' | 'S' | 'M' | 'L' | 'XL';
+export type DatePrecision = 'minute' | 'day' | 'inferred';
+export type SourceType = 'discord_message' | 'steam_post' | 'steam_comment' | 'forum_post';
 
 export interface DashboardMeta {
   actuality_date: string;
@@ -58,6 +60,10 @@ export interface FeedbackSignal {
   url?: string;
   quote: string;
   theme: string;
+  observed_date: string;
+  observed_at?: string;
+  date_precision: DatePrecision;
+  source_type: SourceType;
   severity?: Severity;
   sentiment?: 'negative' | 'positive' | 'neutral';
 }
@@ -177,6 +183,10 @@ export interface DashboardBootstrap {
   meta: DashboardMeta;
   themes: string[];
   sources: Source[];
+  signalDateRange: {
+    min: string;
+    max: string;
+  };
   initialTopRisks: TopRisk[];
   initialBugClusters: BugCluster[];
   sectionCounts: {
@@ -220,6 +230,8 @@ export interface DashboardUIState {
   severity: Severity | 'all';
   category: Category | 'all';
   status: ActionStatus | 'all';
+  dateFrom: string | null;
+  dateTo: string | null;
   sort: SortOrder;
   expandedSections: DashboardExpandedSectionState;
 }
@@ -268,6 +280,8 @@ export const DEFAULT_UI_STATE: DashboardUIState = {
   severity: 'all',
   category: 'all',
   status: 'all',
+  dateFrom: null,
+  dateTo: null,
   sort: 'desc',
   expandedSections: DEFAULT_EXPANDED_SECTIONS,
 };

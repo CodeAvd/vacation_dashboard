@@ -5,7 +5,7 @@ const config = [
   ...nextVitals,
   ...nextTypescript,
   {
-    ignores: [".next/**", "out/**", "node_modules/**"],
+    ignores: [".next/**", "_next/**", "out/**", "node_modules/**"],
   },
 ];
 

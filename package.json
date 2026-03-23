@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "data:build": "tsx scripts/generate-dashboard-data.ts",
+    "build": "pnpm data:build && next build",
     "check:bundle": "node scripts/check-bundle-size.mjs",
     "start": "npx serve@14 out",
     "lint": "eslint . --max-warnings=0",

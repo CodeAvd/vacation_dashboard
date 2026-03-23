@@ -32,6 +32,7 @@ export function EvidenceDrawer({ locale, rows }: EvidenceDrawerProps) {
                     : t(locale, 'severity_minor')}
               </span>
               <span className="badge-base badge-positive">{themeLabel(locale, row.theme)}</span>
+              <span className="badge-base badge-muted">{row.observed_date}</span>
             </div>
             <p className="mt-4 line-clamp-5 text-sm leading-6 text-foreground-muted">{row.quote}</p>
             <div className="mt-4 flex items-center justify-between gap-3 border-t border-border-subtle pt-4">
@@ -41,12 +42,16 @@ export function EvidenceDrawer({ locale, rows }: EvidenceDrawerProps) {
           </summary>
           <div className="mt-4 space-y-3 border-t border-border-subtle pt-4">
             <div>
-              <div className="eyebrow">{locale === 'ru' ? 'РўРµРјР°' : 'Theme'}</div>
+              <div className="eyebrow">{locale === 'ru' ? 'Тема' : 'Theme'}</div>
               <p className="mt-2 text-sm leading-6 text-foreground">{themeLabel(locale, row.theme)}</p>
             </div>
             <div>
-              <div className="eyebrow">{locale === 'ru' ? 'РЎРёРіРЅР°Р»' : 'Signal'}</div>
+              <div className="eyebrow">{locale === 'ru' ? 'Сигнал' : 'Signal'}</div>
               <p className="mt-2 text-sm leading-6 text-foreground-muted">{row.quote}</p>
+            </div>
+            <div>
+              <div className="eyebrow">{t(locale, 'signal_date')}</div>
+              <p className="mt-2 text-sm leading-6 text-foreground-muted">{row.observed_at || row.observed_date}</p>
             </div>
             {row.url ? (
               <a
@@ -77,9 +82,9 @@ export function EvidenceDrawer({ locale, rows }: EvidenceDrawerProps) {
 function shortSourceLabel(url: string, locale: Locale): string {
   try {
     const host = new URL(url).hostname;
-    if (host.includes('steam')) return locale === 'ru' ? 'РћР±СЃСѓР¶РґРµРЅРёРµ Steam' : 'Steam discussion';
+    if (host.includes('steam')) return locale === 'ru' ? 'Обсуждение Steam' : 'Steam discussion';
     if (host.includes('discord')) return 'Discord';
-    if (host.includes('youtu')) return locale === 'ru' ? 'YouTube РѕР±Р·РѕСЂ' : 'YouTube review';
+    if (host.includes('youtu')) return locale === 'ru' ? 'YouTube обзор' : 'YouTube review';
   } catch {}
   return t(locale, 'open_source_link');
 }

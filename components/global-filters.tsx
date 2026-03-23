@@ -11,6 +11,10 @@ interface GlobalFiltersProps {
   uiState: DashboardUIState;
   themes: string[];
   sources: Source[];
+  signalDateRange: {
+    min: string;
+    max: string;
+  };
   activeCount: number;
   isOpen: boolean;
   dataReady: boolean;
@@ -24,6 +28,7 @@ export function GlobalFilters({
   uiState,
   themes,
   sources,
+  signalDateRange,
   activeCount,
   isOpen,
   dataReady,
@@ -31,7 +36,7 @@ export function GlobalFilters({
   onToggleOpen,
   onReset,
 }: GlobalFiltersProps) {
-  const toggleLabel = locale === 'ru' ? (isOpen ? 'Скрыть фильтры' : 'Показать фильтры') : (isOpen ? 'Hide filters' : 'Show filters');
+  const toggleLabel = locale === 'ru' ? (isOpen ? 'Скрыть фильтры' : 'Показать фильтры') : isOpen ? 'Hide filters' : 'Show filters';
   const activeSummary =
     activeCount === 0
       ? locale === 'ru'
@@ -68,6 +73,11 @@ export function GlobalFilters({
                 <div className="flex flex-wrap items-center gap-2 text-sm text-foreground-soft">
                   <span>{activeSummary}</span>
                   <span className="badge-base badge-muted">{dataSummary}</span>
+                  {signalDateRange.min && signalDateRange.max ? (
+                    <span className="badge-base badge-muted">
+                      {t(locale, 'signals_date_range')}: {signalDateRange.min} → {signalDateRange.max}
+                    </span>
+                  ) : null}
                 </div>
               </div>
               <div className="flex items-center gap-2 self-start lg:self-auto">
@@ -94,7 +104,7 @@ export function GlobalFilters({
               )}
             >
               <div className="overflow-hidden">
-                <div className="grid grid-cols-1 gap-3 pt-1 md:grid-cols-2 xl:grid-cols-6">
+                <div className="grid grid-cols-1 gap-3 pt-1 md:grid-cols-2 xl:grid-cols-8">
                   <FilterField
                     fieldId="filter-theme"
                     label={t(locale, 'label_theme')}
@@ -146,6 +156,22 @@ export function GlobalFilters({
                       { value: 'shipping', label: t(locale, 'status_shipping') },
                       { value: 'hypothesis', label: t(locale, 'status_hypothesis') },
                     ]}
+                  />
+                  <DateField
+                    fieldId="filter-date-from"
+                    label={t(locale, 'label_date_from')}
+                    value={uiState.dateFrom ?? ''}
+                    min={signalDateRange.min}
+                    max={signalDateRange.max}
+                    onChange={(value) => onChange({ dateFrom: value || null })}
+                  />
+                  <DateField
+                    fieldId="filter-date-to"
+                    label={t(locale, 'label_date_to')}
+                    value={uiState.dateTo ?? ''}
+                    min={signalDateRange.min}
+                    max={signalDateRange.max}
+                    onChange={(value) => onChange({ dateTo: value || null })}
                   />
                   <FilterField
                     fieldId="filter-sort"
@@ -202,6 +228,38 @@ function FilterField({
   );
 }
 
+function DateField({
+  fieldId,
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  fieldId: string;
+  label: string;
+  value: string;
+  min?: string;
+  max?: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label htmlFor={fieldId} className="flex min-w-0 flex-col gap-2">
+      <span className="eyebrow">{label}</span>
+      <input
+        id={fieldId}
+        name={fieldId}
+        type="date"
+        className="filter-select"
+        value={value}
+        min={min}
+        max={max}
+        onChange={(event) => onChange(event.target.value)}
+      />
+    </label>
+  );
+}
+
 interface ActiveFilterChipsProps {
   locale: Locale;
   uiState: DashboardUIState;
@@ -210,13 +268,22 @@ interface ActiveFilterChipsProps {
 }
 
 export function ActiveFilterChips({ locale, uiState, onChange, onReset }: ActiveFilterChipsProps) {
-  const chips: Array<{ key: keyof DashboardUIState; label: string; clear: Partial<DashboardUIState> }> = [];
+  const chips: Array<{ key: string; label: string; clear: Partial<DashboardUIState> }> = [];
 
   if (uiState.theme !== 'all') chips.push({ key: 'theme', label: `${t(locale, 'label_theme')}: ${themeLabel(locale, uiState.theme)}`, clear: { theme: 'all' } });
   if (uiState.source !== 'all') chips.push({ key: 'source', label: `${t(locale, 'label_source')}: ${sourceLabel(locale, uiState.source)}`, clear: { source: 'all' } });
   if (uiState.severity !== 'all') chips.push({ key: 'severity', label: `${t(locale, 'label_severity')}: ${uiState.severity === 'critical' ? t(locale, 'severity_critical') : uiState.severity === 'major' ? t(locale, 'severity_major') : t(locale, 'severity_minor')}`, clear: { severity: 'all' } });
   if (uiState.category !== 'all') chips.push({ key: 'category', label: `${t(locale, 'label_category')}: ${categoryLabel(locale, uiState.category)}`, clear: { category: 'all' } });
   if (uiState.status !== 'all') chips.push({ key: 'status', label: `${t(locale, 'label_status')}: ${uiState.status === 'shipping' ? t(locale, 'status_shipping') : t(locale, 'status_hypothesis')}`, clear: { status: 'all' } });
+  if (uiState.dateFrom || uiState.dateTo) {
+    const dateLabel =
+      uiState.dateFrom && uiState.dateTo
+        ? `${uiState.dateFrom} → ${uiState.dateTo}`
+        : uiState.dateFrom
+          ? `${t(locale, 'label_date_from')}: ${uiState.dateFrom}`
+          : `${t(locale, 'label_date_to')}: ${uiState.dateTo}`;
+    chips.push({ key: 'date-range', label: `${t(locale, 'label_date_range')}: ${dateLabel}`, clear: { dateFrom: null, dateTo: null } });
+  }
   if (uiState.sort !== 'desc') chips.push({ key: 'sort', label: `${t(locale, 'label_sort')}: ${uiState.sort === 'asc' ? t(locale, 'sort_asc') : t(locale, 'sort_desc')}`, clear: { sort: 'desc' } });
 
   if (!chips.length) return null;
@@ -225,7 +292,7 @@ export function ActiveFilterChips({ locale, uiState, onChange, onReset }: Active
     <div className="mt-4 flex flex-wrap items-center gap-2">
       {chips.map((chip) => (
         <button
-          key={String(chip.key)}
+          key={chip.key}
           type="button"
           onClick={() => onChange(chip.clear)}
           className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"

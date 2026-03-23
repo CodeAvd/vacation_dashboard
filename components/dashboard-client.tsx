@@ -8,11 +8,13 @@ import { DEFAULT_UI_STATE } from '@/lib/data';
 import { loadDashboardData } from '@/lib/dashboard-data-loader';
 import { getSectionManifest, type DashboardSectionId } from '@/lib/dashboard-sections';
 import { t } from '@/lib/i18n';
+import { getSignalDateRange } from '@/lib/signal-analytics';
 import {
   persistState,
   selectActions,
   selectBugClusters,
   selectEvidence,
+  selectFilteredSignals,
   selectImprovements,
   selectInsights,
   selectTopRisks,
@@ -115,6 +117,10 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
     () => (fullDataReady ? selectEvidence(deferredUiState, fullData) : []),
     [deferredUiState, fullData, fullDataReady],
   );
+  const filteredSignals = useMemo(
+    () => (fullDataReady ? selectFilteredSignals(deferredUiState, fullData) : []),
+    [deferredUiState, fullData, fullDataReady],
+  );
   const actions = useMemo(
     () => (fullDataReady ? selectActions(deferredUiState, fullData) : []),
     [deferredUiState, fullData, fullDataReady],
@@ -132,7 +138,7 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
     () =>
       fullDataReady
         ? {
-          evidence: evidence.length,
+          evidence: filteredSignals.length,
           actions: actions.length,
           improvements: improvements.length,
           insights: insights.length,
@@ -145,7 +151,11 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
             fullData.source_snapshot.update_notes.length,
         }
         : bootstrap.sectionCounts,
-    [actions.length, bootstrap.sectionCounts, evidence.length, fullData, fullDataReady, improvements.length, insights.length],
+    [actions.length, bootstrap.sectionCounts, filteredSignals.length, fullData, fullDataReady, improvements.length, insights.length],
+  );
+  const signalDateRange = useMemo(
+    () => (fullDataReady ? getSignalDateRange(fullData.feedback_signals) : bootstrap.signalDateRange),
+    [bootstrap.signalDateRange, fullData, fullDataReady],
   );
 
   const setLocale = (nextLocale: DashboardUIState['locale']) => {
@@ -164,6 +174,8 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
       severity: 'all',
       category: 'all',
       status: 'all',
+      dateFrom: null,
+      dateTo: null,
       sort: 'desc',
     }));
   };
@@ -193,6 +205,7 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
         uiState={uiState}
         themes={bootstrap.themes}
         sources={bootstrap.sources}
+        signalDateRange={signalDateRange}
         activeCount={activeFilterCount}
         isOpen={uiState.expandedSections.filters}
         dataReady={fullDataReady}
@@ -340,11 +353,7 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               lazyMount={getSectionManifest('sources').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('sources').motionDelayMs}
             >
-              {fullDataReady ? (
-                <SourceBreakdown locale={locale} snapshot={fullData.source_snapshot} signals={fullData.feedback_signals} />
-              ) : (
-                <SectionState locale={locale} status={sectionState} />
-              )}
+              {fullDataReady ? <SourceBreakdown locale={locale} snapshot={fullData.source_snapshot} signals={filteredSignals} /> : <SectionState locale={locale} status={sectionState} />}
             </CollapsibleSection>
           </div>
         </div>
@@ -360,6 +369,7 @@ function countActiveFilters(state: DashboardUIState): number {
   if (state.severity !== 'all') count += 1;
   if (state.category !== 'all') count += 1;
   if (state.status !== 'all') count += 1;
+  if (state.dateFrom || state.dateTo) count += 1;
   if (state.sort !== 'desc') count += 1;
   return count;
 }
@@ -404,6 +414,8 @@ function parseDashboardStateSnapshot(snapshot: string): DashboardUIState {
       ...DEFAULT_UI_STATE,
       ...filters,
       locale: parsed.locale === 'en' ? 'en' : 'ru',
+      dateFrom: typeof filters.dateFrom === 'string' ? filters.dateFrom : null,
+      dateTo: typeof filters.dateTo === 'string' ? filters.dateTo : null,
       expandedSections: {
         ...DEFAULT_UI_STATE.expandedSections,
         ...(filters.expandedSections || {}),
