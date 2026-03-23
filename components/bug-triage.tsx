@@ -22,17 +22,17 @@ const priorityClass = {
 
 export function BugTriage({ locale, rows }: BugTriageProps) {
   return (
-    <section id="bugs" data-section="bugs" data-collapsed="false" className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-      <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+    <section id="bugs" data-section="bugs" data-collapsed="false" className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8 lg:pt-12">
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-major/20 bg-major-bg px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-major">
             <Bug className="h-3.5 w-3.5" />
             {t(locale, 'bugs_title')}
           </div>
-          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">{t(locale, 'bugs_desc')}</h2>
-          <p className="max-w-3xl text-sm leading-6 text-foreground-muted">{t(locale, 'bugs_intro')}</p>
+          <h2 className="font-display text-[1.75rem] font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">{t(locale, 'bugs_desc')}</h2>
+          <p className="max-w-3xl text-[0.9375rem] leading-relaxed text-foreground-muted">{t(locale, 'bugs_intro')}</p>
         </div>
-        <div className="rounded-[1.25rem] border border-border-subtle bg-surface px-4 py-3 shadow-card">
+        <div className="surface-inset px-4 py-3">
           <div className="eyebrow">{t(locale, 'visible_bug_clusters')}</div>
           <div className="mt-2 font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">{rows.length}</div>
         </div>
@@ -40,7 +40,7 @@ export function BugTriage({ locale, rows }: BugTriageProps) {
 
       {rows.length ? (
         <>
-          <div className="hidden overflow-hidden rounded-[1.75rem] border border-border-subtle bg-surface shadow-card lg:block">
+          <div className="surface-container hidden overflow-hidden lg:block">
             <div className="max-h-[720px] overflow-auto">
               <table className="data-table">
                 <thead>

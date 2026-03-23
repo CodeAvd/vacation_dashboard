@@ -61,11 +61,11 @@ export function GlobalFilters({
       className="border-b border-border-subtle/80 bg-[rgba(246,241,232,0.86)] backdrop-blur supports-[backdrop-filter]:bg-[rgba(246,241,232,0.74)] md:sticky md:top-0 md:z-20"
     >
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="surface-card rounded-[1.75rem] p-4 md:p-5">
+        <div className="surface-container p-4 md:p-5">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+                <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-primary">
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                   {t(locale, 'filters_title')}
                 </div>

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @theme inline {
+  /* Foundation palette - warm Mediterranean */
   --color-background: #f6f1e8;
   --color-surface: #fffdf8;
   --color-surface-raised: #fffaf3;
@@ -10,11 +11,17 @@
   --color-foreground: #241b15;
   --color-foreground-muted: #6f6254;
   --color-foreground-soft: #8d8173;
+  
+  /* Primary - coastal cypress */
   --color-primary: #285f59;
   --color-primary-strong: #1f4c47;
   --color-primary-foreground: #ffffff;
+  
+  /* Accent - terracotta warmth */
   --color-accent: #c4785a;
   --color-accent-soft: #edd7cb;
+  
+  /* Semantic - warm-shifted severity */
   --color-critical: #b54444;
   --color-critical-bg: #fbefef;
   --color-major: #b66c2f;
@@ -23,11 +30,22 @@
   --color-minor-bg: #f9f3df;
   --color-positive: #3d6f43;
   --color-positive-bg: #edf7ee;
+  
+  /* Typography */
   --font-display: var(--font-display);
   --font-body: var(--font-body);
-  --font-mono: 'IBM Plex Sans', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  --shadow-card: 0 14px 40px -24px rgb(36 27 21 / 0.35), 0 8px 18px -14px rgb(36 27 21 / 0.14);
-  --shadow-card-hover: 0 20px 54px -24px rgb(36 27 21 / 0.4), 0 10px 22px -14px rgb(36 27 21 / 0.18);
+  --font-mono: var(--font-mono), 'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  
+  /* Elevation system - 3 tiers */
+  --shadow-container: 0 1px 3px -1px rgb(36 27 21 / 0.08), 0 2px 8px -4px rgb(36 27 21 / 0.06);
+  --shadow-card: 0 8px 24px -12px rgb(36 27 21 / 0.2), 0 4px 12px -8px rgb(36 27 21 / 0.1);
+  --shadow-card-hover: 0 16px 40px -16px rgb(36 27 21 / 0.28), 0 8px 20px -12px rgb(36 27 21 / 0.14);
+  --shadow-focal: 0 12px 32px -8px rgb(36 27 21 / 0.3), 0 6px 16px -6px rgb(36 27 21 / 0.15), 0 0 0 1px rgb(196 120 90 / 0.12);
+  
+  /* Spacing rhythm scale (modular: 4, 8, 12, 16, 24, 32, 48, 64) */
+  --space-section: 3rem;
+  --space-section-lg: 4rem;
+  --space-group: 1.5rem;
 }
 
 * {
@@ -110,11 +128,32 @@ main {
   }
 }
 
+/* 3-tier surface system */
+.surface-container {
+  border: 1px solid var(--color-border-subtle);
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(255, 250, 243, 0.92));
+  box-shadow: var(--shadow-container);
+  border-radius: 2rem;
+}
+
 .surface-card {
   border: 1px solid var(--color-border-subtle);
   background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 250, 243, 0.96));
   box-shadow: var(--shadow-card);
   border-radius: 1.5rem;
+}
+
+.surface-card-focal {
+  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, var(--color-border-subtle) 80%);
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.99), rgba(255, 250, 243, 0.97));
+  box-shadow: var(--shadow-focal);
+  border-radius: 1.5rem;
+}
+
+.surface-inset {
+  border: 1px solid rgba(204, 190, 169, 0.4);
+  background: rgba(255, 250, 243, 0.6);
+  border-radius: 1.25rem;
 }
 
 .surface-card-hover {
@@ -127,13 +166,29 @@ main {
   border-color: var(--color-border-strong);
 }
 
+/* Typography tiers */
 .eyebrow {
   font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   line-height: 1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-foreground-soft);
+  font-weight: 500;
+}
+
+.text-subhead {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--color-foreground);
+}
+
+.text-body-emphasis {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--color-foreground);
 }
 
 .filter-select {
@@ -152,16 +207,19 @@ main {
   border-color: color-mix(in srgb, var(--color-primary) 50%, white 50%);
 }
 
+/* Unified badge system - consistent sizing */
 .badge-base {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   border-radius: 999px;
-  padding: 0.32rem 0.72rem;
+  padding: 0.375rem 0.75rem;
   font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   line-height: 1;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 .badge-critical {
@@ -205,7 +263,7 @@ main {
 }
 
 .section-divider {
-  border-top: 1px solid rgba(204, 190, 169, 0.52);
+  border-top: 1px solid rgba(204, 190, 169, 0.38);
 }
 
 .data-table {

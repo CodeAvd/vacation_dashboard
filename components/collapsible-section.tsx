@@ -5,6 +5,20 @@ import { t } from '@/lib/i18n';
 import type { Locale } from '@/lib/data';
 import { ChevronDown } from 'lucide-react';
 
+type IconVariant = 'default' | 'evidence' | 'actions' | 'psychology' | 'improvements' | 'insights' | 'competitors' | 'roadmap' | 'sources';
+
+const iconVariantStyles: Record<IconVariant, string> = {
+  default: 'bg-accent-soft/60 text-foreground-muted',
+  evidence: 'bg-surface-strong text-foreground-muted',
+  actions: 'bg-positive-bg text-positive',
+  psychology: 'bg-accent-soft text-accent',
+  improvements: 'bg-primary/10 text-primary',
+  insights: 'bg-minor-bg text-minor',
+  competitors: 'bg-surface-strong text-foreground-muted',
+  roadmap: 'bg-primary/10 text-primary',
+  sources: 'bg-surface-strong text-foreground-soft',
+};
+
 interface CollapsibleSectionProps {
   id: string;
   icon: React.ReactNode;
@@ -18,6 +32,7 @@ interface CollapsibleSectionProps {
   onToggle: () => void;
   lazyMount?: boolean;
   motionDelayMs?: number;
+  iconVariant?: IconVariant;
 }
 
 export function CollapsibleSection({
@@ -33,7 +48,10 @@ export function CollapsibleSection({
   onToggle,
   lazyMount = false,
   motionDelayMs = 0,
+  iconVariant = 'default',
 }: CollapsibleSectionProps) {
+  const iconStyle = iconVariantStyles[iconVariant] || iconVariantStyles.default;
+  
   return (
     <section id={id} data-section={id} data-collapsed={String(!open)} className="section-divider first:border-t-0">
       <button
@@ -41,10 +59,10 @@ export function CollapsibleSection({
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={`${id}-panel`}
-        className="group flex w-full items-start justify-between gap-4 px-5 py-5 text-left transition hover:bg-[rgba(255,250,243,0.5)] sm:px-6"
+        className="group flex w-full items-start justify-between gap-4 px-5 py-6 text-left transition hover:bg-[rgba(255,250,243,0.5)] sm:px-6"
       >
         <div className="flex min-w-0 items-start gap-4">
-          <span className="mt-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-accent-soft/60 text-foreground-muted transition group-hover:text-foreground">
+          <span className={cn('mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl transition', iconStyle)}>
             {icon}
           </span>
           <div className="min-w-0 space-y-2">
@@ -56,7 +74,7 @@ export function CollapsibleSection({
             <p className="text-sm leading-6 text-foreground-soft">{summary}</p>
           </div>
         </div>
-        <span className="mt-1 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-foreground-muted">
+        <span className="mt-0.5 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-foreground-muted transition-colors group-hover:border-border-strong">
           {open ? t(locale, 'collapse') : t(locale, 'expand')}
           <ChevronDown className={cn('h-4 w-4 transition-transform duration-200', open && 'rotate-180')} />
         </span>

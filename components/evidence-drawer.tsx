@@ -70,7 +70,7 @@ export function EvidenceDrawer({ locale, rows }: EvidenceDrawerProps) {
     </div>
   ) : (
     <div className="surface-card p-5 text-sm leading-6 text-foreground-muted">
-      <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+      <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-foreground-soft">
         <MessageSquareQuote className="h-3.5 w-3.5" />
         {t(locale, 'evidence_title')}
       </div>

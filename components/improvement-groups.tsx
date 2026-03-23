@@ -46,8 +46,8 @@ export function ImprovementGroups({ locale, rows }: ImprovementGroupsProps) {
                   </div>
                   <p className="mt-4 text-sm leading-6 text-foreground">{localizedField(locale, 'improvements', row.id, 'solution', row.solution)}</p>
                   <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_impact_effort')}</div><div className="mt-1 text-foreground">{impactLabel(locale, row.impact)} / {effortLabel(locale, row.effort)}</div></div>
-                    <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'kpi_label')}</div><div className="mt-1 text-foreground-muted">{localizedField(locale, 'improvements', row.id, 'kpi', row.kpi)}</div></div>
+                    <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_impact_effort')}</div><div className="mt-1 text-foreground">{impactLabel(locale, row.impact)} / {effortLabel(locale, row.effort)}</div></div>
+                    <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'kpi_label')}</div><div className="mt-1 text-foreground-muted">{localizedField(locale, 'improvements', row.id, 'kpi', row.kpi)}</div></div>
                   </div>
                   <div className="mt-4 flex items-center justify-between gap-3">
                     <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-foreground-soft"><Rocket className="h-3.5 w-3.5" />{stage}</span>
