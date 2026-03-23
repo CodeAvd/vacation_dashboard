@@ -15,17 +15,17 @@ const severityBadge = {
 
 export function TopRisks({ locale, risks }: TopRisksProps) {
   return (
-    <section id="risks" data-section="risks" data-collapsed="false" className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8 lg:pt-10">
-      <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+    <section id="risks" data-section="risks" data-collapsed="false" className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8 lg:pt-12">
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-critical/20 bg-critical-bg px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-critical">
             <AlertTriangle className="h-3.5 w-3.5" />
             {t(locale, 'risks_title')}
           </div>
-          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">{t(locale, 'risks_desc')}</h2>
-          <p className="max-w-3xl text-sm leading-6 text-foreground-muted">{t(locale, 'risks_intro')}</p>
+          <h2 className="font-display text-[1.75rem] font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">{t(locale, 'risks_desc')}</h2>
+          <p className="max-w-3xl text-[0.9375rem] leading-relaxed text-foreground-muted">{t(locale, 'risks_intro')}</p>
         </div>
-        <div className="rounded-[1.25rem] border border-border-subtle bg-surface px-4 py-3 shadow-card">
+        <div className="surface-inset px-4 py-3">
           <div className="eyebrow">{t(locale, 'retention_legend')}</div>
           <div className="mt-2 font-mono text-sm text-foreground-muted">
             {t(locale, 'visible_top_risks')}: <span className="font-semibold text-foreground">{risks.length}</span>
@@ -36,7 +36,7 @@ export function TopRisks({ locale, risks }: TopRisksProps) {
       {risks.length ? (
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
           {risks.map((risk, index) => (
-            <article key={risk.theme} className="surface-card surface-card-hover motion-fade-up relative flex h-full min-w-0 flex-col group">
+            <article key={risk.theme} className={`${index === 0 ? 'surface-card-focal' : 'surface-card'} surface-card-hover motion-fade-up relative flex h-full min-w-0 flex-col group`}>
               <input type="checkbox" id={`risk-${index}`} className="peer hidden" defaultChecked={index === 0} />
 
               <label htmlFor={`risk-${index}`} className="mb-0 flex flex-1 cursor-pointer flex-col p-5 lg:p-6">

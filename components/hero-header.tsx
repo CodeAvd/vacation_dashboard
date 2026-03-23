@@ -92,15 +92,15 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
               {metaCards.map(({ icon: Icon, label, value, hint }) => (
-                <div key={label} className="surface-card surface-card-hover flex min-h-[96px] flex-col justify-between p-4">
+                <div key={label} className="surface-inset flex min-h-[108px] flex-col justify-between p-4 transition-colors hover:border-border-strong">
                   <div className="flex items-center justify-between gap-3">
                     <span className="eyebrow">{label}</span>
                     <Icon className="h-4 w-4 text-foreground-soft" />
                   </div>
                   <div>
-                    <div className="font-display text-xl font-semibold tracking-[-0.03em] text-foreground sm:text-2xl">
+                    <div className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground sm:text-[1.75rem]">
                       {value}
                     </div>
                     {hint ? <p className="mt-2 text-sm leading-6 text-foreground-muted">{hint}</p> : null}
@@ -110,7 +110,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
             </div>
           </div>
 
-          <aside className="surface-card flex h-full flex-col justify-between gap-5 p-5 lg:p-6">
+          <aside className="surface-card-focal flex h-full flex-col justify-between gap-5 p-5 lg:p-6">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="eyebrow">{locale === 'ru' ? 'Немедленный фокус' : 'Immediate focus'}</div>
