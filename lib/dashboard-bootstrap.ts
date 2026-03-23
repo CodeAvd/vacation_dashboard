@@ -1,9 +1,8 @@
 import 'server-only';
 
-import type { DashboardBootstrap } from '@/lib/data';
-import { DEFAULT_UI_STATE } from '@/lib/data';
-import { getSignalDateRange } from '@/lib/signal-analytics';
+import { DEFAULT_UI_STATE, type DashboardBootstrap } from '@/lib/data';
 import { dashboardData } from '@/lib/dashboard-static';
+import { getSignalDateRange } from '@/lib/signal-analytics';
 import { getAllSources, getAllThemes, selectActions, selectBugClusters, selectInsights, selectImprovements, selectTopRisks } from '@/lib/selectors';
 
 export function getDashboardBootstrap(): DashboardBootstrap {

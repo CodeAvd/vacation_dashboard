@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import rawDashboardData from '../GDD/dashboard-data.generated.json';
+import rawDashboardData from '../dashboard-data.generated.json';
 import { EvidenceDrawer } from '../components/evidence-drawer';
 import { DEFAULT_UI_STATE, type DashboardData } from '../lib/data';
 import { buildEvidenceRenderItems } from '../lib/evidence-render';

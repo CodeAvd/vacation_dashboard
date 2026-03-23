@@ -20,7 +20,6 @@ const DATASET_PATH = path.join(PROJECT_ROOT, 'dashboard-data.generated.json');
 const OUTPUT_PATHS = [
   path.join(PROJECT_ROOT, 'dashboard-data.generated.json'),
   path.join(PROJECT_ROOT, 'public/dashboard-data.generated.json'),
-  path.join(PROJECT_ROOT, 'GDD/dashboard-data.generated.json'),
 ];
 
 const IINFO_ARTIFACTS = [

@@ -1,9 +1,16 @@
 .DS_Store
 node_modules/
 .next/
+_next/
+_not-found/
+404/
 out/
+iinfo/
+index.html
+404.html
+.nojekyll
+icon.svg
 .tmp-console.txt
-GDD/dashboard-data.generated.min.json
 .agent/
 .agents/
 .claude/

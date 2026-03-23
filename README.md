@@ -1,20 +1,37 @@
 # Vacation Dashboard
 
-Static dashboard package for `Vacation Cafe Simulator` product feedback analysis.
+Next.js static-export dashboard for `Vacation Cafe Simulator` product feedback analysis.
 
-## Main entry
+## Active project state
 
-- Root redirect: `index.html`
-- Dashboard: `GDD/report_final.html`
+- Source-of-truth branch: `vacation-cafe-dashboard`
+- GitHub Pages URL: `https://codeavd.github.io/vacation_dashboard/`
+- Deployment flow: push to `vacation-cafe-dashboard` -> GitHub Actions builds `out/` -> Pages publishes the artifact
 
-## Included data
+## Runtime
 
-- Single compact bundle: `GDD/dashboard-data-bundle.json`
-- Runtime UI: `GDD/report_final.html`
+- App Router entry: `app/page.tsx`
+- Server bootstrap: `lib/dashboard-bootstrap.ts`
+- Client dataset fetch: `public/dashboard-data.generated.json`
 
-The published dashboard no longer fetches multiple raw `json/md/txt` source files from the repo.
-Those inputs were compacted into one bundle to reduce repository noise and GitHub Pages requests.
+## Data pipeline
 
-## GitHub Pages
+- Canonical dataset: `dashboard-data.generated.json`
+- Public runtime copy: `public/dashboard-data.generated.json`
+- Optional local-only raw imports: `iinfo/`
+- Rebuild command: `pnpm data:build`
 
-After enabling GitHub Pages for the `main` branch, the dashboard will open from the repository root because `index.html` redirects to `GDD/report_final.html`.
+The generator rebuilds the dashboard dataset from checked-in canonical data plus any local `iinfo/` artifacts that are present on the machine. Raw import files are intentionally gitignored.
+
+## Commands
+
+- `pnpm install`
+- `pnpm data:build`
+- `pnpm test`
+- `pnpm lint`
+- `pnpm build`
+
+## Notes
+
+- The repository no longer relies on the old standalone HTML dashboard or committed `next export` artifacts.
+- Published assets are produced during CI from the current Next.js app rather than being committed to the branch.
