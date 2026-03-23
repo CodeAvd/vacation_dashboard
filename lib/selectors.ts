@@ -319,6 +319,7 @@ export function getPersistedState(): DashboardUIState {
       expandedSections: {
         ...DEFAULT_UI_STATE.expandedSections,
         ...(parsed.expandedSections || {}),
+        filters: DEFAULT_UI_STATE.expandedSections.filters,
       },
       sort: parsed.sort === 'asc' ? 'asc' : 'desc',
     };
@@ -342,7 +343,10 @@ export function persistState(state: DashboardUIState): void {
         dateFrom: state.dateFrom,
         dateTo: state.dateTo,
         sort: state.sort,
-        expandedSections: state.expandedSections,
+        expandedSections: {
+          ...state.expandedSections,
+          filters: DEFAULT_UI_STATE.expandedSections.filters,
+        },
       }),
     );
   } catch {}

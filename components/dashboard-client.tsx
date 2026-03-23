@@ -222,8 +222,8 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
         <TopRisks locale={locale} risks={topRisks} />
         <BugTriage locale={locale} rows={bugClusters} />
 
-        <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
-          <div className="surface-container overflow-hidden [content-visibility:auto] [contain-intrinsic-size:auto_560px]">
+        <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-[2rem] border border-border-subtle bg-surface shadow-card [content-visibility:auto] [contain-intrinsic-size:auto_560px]">
             <CollapsibleSection
               id="evidence"
               locale={locale}
@@ -234,7 +234,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.evidence}
               onToggle={() => toggleSection('evidence')}
               icon={<MessageSquareQuote className="h-5 w-5" />}
-              iconVariant="evidence"
               lazyMount={getSectionManifest('evidence').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('evidence').motionDelayMs}
             >
@@ -243,8 +242,8 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8 lg:mt-16">
-          <div className="surface-container overflow-hidden [content-visibility:auto] [contain-intrinsic-size:auto_1000px]">
+        <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-[2rem] border border-border-subtle bg-surface shadow-card [content-visibility:auto] [contain-intrinsic-size:auto_1000px]">
             <CollapsibleSection
               id="actions"
               locale={locale}
@@ -255,7 +254,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.actions}
               onToggle={() => toggleSection('actions')}
               icon={<CheckSquare className="h-5 w-5" />}
-              iconVariant="actions"
               lazyMount={getSectionManifest('actions').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('actions').motionDelayMs}
             >
@@ -272,7 +270,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.psychology}
               onToggle={() => toggleSection('psychology')}
               icon={<Brain className="h-5 w-5" />}
-              iconVariant="psychology"
               lazyMount={getSectionManifest('psychology').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('psychology').motionDelayMs}
             >
@@ -289,7 +286,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.improvements}
               onToggle={() => toggleSection('improvements')}
               icon={<Rocket className="h-5 w-5" />}
-              iconVariant="improvements"
               lazyMount={getSectionManifest('improvements').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('improvements').motionDelayMs}
             >
@@ -306,7 +302,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.insights}
               onToggle={() => toggleSection('insights')}
               icon={<Lightbulb className="h-5 w-5" />}
-              iconVariant="insights"
               lazyMount={getSectionManifest('insights').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('insights').motionDelayMs}
             >
@@ -323,7 +318,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.competitors}
               onToggle={() => toggleSection('competitors')}
               icon={<Users className="h-5 w-5" />}
-              iconVariant="competitors"
               lazyMount={getSectionManifest('competitors').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('competitors').motionDelayMs}
             >
@@ -340,7 +334,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.roadmap}
               onToggle={() => toggleSection('roadmap')}
               icon={<Map className="h-5 w-5" />}
-              iconVariant="roadmap"
               lazyMount={getSectionManifest('roadmap').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('roadmap').motionDelayMs}
             >
@@ -357,7 +350,6 @@ export function DashboardClient({ bootstrap }: DashboardClientProps) {
               open={uiState.expandedSections.sources}
               onToggle={() => toggleSection('sources')}
               icon={<Database className="h-5 w-5" />}
-              iconVariant="sources"
               lazyMount={getSectionManifest('sources').lazy === 'on-demand'}
               motionDelayMs={getSectionManifest('sources').motionDelayMs}
             >
@@ -427,6 +419,7 @@ function parseDashboardStateSnapshot(snapshot: string): DashboardUIState {
       expandedSections: {
         ...DEFAULT_UI_STATE.expandedSections,
         ...(filters.expandedSections || {}),
+        filters: DEFAULT_UI_STATE.expandedSections.filters,
       },
       sort: filters.sort === 'asc' ? 'asc' : 'desc',
     };

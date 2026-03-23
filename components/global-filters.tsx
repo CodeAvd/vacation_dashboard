@@ -4,7 +4,7 @@ import type { Category, DashboardUIState, Locale, Severity, Source } from '@/lib
 import { categoryLabel, sourceLabel, t, themeLabel } from '@/lib/i18n';
 import { CATEGORY_OPTIONS, SEVERITY_OPTIONS, SORT_OPTIONS } from '@/lib/selectors';
 import { cn } from '@/lib/utils';
-import { RotateCcw, SlidersHorizontal, X } from 'lucide-react';
+import { ChevronDown, RotateCcw, SlidersHorizontal, X } from 'lucide-react';
 
 interface GlobalFiltersProps {
   locale: Locale;
@@ -52,59 +52,68 @@ export function GlobalFilters({
     : locale === 'ru'
       ? 'Подгружаем интерактивные секции'
       : 'Loading interactive sections';
+  const showResetButton = activeCount > 0;
 
   return (
-    <section
-      id="filters"
-      data-section="filters"
-      data-collapsed={String(!isOpen)}
-      className="border-b border-border-subtle/80 bg-[rgba(246,241,232,0.86)] backdrop-blur supports-[backdrop-filter]:bg-[rgba(246,241,232,0.74)] md:sticky md:top-0 md:z-20"
-    >
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="surface-container p-4 md:p-5">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-              <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-primary">
-                  <SlidersHorizontal className="h-3.5 w-3.5" />
-                  {t(locale, 'filters_title')}
-                </div>
-                <p className="max-w-3xl text-sm leading-6 text-foreground-muted">{t(locale, 'filters_desc')}</p>
-                <div className="flex flex-wrap items-center gap-2 text-sm text-foreground-soft">
-                  <span>{activeSummary}</span>
-                  <span className="badge-base badge-muted">{dataSummary}</span>
+    <section id="filters" data-section="filters" data-collapsed={String(!isOpen)} className="section-divider">
+      <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+        <div className="surface-card rounded-[1.4rem] p-3.5 md:p-4">
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+              <div className="min-w-0 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-raised px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-foreground-soft">
+                    <SlidersHorizontal className="h-3.5 w-3.5" />
+                    {t(locale, 'filters_title')}
+                  </div>
+                  <span className={cn('badge-base', activeCount > 0 ? 'badge-positive' : 'badge-muted')}>{activeSummary}</span>
                   {signalDateRange.min && signalDateRange.max ? (
                     <span className="badge-base badge-muted">
                       {t(locale, 'signals_date_range')}: {signalDateRange.min} → {signalDateRange.max}
                     </span>
                   ) : null}
                 </div>
+                <p className="max-w-3xl text-[0.92rem] leading-5 text-foreground-muted">{t(locale, 'filters_desc')}</p>
               </div>
-              <div className="flex items-center gap-2 self-start lg:self-auto">
-                <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-foreground-soft">
+              <div className="flex flex-wrap items-center gap-2 xl:justify-end">
+                <span className="badge-base badge-muted hidden sm:inline-flex">{dataSummary}</span>
+                <div className="hidden items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-foreground-soft lg:inline-flex">
                   <span>{t(locale, 'filters_state_prefix')}</span>
                   <span className="rounded-full bg-accent-soft px-2 py-1 text-[0.68rem] text-foreground">sort={uiState.sort}</span>
                 </div>
+                {showResetButton ? (
+                  <button
+                    type="button"
+                    onClick={onReset}
+                    className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3.5 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    {t(locale, 'reset_btn')}
+                  </button>
+                ) : null}
                 <button
                   type="button"
                   onClick={onToggleOpen}
                   aria-expanded={isOpen}
-                  className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-4 py-2 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-foreground-muted transition hover:border-border-strong hover:text-foreground md:hidden"
+                  aria-controls="filters-panel"
+                  className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3.5 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
                 >
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                   {toggleLabel}
+                  <ChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-200', isOpen && 'rotate-180')} />
                 </button>
               </div>
             </div>
 
             <div
+              id="filters-panel"
               className={cn(
                 'grid transition-[grid-template-rows,opacity] duration-300 ease-out',
-                isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 md:grid-rows-[1fr] md:opacity-100',
+                isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
               )}
             >
               <div className="overflow-hidden">
-                <div className="grid grid-cols-1 gap-3 pt-1 md:grid-cols-2 xl:grid-cols-8">
+                <div className="grid grid-cols-1 gap-3 border-t border-border-subtle/70 pt-3 md:grid-cols-2 xl:grid-cols-4">
                   <FilterField
                     fieldId="filter-theme"
                     label={t(locale, 'label_theme')}
@@ -181,17 +190,6 @@ export function GlobalFilters({
                     options={SORT_OPTIONS.map((sort) => ({ value: sort, label: sort === 'desc' ? t(locale, 'sort_desc') : t(locale, 'sort_asc') }))}
                   />
                 </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                  <button
-                    type="button"
-                    onClick={onReset}
-                    className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-4 py-2 font-mono text-[0.74rem] uppercase tracking-[0.12em] text-foreground-muted transition hover:border-border-strong hover:text-foreground"
-                  >
-                    <RotateCcw className="h-3.5 w-3.5" />
-                    {t(locale, 'reset_btn')}
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -215,9 +213,9 @@ function FilterField({
   options: Array<{ value: string; label: string }>;
 }) {
   return (
-    <label htmlFor={fieldId} className="flex min-w-0 flex-col gap-2">
+    <label htmlFor={fieldId} className="flex min-w-0 flex-col gap-1.5">
       <span className="eyebrow">{label}</span>
-      <select id={fieldId} name={fieldId} className="filter-select" value={value} onChange={(event) => onChange(event.target.value)}>
+      <select id={fieldId} name={fieldId} className="filter-select h-11 py-0" value={value} onChange={(event) => onChange(event.target.value)}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -244,13 +242,13 @@ function DateField({
   onChange: (value: string) => void;
 }) {
   return (
-    <label htmlFor={fieldId} className="flex min-w-0 flex-col gap-2">
+    <label htmlFor={fieldId} className="flex min-w-0 flex-col gap-1.5">
       <span className="eyebrow">{label}</span>
       <input
         id={fieldId}
         name={fieldId}
         type="date"
-        className="filter-select"
+        className="filter-select h-11 py-0"
         value={value}
         min={min}
         max={max}
@@ -289,7 +287,7 @@ export function ActiveFilterChips({ locale, uiState, onChange, onReset }: Active
   if (!chips.length) return null;
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-2">
+    <div className="mt-3 flex flex-wrap items-center gap-2">
       {chips.map((chip) => (
         <button
           key={chip.key}
