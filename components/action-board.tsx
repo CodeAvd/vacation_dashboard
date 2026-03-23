@@ -20,7 +20,7 @@ export function ActionBoard({ locale, rows }: ActionBoardProps) {
 
   return (
     <>
-      <div className="hidden overflow-hidden rounded-[1.5rem] border border-border-subtle bg-surface lg:block">
+      <div className="surface-container hidden overflow-hidden lg:block">
         <div className="overflow-auto">
           <table className="data-table">
             <thead>
@@ -86,10 +86,10 @@ export function ActionBoard({ locale, rows }: ActionBoardProps) {
             </div>
             <p className="mt-4 text-sm leading-6 text-foreground">{localizedField(locale, 'actions', row.id, 'solution', row.solution)}</p>
             <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_impact_effort')}</div><div className="mt-1 text-foreground">{impactLabel(locale, row.impact)} / {effortLabel(locale, row.effort)}</div></div>
-              <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_owner')}</div><div className="mt-1 text-foreground">{ownerLabel(locale, row.owner)}</div></div>
+              <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_impact_effort')}</div><div className="mt-1 text-foreground">{impactLabel(locale, row.impact)} / {effortLabel(locale, row.effort)}</div></div>
+              <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_owner')}</div><div className="mt-1 text-foreground">{ownerLabel(locale, row.owner)}</div></div>
             </div>
-            <div className="mt-4 rounded-[1.2rem] border border-border-subtle bg-[rgba(255,250,243,0.72)] p-4 text-sm leading-6 text-foreground-muted">{localizedField(locale, 'actions', row.id, 'kpi', row.kpi)}</div>
+            <div className="mt-4 rounded-[1.25rem] border border-border-subtle bg-[rgba(255,250,243,0.72)] p-4 text-sm leading-6 text-foreground-muted">{localizedField(locale, 'actions', row.id, 'kpi', row.kpi)}</div>
             <div className="mt-4 flex items-center justify-between gap-3">
               <span className="font-mono text-xs uppercase tracking-[0.12em] text-foreground-soft">{etaLabel(locale, row.eta)}</span>
               {row.problem_link ? <a href={row.problem_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-primary">{t(locale, 'source_link')}<ExternalLink className="h-3.5 w-3.5" /></a> : null}

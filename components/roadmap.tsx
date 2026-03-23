@@ -25,7 +25,7 @@ export function RoadmapSection({ locale, rows }: RoadmapSectionProps) {
           <div className="mt-5 space-y-4 border-l border-border-subtle pl-4">
             {items.map((item) => (
               <article key={`${window}-${item.initiative}`} className={cn('timeline-step', item.urgency)}>
-                <div className="rounded-[1.15rem] border border-border-subtle bg-surface-raised p-4">
+                <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-4">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className={item.urgency === 'critical' ? 'badge-base badge-critical' : item.urgency === 'major' ? 'badge-base badge-major' : 'badge-base badge-minor'}>
                       {item.urgency === 'critical' ? t(locale, 'severity_critical') : item.urgency === 'major' ? t(locale, 'severity_major') : t(locale, 'severity_minor')}

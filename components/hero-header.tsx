@@ -26,15 +26,15 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
   return (
     <header className="relative overflow-hidden border-b border-border-subtle/80 bg-[linear-gradient(180deg,rgba(255,252,247,0.92),rgba(246,241,232,0.42))]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(196,120,90,0.12),transparent_34%),radial-gradient(circle_at_top_right,rgba(40,95,89,0.08),transparent_36%)]" />
-      <div className="relative mx-auto max-w-7xl px-4 pb-7 pt-6 sm:px-6 lg:px-8 lg:pb-9 lg:pt-7">
+      <div className="relative mx-auto max-w-7xl px-4 pb-8 pt-6 sm:px-6 lg:px-8 lg:pb-10 lg:pt-8">
         <div className="flex flex-col gap-6 xl:grid xl:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.8fr)]">
           <div className="space-y-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div className="space-y-4">
-                <div className="flex flex-wrap items-center gap-2 text-[0.72rem] uppercase tracking-[0.16em] text-foreground-soft">
-                  <span className="rounded-full border border-border-subtle bg-surface/80 px-3 py-1 font-mono">Vacation Cafe Simulator</span>
-                  <span className="rounded-full border border-border-subtle bg-surface/70 px-3 py-1 font-mono">Bug-first cockpit</span>
-                  <span className="rounded-full border border-border-subtle bg-surface/70 px-3 py-1 font-mono">GitHub Pages static export</span>
+                <div className="flex flex-wrap items-center gap-2 text-[0.6875rem] uppercase tracking-[0.12em] text-foreground-soft">
+                  <span className="rounded-full border border-border-subtle bg-surface/80 px-3 py-1.5 font-mono">Vacation Cafe Simulator</span>
+                  <span className="rounded-full border border-border-subtle bg-surface/70 px-3 py-1.5 font-mono">Bug-first cockpit</span>
+                  <span className="rounded-full border border-border-subtle bg-surface/70 px-3 py-1.5 font-mono">GitHub Pages static export</span>
                 </div>
                 <div className="space-y-3">
                   <p className="eyebrow">Product feedback operating layer</p>
@@ -48,7 +48,7 @@ export function HeroHeader({ locale, meta, leadRisk, onLocaleChange }: HeroHeade
                     <p className="hidden max-w-3xl text-pretty text-[0.98rem] leading-7 text-foreground-muted [font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] sm:block sm:text-[1.04rem]">
                       {t(locale, 'hero_sub')} <span className="font-semibold text-foreground">{meta.actuality_date}</span>
                     </p>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface/80 px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-foreground-soft sm:hidden">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface/80 px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-foreground-soft sm:hidden">
                       <span>{actualityLabel}</span>
                       <span className="text-foreground">{meta.actuality_date}</span>
                     </div>

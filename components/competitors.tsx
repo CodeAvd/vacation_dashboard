@@ -20,19 +20,19 @@ export function CompetitorSection({ locale, rows }: CompetitorSectionProps) {
               <h3 className="mt-2 font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{row.game}</h3>
               <p className="mt-2 text-sm leading-6 text-foreground-muted">{competitorCopy(locale, row.game, 'market_role', row.market_role)}</p>
             </div>
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-soft/60 text-foreground-muted"><Sparkles className="h-4 w-4" /></span>
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-[1.25rem] bg-accent-soft/60 text-foreground-muted"><Sparkles className="h-4 w-4" /></span>
           </div>
           <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="rounded-[1.2rem] border border-border-subtle bg-surface-raised p-4">
+            <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-4">
               <div className="eyebrow">{t(locale, 'competitor_th_strengths')}</div>
               <p className="mt-2 text-sm leading-6 text-foreground-muted">{competitorCopy(locale, row.game, 'strengths', row.strengths)}</p>
             </div>
-            <div className="rounded-[1.2rem] border border-border-subtle bg-surface-raised p-4">
+            <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-4">
               <div className="eyebrow">{t(locale, 'competitor_th_weaknesses')}</div>
               <p className="mt-2 text-sm leading-6 text-foreground-muted">{competitorCopy(locale, row.game, 'weaknesses', row.weaknesses)}</p>
             </div>
           </div>
-          <div className="mt-4 rounded-[1.2rem] border border-border-subtle bg-[rgba(40,95,89,0.08)] p-4">
+          <div className="mt-4 rounded-[1.25rem] border border-border-subtle bg-primary/10 p-4">
             <div className="eyebrow">{t(locale, 'competitor_th_opportunity')}</div>
             <p className="mt-2 text-sm leading-6 text-foreground">{competitorCopy(locale, row.game, 'opportunity', row.opportunity)}</p>
           </div>

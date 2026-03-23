@@ -23,7 +23,7 @@ export function SourceBreakdown({ locale, snapshot, signals }: SourceBreakdownPr
             <MetaBox label={t(locale, 'source_reviews')} value={localizeReviewState(locale, snapshot.steam_store_status.review_state)} />
             <MetaBox label={t(locale, 'source_verified')} value={snapshot.verified_at} />
           </div>
-          <div className="mt-4 rounded-[1.2rem] border border-border-subtle bg-surface-raised p-4">
+          <div className="mt-4 rounded-[1.25rem] border border-border-subtle bg-surface-raised p-4">
             <div className="eyebrow">{t(locale, 'source_platforms')}</div>
             <div className="mt-3 flex flex-wrap gap-2">
               {Object.entries(snapshot.steam_store_status.platforms).map(([platform, enabled]) => (
@@ -45,7 +45,7 @@ export function SourceBreakdown({ locale, snapshot, signals }: SourceBreakdownPr
             </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {breakdown.map((item) => (
-                <div key={item.source} className="rounded-[1.1rem] border border-border-subtle bg-surface-raised p-3">
+                <div key={item.source} className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3">
                   <div className="eyebrow">{sourceLabel(locale, item.source)}</div>
                   <div className="mt-2 flex items-end justify-between gap-3">
                     <span className="font-display text-2xl font-semibold tracking-[-0.03em] text-foreground">{item.count}</span>
@@ -76,7 +76,7 @@ export function SourceBreakdown({ locale, snapshot, signals }: SourceBreakdownPr
           <div className="eyebrow">{t(locale, 'source_http')}</div>
           <div id="sourceLinks" className="mt-4 space-y-3">
             {snapshot.url_checks.map((check) => (
-              <a key={check.url} href={check.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 rounded-[1.1rem] border border-border-subtle bg-surface-raised px-4 py-3 text-sm text-foreground transition hover:border-border-strong">
+              <a key={check.url} href={check.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 rounded-[1.25rem] border border-border-subtle bg-surface-raised px-4 py-3 text-sm text-foreground transition hover:border-border-strong">
                 <span className="min-w-0 truncate">{shortUrl(check.url)}</span>
                 <span className={check.status >= 400 ? 'badge-base badge-critical' : 'badge-base badge-positive'}>
                   {check.status}
@@ -93,7 +93,7 @@ export function SourceBreakdown({ locale, snapshot, signals }: SourceBreakdownPr
 
 function MetaBox({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[1.1rem] border border-border-subtle bg-surface-raised p-3">
+    <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3">
       <div className="eyebrow">{label}</div>
       <div className="mt-2 text-sm leading-6 text-foreground">{value}</div>
     </div>

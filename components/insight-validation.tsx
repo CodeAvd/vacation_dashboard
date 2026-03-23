@@ -29,12 +29,12 @@ export function InsightValidation({ locale, rows }: InsightValidationProps) {
               </div>
               <h3 className="font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{localizedField(locale, 'insights', row.id, 'title', row.title)}</h3>
             </div>
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-soft/60 text-foreground-muted"><Lightbulb className="h-4 w-4" /></span>
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-[1.25rem] bg-accent-soft/60 text-foreground-muted"><Lightbulb className="h-4 w-4" /></span>
           </div>
           <p className="mt-4 text-sm leading-6 text-foreground">{localizedField(locale, 'insights', row.id, 'solution', row.solution)}</p>
           <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_impact_effort')}</div><div className="mt-1 text-foreground">{impactLabel(locale, row.impact)} / {effortLabel(locale, row.effort)}</div></div>
-            <div className="rounded-2xl border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'kpi_label')}</div><div className="mt-1 text-foreground-muted">{localizedField(locale, 'insights', row.id, 'kpi', row.kpi)}</div></div>
+            <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'label_impact_effort')}</div><div className="mt-1 text-foreground">{impactLabel(locale, row.impact)} / {effortLabel(locale, row.effort)}</div></div>
+            <div className="rounded-[1.25rem] border border-border-subtle bg-surface-raised p-3"><div className="eyebrow">{t(locale, 'kpi_label')}</div><div className="mt-1 text-foreground-muted">{localizedField(locale, 'insights', row.id, 'kpi', row.kpi)}</div></div>
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <span className="badge-base badge-muted">{evidenceStrengthLabel(locale, row.evidence_strength || 'Unknown')} {t(locale, 'evidence_strength_suffix')}</span>
@@ -43,7 +43,7 @@ export function InsightValidation({ locale, rows }: InsightValidationProps) {
           {row.source_refs?.length ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {row.source_refs.map((ref) => (
-                <a key={ref} href={ref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-1.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-primary">
+                <a key={ref} href={ref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-primary">
                   {shortSourceLabel(ref, locale)}
                   <ExternalLink className="h-3.5 w-3.5" />
                 </a>

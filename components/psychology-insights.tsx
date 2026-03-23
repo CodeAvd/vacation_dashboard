@@ -14,7 +14,7 @@ export function PsychologyInsights({ locale, data }: PsychologyInsightsProps) {
         {data.personas.length ? data.personas.map((persona) => (
           <article key={persona.name} className="surface-card p-5">
             <div className="flex items-center gap-3 text-foreground-soft">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-soft/60"><Brain className="h-4 w-4" /></span>
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-[1.25rem] bg-accent-soft/60"><Brain className="h-4 w-4" /></span>
               <div>
                 <div className="eyebrow">{t(locale, 'personas_heading')}</div>
                 <h3 className="mt-1 font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{personaCopy(locale, persona.name, 'name', persona.name)}</h3>
@@ -22,7 +22,7 @@ export function PsychologyInsights({ locale, data }: PsychologyInsightsProps) {
             </div>
             <p className="mt-4 text-sm leading-6 text-foreground"><strong>{personaCopy(locale, persona.name, 'role', persona.role)}</strong></p>
             <p className="mt-3 text-sm leading-6 text-foreground-muted">{personaCopy(locale, persona.name, 'desc', persona.desc)}</p>
-            <div className="mt-4 rounded-[1.2rem] border border-border-subtle bg-surface-raised p-4">
+            <div className="mt-4 rounded-[1.25rem] border border-border-subtle bg-surface-raised p-4">
               <div className="eyebrow">{t(locale, 'action_label')}</div>
               <p className="mt-2 text-sm leading-6 text-foreground">{personaCopy(locale, persona.name, 'action', persona.action)}</p>
             </div>
@@ -33,7 +33,7 @@ export function PsychologyInsights({ locale, data }: PsychologyInsightsProps) {
       <div className="surface-card overflow-hidden">
         <div className="border-b border-border-subtle px-5 py-4">
           <div className="flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-soft/60"><HeartPulse className="h-4 w-4" /></span>
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-[1.25rem] bg-accent-soft/60"><HeartPulse className="h-4 w-4" /></span>
             <div>
               <div className="eyebrow">{t(locale, 'friction_heading')}</div>
               <p className="mt-1 text-sm leading-6 text-foreground-muted">{t(locale, 'friction_expected_result')}</p>
@@ -72,7 +72,7 @@ export function PsychologyInsights({ locale, data }: PsychologyInsightsProps) {
         {data.dopamine.length ? data.dopamine.map((row) => (
           <article key={row.name} className="surface-card p-5">
             <div className="flex items-center gap-3 text-foreground-soft">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[rgba(40,95,89,0.12)]"><Sparkles className="h-4 w-4" /></span>
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-[1.25rem] bg-primary/10"><Sparkles className="h-4 w-4" /></span>
               <div>
                 <div className="eyebrow">{t(locale, 'dopamine_heading')}</div>
                 <h3 className="mt-1 font-display text-xl font-semibold tracking-[-0.03em] text-foreground">{dopamineCopy(locale, row.name, 'name', row.name)}</h3>
